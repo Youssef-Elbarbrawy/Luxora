@@ -1,0 +1,259 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    text-decoration: none;
+    list-style: none;
+    outline: none;
+    font-family: "Poppins",sans-serif;
+}
+
+:root {
+    --first-color: #fff;
+    --second-color: #fff2df;
+    --third-color: #ffe0b2;
+    --fourth-color: #d3a376;
+    --fifth-color: #8c6e63;
+    --sixth-color: #3e2522;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--first-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--sixth-color);
+    border-radius: 10px;
+}
+
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+section {
+    min-height: 100%;
+}
+
+input {
+    border: 1px solid var(--third-color);
+    padding-left: 5px;
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.center-center{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+
+.center-between {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+
+.col {
+    flex-direction: column;
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////// layout*/
+/*//////////////////////////////// header*/
+
+nav {
+    position: fixed;
+    box-shadow: 0 6px 8px -2px rgba(0,0,0,0.25);
+    justify-content: space-between;
+    height: 8vh;
+    width: 100%;
+    padding: 0 20px;
+    background-color: var(--first-color);
+}
+
+.logo-container{
+    justify-content: center;
+    gap: 5px;
+}
+
+.logo-container img{
+    width: 30px;
+    border-radius: 20px;
+}
+
+.logo-container a{
+    color: var(--sixth-color);
+}
+
+.menu{
+    gap: 10px;
+}
+
+.menu a{
+    text-decoration: none;
+    color: var(--sixth-color);
+}
+
+.menu > li{
+    position: relative;
+    cursor: pointer;
+    color:var(--sixth-color);
+}
+
+.menu > li{
+    height: 8vh;
+    display: flex;
+    align-items: center;
+}
+
+.menu li,.menu a, .sub-menu li, .logo-container h3{
+    transition: all ease-in-out 0.3s;
+}
+
+.menu li:hover,.menu a:hover, .sub-menu li:hover, .logo-container h3:hover{
+    color: var(--fourth-color);
+}
+
+.menu li:hover .sub-menu{
+    display: block;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    color: var(--third-color);
+}
+
+.sub-menu{
+    display: none;
+    background-color: var(--sixth-color);
+    width: 150px;
+    padding: 10px 0;
+    border-radius: 10px;
+}
+
+.sub-menu li{
+    padding: 5px 10px;
+    transition: all ease-in-out 0.3s;
+}
+
+.sub-menu a{
+    color:var(--third-color);
+}
+
+.sub-menu li:hover{
+    background-color: var(--fifth-color);
+}
+
+.sub-menu li:hover a{
+    color: var(--first-color);
+}
+
+.pages{
+    background-color:var(--second-color);
+    min-height:100vh;
+}
+
+/*//////////////////////////////// footer*/
+
+footer {
+    position: absolute;
+    bottom:0;
+    height: 20vh;
+    width: 100%;
+    background-color: var(--sixth-color);
+    bottom: 0;
+    padding:10px 20px;
+    color: var(--third-color);
+    font-size:12px;
+}
+
+footer h3{
+    margin-bottom:5px;
+}
+
+footer a{
+    color:var(--third-color);
+    text-decoration:underline;
+    transition:all ease-out 0.3s;
+}
+
+footer a:hover{
+    color:var(--first-color);
+}
+
+.rights{
+    margin-top:15px;
+}
+
+/*footer div div {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: foot 0.8s ease forwards;
+}
+
+footer div div:nth-child(1) {
+    animation-delay: 0s;
+}
+
+footer div div:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+footer div div:nth-child(3) {
+    animation-delay: 1s;
+}
+
+footer div div:nth-child(4) {
+    animation-delay: 1.5s;
+}
+
+@keyframes foot {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}*/
+
+
+.foot {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+} 
+
+.foot.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
