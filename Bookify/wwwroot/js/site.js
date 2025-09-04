@@ -165,3 +165,70 @@ function handleScroll() {
 
 window.addEventListener("scroll", handleScroll);
 window.addEventListener("load", handleScroll);
+
+
+/////////////////////////////////////////////////////////////// make order page
+/////////////////////////// form 
+
+
+// Calculate nights automatically
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const checkinInput = document.getElementById("check-in-date");
+    const nightsInput = document.getElementById("nightsNumber");
+    const checkoutInput = document.getElementById("check-out-date");
+
+    // إنشاء عنصر لرسالة الخطأ
+    const errorMsg = document.createElement("small");
+    errorMsg.style.color = "red";
+    errorMsg.style.display = "none"; // مخفي في البداية
+    checkoutInput.parentNode.appendChild(errorMsg);
+
+    function calculateNights() {
+        const checkinDate = new Date(checkinInput.value);
+        const checkoutDate = new Date(checkoutInput.value);
+
+        if (!isNaN(checkinDate.getTime()) && !isNaN(checkoutDate.getTime())) {
+            const diffTime = checkoutDate - checkinDate;
+            const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+            if (diffDays > 0) {
+                nightsInput.value = diffDays;
+                errorMsg.style.display = "none"; // إخفاء رسالة الخطأ
+            } else {
+                nightsInput.value = "";
+                errorMsg.textContent = "⚠️ Check-out date must be after Check-in date.";
+                errorMsg.style.display = "block"; // إظهار رسالة الخطأ
+            }
+        } else {
+            nightsInput.value = "";
+            errorMsg.style.display = "none";
+        }
+    }
+
+    checkinInput.addEventListener("change", calculateNights);
+    checkoutInput.addEventListener("change", calculateNights);
+});
+
+
+// Form validation
+document.querySelector(".btn").addEventListener("click", function () {
+    const terms = document.getElementById("terms");
+    if (!terms.checked) {
+        alert("You must agree to the Terms & Conditions.");
+        return;
+    }
+
+    const requiredFields = document.querySelectorAll("input[required], select[required]");
+    for (let field of requiredFields) {
+        if (!field.value.trim()) {
+            alert("Please fill out all required fields.");
+            field.focus();
+            return;
+        }
+    }
+
+    alert("Reservation submitted successfully!");
+});
+
