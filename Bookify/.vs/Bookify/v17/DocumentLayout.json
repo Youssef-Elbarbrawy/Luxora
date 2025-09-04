@@ -1,12 +1,139 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "F:\\DEPI-R3\\Bookify\\Bookify\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|c:\\users\\dell\\documents\\bookify\\bookify\\wwwroot\\css\\rooms.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|solutionrelative:wwwroot\\css\\rooms.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|c:\\users\\dell\\documents\\bookify\\bookify\\wwwroot\\js\\rooms.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|solutionrelative:wwwroot\\js\\rooms.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|c:\\users\\dell\\documents\\bookify\\bookify\\views\\rooms\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|solutionrelative:views\\rooms\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|c:\\users\\dell\\documents\\bookify\\bookify\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|solutionrelative:wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|c:\\users\\dell\\documents\\bookify\\bookify\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|c:\\users\\dell\\documents\\bookify\\bookify\\controllers\\roomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|solutionrelative:controllers\\roomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|c:\\users\\dell\\documents\\bookify\\bookify\\models\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B14554EA-D1A1-41F0-BF9C-0DD058509571}|Bookify.csproj|solutionrelative:models\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "rooms.js",
+              "DocumentMoniker": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\wwwroot\\js\\rooms.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\rooms.js",
+              "ToolTip": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\wwwroot\\js\\rooms.js",
+              "RelativeToolTip": "wwwroot\\js\\rooms.js",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAowFoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-04T20:25:52.117Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "rooms.css",
+              "DocumentMoniker": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\wwwroot\\css\\rooms.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\rooms.css",
+              "ToolTip": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\wwwroot\\css\\rooms.css*",
+              "RelativeToolTip": "wwwroot\\css\\rooms.css*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-09-04T20:25:16.039Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\Views\\Rooms\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Rooms\\Index.cshtml",
+              "ToolTip": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\Views\\Rooms\\Index.cshtml",
+              "RelativeToolTip": "Views\\Rooms\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-04T19:50:05.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAAFMIAAAAAAAAAAAAAGUIAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-09-04T19:30:15.122Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "site.js",
+              "DocumentMoniker": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\wwwroot\\js\\site.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\site.js",
+              "ToolTip": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\wwwroot\\js\\site.js",
+              "RelativeToolTip": "wwwroot\\js\\site.js",
+              "ViewState": "AgIAANwAAAAAAAAAAAAmwOQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-04T19:29:37.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RoomsController.cs",
+              "DocumentMoniker": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\Controllers\\RoomsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\RoomsController.cs",
+              "ToolTip": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\Controllers\\RoomsController.cs",
+              "RelativeToolTip": "Controllers\\RoomsController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAuwBwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-04T19:26:49.945Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Room.cs",
+              "DocumentMoniker": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\Models\\Room.cs",
+              "RelativeDocumentMoniker": "Models\\Room.cs",
+              "ToolTip": "C:\\Users\\dell\\Documents\\bookify\\Bookify\\Models\\Room.cs",
+              "RelativeToolTip": "Models\\Room.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-04T19:25:53.731Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

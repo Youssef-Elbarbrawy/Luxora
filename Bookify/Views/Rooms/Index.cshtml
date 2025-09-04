@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Bookify.Models.Room>
+@{
+    ViewBag.Title = "Rooms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/rooms.css" rel="stylesheet" />
+
+<section class="rooms">
+    <span style="font-size: 55px;">🏨</span>
+    <h2 class="rooms-title"> Exclusive Rooms & Suites</h2>
+    <p class="rooms-subtitle">Where Luxury Meets Comfort</p>
+
+    <!-- Cube -->
+    <div class="cube-container">
+        <div class="cube" id="cube">
+            <div class="face front" data-category="Luxury">Luxury</div>
+            <div class="face back" data-category="Family">Family</div>
+            <div class="face right" data-category="Business">Business</div>
+            <div class="face left" data-category="Budget">Budget</div>
+            <div class="face top" data-category="Couples">Couples</div>
+            <div class="face bottom" data-category="Suite">Suite</div>
+        </div>
+    </div>
+
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Dynamic Rooms Grid -->
+    <div class="rooms-grid" id="roomsGrid">
+        @foreach (var room in Model)
+        {
+            <article class="room-card" data-category="@room.Category.ToLower()">
+                <div class="room-img">
+                    <img src="@room.Image" alt="@room.Name" />
+                    <div class="overlay"><p>@room.Perks</p></div>
+                    <span class="price-tag">$@room.Price / Night</span>
+                </div>
+                <div class="room-content">
+                    <h3>@room.Name</h3>
+                    <p>@room.Description</p>
+                    <button class="book-btn" onclick="location.href='@Url.Action("MakeOrder","Rooms", new { id = room.Id })'">Book Now</button>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/rooms.js"></script>
+}

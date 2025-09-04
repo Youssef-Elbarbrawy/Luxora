@@ -226,4 +226,3 @@ document.querySelector(".btn").addEventListener("click", function () {
 
     alert("Reservation submitted successfully!");
 });
-
