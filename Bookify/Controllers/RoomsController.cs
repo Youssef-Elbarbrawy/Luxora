@@ -13,6 +13,7 @@ namespace Bookify.Controllers
         {
             return View();
         }
+
         public IActionResult Index()
         {
             var rooms = new List<Room>

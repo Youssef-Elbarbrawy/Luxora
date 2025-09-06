@@ -5,16 +5,68 @@
       "PackagePath": "staticwebassets\\Bookify.2t2xgw4wxl.bundle.scp.css"
     },
     {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\css\\Payment.css",
+      "PackagePath": "staticwebassets\\css\\Payment.css"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\css\\rooms.css",
+      "PackagePath": "staticwebassets\\css\\rooms.css"
+    },
+    {
       "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\icon.png",
-      "PackagePath": "staticwebassets\\icon.png"
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\Rooms\\R.jpeg",
+      "PackagePath": "staticwebassets\\img\\Rooms\\R.jpeg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\Rooms\\a.jpg",
+      "PackagePath": "staticwebassets\\img\\Rooms\\a.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\Rooms\\b.jpg",
+      "PackagePath": "staticwebassets\\img\\Rooms\\b.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\Rooms\\c.jpg",
+      "PackagePath": "staticwebassets\\img\\Rooms\\c.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\Rooms\\d.jpg",
+      "PackagePath": "staticwebassets\\img\\Rooms\\d.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\Rooms\\e.jpg",
+      "PackagePath": "staticwebassets\\img\\Rooms\\e.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\Rooms\\f.jpg",
+      "PackagePath": "staticwebassets\\img\\Rooms\\f.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\icon.png",
+      "PackagePath": "staticwebassets\\img\\icon.png"
     },
     {
       "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\index-contact\\img.jpg",
       "PackagePath": "staticwebassets\\img\\index-contact\\img.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\index-reviews\\img1.jpg",
+      "PackagePath": "staticwebassets\\img\\index-reviews\\img1.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\index-reviews\\img2.jpg",
+      "PackagePath": "staticwebassets\\img\\index-reviews\\img2.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\index-reviews\\img3.jpg",
+      "PackagePath": "staticwebassets\\img\\index-reviews\\img3.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\index-reviews\\img4.jpg",
+      "PackagePath": "staticwebassets\\img\\index-reviews\\img4.jpg"
     },
     {
       "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\index_hero\\img1-s.jpg",
@@ -47,6 +99,14 @@
     {
       "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\img\\index_hero\\img5.jpg",
       "PackagePath": "staticwebassets\\img\\index_hero\\img5.jpg"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\js\\Payment.js",
+      "PackagePath": "staticwebassets\\js\\Payment.js"
+    },
+    {
+      "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\js\\rooms.js",
+      "PackagePath": "staticwebassets\\js\\rooms.js"
     },
     {
       "Id": "F:\\DEPI-R3\\Bookify\\Bookify\\wwwroot\\js\\site.js",

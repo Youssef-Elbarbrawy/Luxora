@@ -1,6 +1,6 @@
 ﻿/* ================== ROOMS SECTION ================== */
 .rooms {
-    padding: 120px 50px;
+    padding: 120px 20px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -208,6 +208,9 @@
     width: 320px;
     height: 320px;
     margin: 50px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cube {
@@ -333,7 +336,7 @@
 
 @media(max-width: 600px) {
     .rooms {
-        padding: 80px 18px;
+        padding: 80px 10px;
     }
 
     .room-img img {

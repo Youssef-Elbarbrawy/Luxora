@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - Bookify</title>
+        <title>@ViewData["Title"] - Luxora</title>
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link href="~/icon.png" rel="icon" />
+        <link href="~/img/icon.png" rel="icon" />
     </head>
 
     <body>
@@ -13,7 +13,7 @@
             <nav class="center-between">
                 <div class="logo-container">
                     <a asp-controller="Home" asp-action="Index">
-                        <h3>Bookify</h3>
+                    <h3>Luxora</h3>
                     </a>
                 </div>
 
@@ -28,14 +28,12 @@
 
                         <div id="navbarContent">
                             <ul class="center-center menu">
-                                <li><a asp-controller="Rooms" asp-action="MakeOrder">MakeOrder</a></li>
-                                <li><a asp-controller="Rooms" asp-action="Terms">Terms</a></li>
-                                <li><a asp-controller="History" asp-action="History">history</a></li>
+                                <li onclick="location.href='@Url.Action("Index", "Home")'"><a>Home</a></li>
 
                                 <li>
-                                    Category▾
+                                    Rooms▾
                                     <ul class="sub-menu">
-                                        <li><a asp-controller="" asp-action="">All</a></li>
+                                        <li onclick="location.href='@Url.Action("Index", "Rooms")'"><a>All</a></li>
                                         <li><a asp-controller="" asp-action="">Standard</a></li>
                                         <li><a asp-controller="" asp-action="">Deluxe</a></li>
                                         <li><a asp-controller="" asp-action="">Suite</a></li>
@@ -43,25 +41,32 @@
                                         <li><a asp-controller="" asp-action="">Family & Group</a></li>
                                     </ul>
                                 </li>
+                               
                                 <li>
-                                    Authentication▾
-                                    <ul class="sub-menu">
-                                        <li><a asp-controller="Auth" asp-action="Login">login</a></li>
-                                        <li><a asp-controller="Auth" asp-action="Signup">signup</a></li>
-                                    </ul>
-                                </li>
-<li>
                                     Profile▾
                                     <ul class="sub-menu">
-                                        <li><a asp-controller="Profile" asp-action="Index">Account Details</a></li>
-                                        <li><a asp-controller="Profile" asp-action="Edit">Edit Profile</a></li>
-                                        <li><a asp-controller="Profile" asp-action="ChangePassword">Change Password</a></li>
-                                        <li><a asp-controller="Profile" asp-action="Reviews">My Reviews</a></li>
-                                        <li><a asp-controller="Profile" asp-action="Logout">Logout</a></li>
+                                        <li onclick="location.href='@Url.Action("Index", "Profile")'"><a>Account</a></li>
+                                        <li onclick="location.href='@Url.Action("Index", "History")'"><a>History</a></li>
                                     </ul>
-                                </li>                            </ul>
+                                </li>  
+                                
+                                <li id="nav-button">
+                                    Authentication▾
+                                    <ul class="sub-menu">
+                                        <li onclick="location.href='@Url.Action("Login", "Auth")'"><a>Login</a></li>
+                                        <li onclick="location.href='@Url.Action("Signup", "Auth")'"><a>Signup</a></li>
+                                        <li onclick="location.href='@Url.Action("Logout", "Profile")'"><a>Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                </div>
+            
+                <div class="nav-button">
+                    <button type="button" onclick="window.location.href='/Auth/Login'">Login</button>
+                    <button type="button" onclick="window.location.href='/Profile/Logout'">Logout</button>
+                    <button type="button" onclick="window.location.href='/Auth/Signup'">Signup</button>
                 </div>
             </nav>
         </header>
@@ -74,39 +79,64 @@
 
         <footer>
             <div class="center-center foot-container">
-                <div class="foot foot1">
-                    <h3>Privacy Policy</h3>
-                    <p>
-                        At Bookify, we respect your privacy. Any personal information 
-                        you share with us (such as your name, email, or preferences) is
-                        kept secure and used only to improve your experience.
-                    </p>
-                </div>
+                <div>
+                    <div class="foot foot1">
+                        <h3>Luxora</h3>
+                        <div>
+                            <p>
+                                We believe every journey deserves the perfect stay. Our hotel
+                                offers guests a welcoming experience with comfortable rooms,
+                                modern amenities, and a relaxing atmosphere.
+                            </p>
+                        </div>
+                    </div>
 
-                <div class="foot foot1">
-                    <h3>Reservations & Payments</h3>
-                    <p>All reservations are subject to availability and confirmation.</p>
-                    <p>Prices shown are in the selected currency and may include applicable taxes or fees.</p>
-                    <p>Full or partial payment may be required to secure a booking.</p>
+                    <div class="foot foot5">
+                        <h3>Terms & Conditions</h3>
+                        <div>
+                            <p>
+                                By booking a room through our website, you agree to
+                                comply with these
+                                <span><a asp-controller="Rooms" asp-action="Terms">Terms & Conditions</a></span>.
+                            </p>
+                        </div>
+                    </div>
                 </div>
+                
+                <div>
+                    <div class="foot foot2">
+                        <h3>Contact Us</h3>
+                        <div>
+                            <p>📍 123 Street, Cairo</p>
+                            <p>📧 info@luxora.com</p>
+                            <p>📞 +20 123 456 789</p>
+                        </div>
+                    </div>
 
-                <div class="foot foot2">
-                    <h3>Contact Us</h3>
-                    <p>📍 123 Main Street, Cairo</p>
-                    <p>📧 info@bookifyhotel.com</p>
-                    <p>📞 +20 123 456 789</p>
-                </div>
+                    <div class="foot foot3">
+                        <h3>Quick Links</h3>
+                        <div>
+                            <ul>
+                                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li><a asp-controller="Rooms" asp-action="Index">Rooms</a></li>
+                                <li><a asp-controller="Rooms" asp-action="Terms">Terms</a></li>
+                            </ul>
+                        </div>
+                    </div>
 
-                <div class="foot foot3">
-                    <h3>Quick Links</h3>
-                    <ul>
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a href="/Rooms">Rooms</a></li>
-                        <li><a href="/About">About Us</a></li>
-                        <li><a href="/Contact">Contact</a></li>
-                    </ul>
+                    <div class="foot foot4">
+                        <h3>Stay in the loop</h3>
+                        <div>
+                            <form>
+                                <input type="email" placeholder="Type your Email" />
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <hr class="hr-foot"/>
 
             <div class="center-center rights">
                 © 2025 Bookify Hotel | All rights reserved

@@ -147,7 +147,7 @@ function initSlider(containerSelector, intervalTime, nextArrow, prevArrow) {
 
 /////////////////////////// review section
 
-const reviews = document.querySelectorAll(".review");
+const reviews = document.querySelectorAll(".hero-sections > div");
 
 function handleScroll() {
     const triggerBottom = window.innerHeight * 0.85; 
