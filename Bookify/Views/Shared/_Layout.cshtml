@@ -6,142 +6,606 @@
         <title>@ViewData["Title"] - Luxora</title>
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         <link href="~/img/icon.png" rel="icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <section class="hero">
     </head>
 
     <body>
         <header>
-            <nav class="center-between">
+        <nav class="navbar">
+            <div class="nav-container">
+                <!-- Logo Section -->
                 <div class="logo-container">
-                    <a asp-controller="Home" asp-action="Index">
-                    <h3>Luxora</h3>
+                    <a asp-route="/Home/index.cshtml" class="logo-link">
+                        <div class="logo-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3>Luxora</h3>
                     </a>
                 </div>
 
-                <div class="center-center">
-                    <div class="hamburgers">
+                <!-- Desktop Navigation -->
+                <div class="nav-menu-container">
+                    <div class="hamburger-menu">
                         <label class="hamburger">
-                            <input type="checkbox" />
-                            <span class="bar"></span>
-                            <span class="bar"></span>
-                            <span class="bar"></span>
+                            <input type="checkbox" id="menuToggle" />
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
                         </label>
+                    </div>
 
-                        <div id="navbarContent">
-                            <ul class="center-center menu">
-                                <li onclick="location.href='@Url.Action("Index", "Home")'"><a>Home</a></li>
+                    <div class="nav-content" id="navbarContent">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-home"></i>
+                                    <span>Home</span>
+                                </a>
+                            </li>
 
-                                <li>
-                                    Rooms▾
-                                    <ul class="sub-menu">
-                                        <li onclick="location.href='@Url.Action("Index", "Rooms")'"><a>All</a></li>
-                                        <li><a asp-controller="" asp-action="">Standard</a></li>
-                                        <li><a asp-controller="" asp-action="">Deluxe</a></li>
-                                        <li><a asp-controller="" asp-action="">Suite</a></li>
-                                        <li><a asp-controller="" asp-action="">Special View</a></li>
-                                        <li><a asp-controller="" asp-action="">Family & Group</a></li>
-                                    </ul>
-                                </li>
-                               
-                                <li>
-                                    Profile▾
-                                    <ul class="sub-menu">
-                                        <li onclick="location.href='@Url.Action("Index", "Profile")'"><a>Account</a></li>
-                                        <li onclick="location.href='@Url.Action("Index", "History")'"><a>History</a></li>
-                                    </ul>
-                                </li>  
-                                
-                                <li id="nav-button">
-                                    Authentication▾
-                                    <ul class="sub-menu">
-                                        <li onclick="location.href='@Url.Action("Login", "Auth")'"><a>Login</a></li>
-                                        <li onclick="location.href='@Url.Action("Signup", "Auth")'"><a>Signup</a></li>
-                                        <li onclick="location.href='@Url.Action("Logout", "Profile")'"><a>Logout</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle">
+                                    <i class="fas fa-bed"></i>
+                                    <span>Rooms</span>
+                                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-header">
+                                        <h4>Room Categories</h4>
+                                        <p>Discover our luxury accommodations</p>
+                                    </div>
+                                    <div class="dropdown-grid">
+                                        <a href="#" class="dropdown-item featured">
+                                            <div class="dropdown-icon">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <div class="dropdown-content">
+                                                <span class="dropdown-title">All Rooms</span>
+                                                <span class="dropdown-desc">Browse all available rooms</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="dropdown-icon">
+                                                <i class="fas fa-door-open"></i>
+                                            </div>
+                                            <div class="dropdown-content">
+                                                <span class="dropdown-title">Standard</span>
+                                                <span class="dropdown-desc">Comfortable and elegant</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="dropdown-icon">
+                                                <i class="fas fa-crown"></i>
+                                            </div>
+                                            <div class="dropdown-content">
+                                                <span class="dropdown-title">Deluxe</span>
+                                                <span class="dropdown-desc">Premium amenities</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="dropdown-icon">
+                                                <i class="fas fa-chess-queen"></i>
+                                            </div>
+                                            <div class="dropdown-content">
+                                                <span class="dropdown-title">Suite</span>
+                                                <span class="dropdown-desc">Luxurious suites</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="dropdown-icon">
+                                                <i class="fas fa-mountain"></i>
+                                            </div>
+                                            <div class="dropdown-content">
+                                                <span class="dropdown-title">Special View</span>
+                                                <span class="dropdown-desc">Breathtaking views</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="dropdown-icon">
+                                                <i class="fas fa-users"></i>
+                                            </div>
+                                            <div class="dropdown-content">
+                                                <span class="dropdown-title">Family & Group</span>
+                                                <span class="dropdown-desc">Perfect for families</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Dining</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-spa"></i>
+                                    <span>Amenities</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle">
+                                    <i class="fas fa-user"></i>
+                                    <span>Profile</span>
+                                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                                </a>
+                                <div class="dropdown-menu profile-menu">
+                                    <div class="dropdown-header">
+                                        <div class="user-avatar">
+                                            <i class="fas fa-user-circle"></i>
+                                        </div>
+                                        <div class="user-info">
+                                            <h4>Welcome Back!</h4>
+                                            <p>Manage your account</p>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item">
+                                        <div class="dropdown-icon">
+                                            <i class="fas fa-user-cog"></i>
+                                        </div>
+                                        <div class="dropdown-content">
+                                            <span class="dropdown-title">Account Settings</span>
+                                            <span class="dropdown-desc">Manage your profile</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <div class="dropdown-icon">
+                                            <i class="fas fa-history"></i>
+                                        </div>
+                                        <div class="dropdown-content">
+                                            <span class="dropdown-title">Booking History</span>
+                                            <span class="dropdown-desc">View past reservations</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <div class="dropdown-icon">
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="dropdown-content">
+                                            <span class="dropdown-title">Favorites</span>
+                                            <span class="dropdown-desc">Saved rooms and services</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <!-- Mobile Auth Menu -->
+                            <li class="nav-item dropdown mobile-auth">
+                                <a href="#" class="nav-link dropdown-toggle">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    <span>Account</span>
+                                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                                </a>
+                                <div class="dropdown-menu auth-menu">
+                                    <a href="#" class="dropdown-item">
+                                        <div class="dropdown-icon">
+                                            <i class="fas fa-sign-in-alt"></i>
+                                        </div>
+                                        <div class="dropdown-content">
+                                            <span class="dropdown-title">Login</span>
+                                            <span class="dropdown-desc">Access your account</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <div class="dropdown-icon">
+                                            <i class="fas fa-user-plus"></i>
+                                        </div>
+                                        <div class="dropdown-content">
+                                            <span class="dropdown-title">Sign Up</span>
+                                            <span class="dropdown-desc">Create new account</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <div class="dropdown-icon">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                        </div>
+                                        <div class="dropdown-content">
+                                            <span class="dropdown-title">Logout</span>
+                                            <span class="dropdown-desc">Sign out securely</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            
-                <div class="nav-button">
-                    <button type="button" onclick="window.location.href='/Auth/Login'">Login</button>
-                    <button type="button" onclick="window.location.href='/Profile/Logout'">Logout</button>
-                    <button type="button" onclick="window.location.href='/Auth/Signup'">Signup</button>
+
+                <!-- Desktop Action Buttons -->
+                <div class="nav-actions">
+                    <div class="search-container2">
+                        <button class="search-btn" id="searchToggle">
+                            <i  class="fas fa-search"></i>
+                        </button>
+                        <div class="search-dropdown" id="searchDropdown">
+                            <div class="search-input-container">
+                                <input type="text" placeholder="Search rooms, amenities..." class="search-input">
+                                <button class="search-submit">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+
+                            <div class="search-suggestions">
+                                <div class="suggestion-category">
+                                    <h5>Quick Search</h5>
+                                    <a href="#" class="suggestion-item">
+                                        <i class="fas fa-bed"></i>
+                                        <span>Available Rooms</span>
+                                    </a>
+                                    <a href="#" class="suggestion-item">
+                                        <i class="fas fa-spa"></i>
+                                        <span>Spa Services</span>
+                                    </a>
+                                    <a href="#" class="suggestion-item">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Events & Meetings</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="notification-container">
+                        <button class="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+
+                    <div class="auth-buttons2">
+                        <button class="auth-btn2 login-btn" onclick="window.location.href='/Auth/Login'">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Login</span>
+                        </button>
+                        <button class="auth-btn2 signup-btn" onclick="window.location.href='/Auth/Signup'">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Sign Up</span>
+                        </button>
+                        <button class="auth-btn2 logout-btn" onclick="window.location.href='/Profile/Logout'">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
                 </div>
-            </nav>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="scroll-progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </nav>
         </header>
 
         <div>
-            <main role="main" style="padding-top:8vh;" class="pages">
+            <main role="main" class="pages" >
                 @RenderBody()
             </main>
         </div>
 
-        <footer>
-            <div class="center-center foot-container">
-                <div>
-                    <div class="foot foot1">
-                        <h3>Luxora</h3>
-                        <div>
-                            <p>
-                                We believe every journey deserves the perfect stay. Our hotel
-                                offers guests a welcoming experience with comfortable rooms,
-                                modern amenities, and a relaxing atmosphere.
-                            </p>
+    <footer class="luxury-footer">
+        <!-- Decorative Wave -->
+        <div class="footer-wave">
+            <svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,60 C300,120 900,0 1200,60 L1200,0 L0,0 Z" fill="currentColor" opacity="0.1" />
+                <path d="M0,80 C400,140 800,20 1200,80 L1200,0 L0,0 Z" fill="currentColor" opacity="0.08" />
+            </svg>
+        </div>
+
+        <div class="footer-container">
+            <!-- Main Footer Content -->
+            <div class="footer-main">
+                <div class="footer-grid">
+                    <!-- Brand Section -->
+                    <div class="footer-section brand-section">
+                        <div class="brand-logo">
+                            <div class="logo-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <h3>Luxora</h3>
+                        </div>
+                        <p class="brand-description">
+                            We believe every journey deserves the perfect stay. Our hotel offers guests a welcoming experience with comfortable rooms, modern amenities, and a relaxing atmosphere designed for unforgettable memories.
+                        </p>
+                        <div class="brand-stats">
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-award"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat3number">25+</span>
+                                    <span class="stat3-label">Years Experience</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat3-number">5.0</span>
+                                    <span class="stat3-label">Guest Rating</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat3-number">50K+</span>
+                                    <span class="stat3-label">Happy Guests</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="#" class="social-link">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-youtube"></i>
+                            </a>
                         </div>
                     </div>
 
-                    <div class="foot foot5">
-                        <h3>Terms & Conditions</h3>
-                        <div>
-                            <p>
-                                By booking a room through our website, you agree to
-                                comply with these
-                                <span><a asp-controller="Rooms" asp-action="Terms">Terms & Conditions</a></span>.
-                            </p>
-                        </div>
+                    <!-- Quick Links -->
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-home"></i>
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-bed"></i>
+                                    <span>Rooms & Suites</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Dining</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-spa"></i>
+                                    <span>Spa & Wellness</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>Events</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-images"></i>
+                                    <span>Gallery</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-                
-                <div>
-                    <div class="foot foot2">
-                        <h3>Contact Us</h3>
-                        <div>
-                            <p>📍 123 Street, Cairo</p>
-                            <p>📧 info@luxora.com</p>
-                            <p>📞 +20 123 456 789</p>
+
+                    <!-- Services -->
+                    <div class="footer-section">
+                        <h4>Services</h4>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-concierge-bell"></i>
+                                    <span>Concierge</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-car"></i>
+                                    <span>Airport Transfer</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Free WiFi</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-dumbbell"></i>
+                                    <span>Fitness Center</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-swimmer"></i>
+                                    <span>Swimming Pool</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-business-time"></i>
+                                    <span>Business Center</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="footer-section">
+                        <h4>Contact Us</h4>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span class="contact-label">Address</span>
+                                    <span class="contact-value">123 Luxury Street, Cairo, Egypt</span>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span class="contact-label">Phone</span>
+                                    <span class="contact-value">+20 123 456 789</span>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span class="contact-label">Email</span>
+                                    <span class="contact-value">info@luxora.com</span>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span class="contact-label">Reception</span>
+                                    <span class="contact-value">24/7 Available</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="foot foot3">
-                        <h3>Quick Links</h3>
-                        <div>
-                            <ul>
-                                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li><a asp-controller="Rooms" asp-action="Index">Rooms</a></li>
-                                <li><a asp-controller="Rooms" asp-action="Terms">Terms</a></li>
-                            </ul>
+                    <!-- Newsletter -->
+                    <div class="footer-section newsletter-section">
+                        <h4>Stay Connected</h4>
+                        <p class="newsletter-description">
+                            Subscribe to our newsletter for exclusive offers, updates, and luxury travel inspiration.
+                        </p>
+                        <form class="newsletter-form" id="newsletterForm">
+                            <div class="input-group">
+                                <div class="input-container">
+                                    <input type="email" placeholder="Enter your email address" required>
+                                    <i class="fas fa-envelope input-icon"></i>
+                                </div>
+                                <button type="submit" class="subscribe-btn">
+                                    <span>Subscribe</span>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <div class="newsletter-benefits">
+                            <div class="benefit-item">
+                                <i class="fas fa-percent"></i>
+                                <span>Exclusive Deals</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Early Access</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-gift"></i>
+                                <span>Special Offers</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="foot foot4">
-                        <h3>Stay in the loop</h3>
-                        <div>
-                            <form>
-                                <input type="email" placeholder="Type your Email" />
-                                <button type="submit">Subscribe</button>
-                            </form>
+                        <!-- Awards Section -->
+                        <div class="awards-section">
+                            <h5>Awards & Recognition</h5>
+                            <div class="awards-grid">
+                                <div class="award-item">
+                                    <i class="fas fa-trophy"></i>
+                                    <span>Best Hotel 2024</span>
+                                </div>
+                                <div class="award-item">
+                                    <i class="fas fa-medal"></i>
+                                    <span>Excellence Award</span>
+                                </div>
+                                <div class="award-item">
+                                    <i class="fas fa-star"></i>
+                                    <span>5-Star Rated</span>
+                                </div>
+                                <div class="award-item">
+                                    <i class="fas fa-leaf"></i>
+                                    <span>Eco Certified</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <hr class="hr-foot"/>
-
-            <div class="center-center rights">
-                © 2025 Bookify Hotel | All rights reserved
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                        <p>&copy; 2025 Luxora Hotel. All rights reserved.</p>
+                        <p class="tagline">Creating unforgettable experiences since 1999</p>
+                    </div>
+                    <div class="footer-links-bottom">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms & Conditions</a>
+                        <a href="#">Cookie Policy</a>
+                        <a href="#">Sitemap</a>
+                    </div>
+                    <div class="payment-methods">
+                        <span class="payment-label">We Accept:</span>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fab fa-cc-amex"></i>
+                            <i class="fab fa-cc-paypal"></i>
+                            <i class="fab fa-apple-pay"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </footer>
+        </div>
+
+        <!-- Back to Top Button -->
+        <button class="back-to-top" id="backToTop">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+
+        <!-- Floating Contact Button -->
+        <div class="floating-contact">
+            <button class="floating-btn" id="contactToggle">
+                <i class="fas fa-headset"></i>
+            </button>
+            <div class="floating-menu" id="floatingMenu">
+                <a href="tel:+20123456789" class="floating-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Call Us</span>
+                </a>
+                <a href="mailto:info@luxora.com" class="floating-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </a>
+                <a href="#" class="floating-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="#" class="floating-item">
+                    <i class="fas fa-comments"></i>
+                    <span>Live Chat</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
 
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)

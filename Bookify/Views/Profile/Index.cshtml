@@ -1,69 +1,492 @@
 @{
     ViewData["Title"] = "My Profile";
 }
-
-<div class="profile-container">
+<link href="~/css/profile.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<div class="profile-page">
     <div class="profile-header">
-        <h1>My Profile</h1>
-        <p class="welcome-text">Welcome back, Ahmed Sameh</p>
+        <div class="header-background">
+            <div class="floating-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="profile-avatar">
+                <div class="avatar-container">
+                    <div class="avatar-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="avatar-badge">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <button class="avatar-edit-btn" id="avatarEdit">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h1>Ahmed Sameh</h1>
+                <p class="member-status">
+                    <i class="fas fa-gem"></i>
+                    Premium Member since 2020
+                </p>
+                <div class="member-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">12</span>
+                        <span class="stat-label">Bookings</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">4.9</span>
+                        <span class="stat-label">Rating</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">24</span>
+                        <span class="stat-label">Nights</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-navigation">
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="overview">
+                <i class="fas fa-user"></i>
+                <span>Overview</span>
+            </button>
+            <button class="nav-tab" data-tab="bookings">
+                <i class="fas fa-bed"></i>
+                <span>My Bookings</span>
+            </button>
+            <button class="nav-tab" data-tab="reviews">
+                <i class="fas fa-star"></i>
+                <span>Reviews</span>
+            </button>
+            <button class="nav-tab" data-tab="preferences">
+                <i class="fas fa-cog"></i>
+                <span>Preferences</span>
+            </button>
+            <button class="nav-tab" data-tab="security">
+                <i class="fas fa-shield-alt"></i>
+                <span>Security</span>
+            </button>
+        </div>
     </div>
 
-    <div class="profile-content">
-        <!-- Account Details Section -->
-        <div class="account-details">
-            <div class="section-header">
-                <h2>Account Details</h2>
-            </div>
-            
-            <div class="details-grid">
-                <div class="detail-item">
-                    <span class="detail-label">First Name</span>
-                    <span class="detail-value">Ahmed</span>
+    <div class="profile-container">
+        <div class="tab-content active" id="overview">
+            <div class="content-grid">
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-user-circle"></i> Personal Information</h3>
+                        <button class="edit-btn" id="editPersonalInfo">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-signature"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Full Name</span>
+                                    <span class="info-value">Ahmed Sameh</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Email Address</span>
+                                    <span class="info-value">ahmedsmoselhi@gmail.com</span>
+                                    <span class="verified-badge">
+                                        <i class="fas fa-check-circle"></i>
+                                        Verified
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Phone Number</span>
+                                    <span class="info-value">+20 123 456 789</span>
+                                    <span class="verified-badge">
+                                        <i class="fas fa-check-circle"></i>
+                                        Verified
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Location</span>
+                                    <span class="info-value">Cairo, Egypt</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Date of Birth</span>
+                                    <span class="info-value">January 15, 1990</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-venus-mars"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Gender</span>
+                                    <span class="info-value">Male</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="detail-item">
-                    <span class="detail-label">Last Name</span>
-                    <span class="detail-value">Sameh</span>
+                <div class="profile-card membership-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-crown"></i> Membership Status</h3>
+                        <div class="membership-level premium">Premium</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="membership-benefits">
+                            <div class="benefit-item active">
+                                <i class="fas fa-check"></i>
+                                <span>Priority Booking</span>
+                            </div>
+                            <div class="benefit-item active">
+                                <i class="fas fa-check"></i>
+                                <span>Room Upgrades</span>
+                            </div>
+                            <div class="benefit-item active">
+                                <i class="fas fa-check"></i>
+                                <span>Late Checkout</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-times"></i>
+                                <span>Concierge Service</span>
+                            </div>
+                        </div>
+                        <div class="membership-progress">
+                            <div class="progress-header">
+                                <span>Progress to VIP Status</span>
+                                <span class="progress-text">8/15 stays</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 53%"></div>
+                            </div>
+                            <p class="progress-description">7 more stays to unlock VIP benefits</p>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="detail-item">
-                    <span class="detail-label">Email Address</span>
-                    <span class="detail-value">ahmedsmoselhi@gmail.com</span>
+
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                        <a href="#" class="view-all-link">View All</a>
+                    </div>
+                    <div class="card-content">
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon booking">
+                                    <i class="fas fa-bed"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p class="activity-title">Booked Deluxe Suite</p>
+                                    <p class="activity-date">December 15, 2024</p>
+                                </div>
+                                <div class="activity-status completed">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon review">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p class="activity-title">Left a review for Presidential Suite</p>
+                                    <p class="activity-date">November 28, 2024</p>
+                                </div>
+                                <div class="activity-status completed">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon profile">
+                                    <i class="fas fa-user-edit"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p class="activity-title">Updated profile information</p>
+                                    <p class="activity-date">November 10, 2024</p>
+                                </div>
+                                <div class="activity-status completed">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="detail-item">
-                    <span class="detail-label">Phone Number</span>
-                    <span class="detail-value">+20 123 456 789</span>
-                </div>
-                
-                <div class="detail-item">
-                    <span class="detail-label">Address</span>
-                    <span class="detail-value">Cairo, Egypt</span>
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="quick-actions">
+                            <button class="quick-action-btn primary">
+                                <i class="fas fa-plus"></i>
+                                <span>New Booking</span>
+                            </button>
+                            <button class="quick-action-btn secondary">
+                                <i class="fas fa-edit"></i>
+                                <span>Edit Profile</span>
+                            </button>
+                            <button class="quick-action-btn tertiary">
+                                <i class="fas fa-star"></i>
+                                <span>Write Review</span>
+                            </button>
+                            <button class="quick-action-btn quaternary">
+                                <i class="fas fa-headset"></i>
+                                <span>Contact Support</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            <a asp-controller="Profile" asp-action="Edit" class="action-btn edit-btn">
-                <span class="btn-icon">✏️</span>
-                <span class="btn-text">Edit Profile</span>
-            </a>
-            
-            <a asp-controller="Profile" asp-action="ChangePassword" class="action-btn password-btn">
-                <span class="btn-icon">🔒</span>
-                <span class="btn-text">Change Password</span>
-            </a>
-            
-            <a asp-controller="Profile" asp-action="Reviews" class="action-btn reviews-btn">
-                <span class="btn-icon">⭐</span>
-                <span class="btn-text">My Reviews</span>
-            </a>
-            
-            <a asp-controller="Profile" asp-action="Logout" class="action-btn logout-btn">
-                <span class="btn-icon">🚪</span>
-                <span class="btn-text">Logout</span>
-            </a>
+        <div class="tab-content" id="bookings">
+            <div class="bookings-header">
+                <h2>My Bookings</h2>
+                <div class="booking-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                    <button class="filter-btn" data-filter="cancelled">Cancelled</button>
+                </div>
+            </div>
+            <div class="bookings-list">
+                <div class="booking-card upcoming">
+                    <div class="booking-image">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Deluxe Suite">
+                        <div class="booking-status status-upcoming">Upcoming</div>
+                    </div>
+                    <div class="booking-details">
+                        <h4>Deluxe Suite with City View</h4>
+                        <div class="booking-info">
+                            <div class="info-row">
+                                <i class="fas fa-calendar"></i>
+                                <span>Dec 20, 2024 - Dec 25, 2024</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-users"></i>
+                                <span>2 Guests</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-credit-card"></i>
+                                <span>$1,250 Total</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="booking-actions">
+                        <button class="action-btn primary">Manage</button>
+                        <button class="action-btn secondary">Cancel</button>
+                    </div>
+                </div>
+
+                <div class="booking-card completed">
+                    <div class="booking-image">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Presidential Suite">
+                        <div class="booking-status status-completed">Completed</div>
+                    </div>
+                    <div class="booking-details">
+                        <h4>Presidential Suite</h4>
+                        <div class="booking-info">
+                            <div class="info-row">
+                                <i class="fas fa-calendar"></i>
+                                <span>Nov 15, 2024 - Nov 20, 2024</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-users"></i>
+                                <span>2 Guests</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-credit-card"></i>
+                                <span>$2,100 Total</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="booking-actions">
+                        <button class="action-btn primary">Review</button>
+                        <button class="action-btn secondary">Receipt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="reviews">
+            <div class="reviews-header">
+                <h2>My Reviews</h2>
+                <div class="review-stats">
+                    <div class="stat">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Reviews</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4.9</span>
+                        <span class="stat-label">Avg Rating</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-list">
+                <div class="review-card">
+                    <div class="review-header">
+                        <h4>Presidential Suite</h4>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"Absolutely stunning suite with incredible city views. The service was impeccable and the amenities were top-notch. Will definitely stay again!"</p>
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-date">November 20, 2024</span>
+                        <div class="review-actions">
+                            <button class="edit-review-btn">Edit</button>
+                            <button class="delete-review-btn">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="preferences">
+            <div class="preferences-section">
+                <h2>Preferences & Settings</h2>
+                <div class="preferences-grid">
+                    <div class="preference-card">
+                        <h3>Room Preferences</h3>
+                        <div class="preference-options">
+                            <div class="option-item">
+                                <label>Bed Type</label>
+                                <select>
+                                    <option>King Size</option>
+                                    <option>Queen Size</option>
+                                    <option>Twin Beds</option>
+                                </select>
+                            </div>
+                            <div class="option-item">
+                                <label>Floor Preference</label>
+                                <select>
+                                    <option>High Floor</option>
+                                    <option>Low Floor</option>
+                                    <option>No Preference</option>
+                                </select>
+                            </div>
+                            <div class="option-item">
+                                <label>View Preference</label>
+                                <select>
+                                    <option>City View</option>
+                                    <option>Ocean View</option>
+                                    <option>Garden View</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preference-card">
+                        <h3>Communication Preferences</h3>
+                        <div class="toggle-options">
+                            <div class="toggle-item">
+                                <span>Email Notifications</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-item">
+                                <span>SMS Notifications</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-item">
+                                <span>Marketing Emails</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="security">
+            <div class="security-section">
+                <h2>Security & Privacy</h2>
+                <div class="security-grid">
+                    <div class="security-card">
+                        <div class="card-header">
+                            <h3>Password & Authentication</h3>
+                            <div class="security-status secure">
+                                <i class="fas fa-shield-check"></i>
+                                Secure
+                            </div>
+                        </div>
+                        <div class="security-actions">
+                            <button class="security-btn">Change Password</button>
+                            <button class="security-btn">Enable 2FA</button>
+                        </div>
+                    </div>
+
+                    <div class="security-card">
+                        <div class="card-header">
+                            <h3>Login Sessions</h3>
+                        </div>
+                        <div class="session-list">
+                            <div class="session-item current">
+                                <div class="session-info">
+                                    <i class="fas fa-desktop"></i>
+                                    <div>
+                                        <p>Chrome on Windows</p>
+                                        <small>Current session - Cairo, Egypt</small>
+                                    </div>
+                                </div>
+                                <span class="session-status">Active</span>
+                            </div>
+                            <div class="session-item">
+                                <div class="session-info">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <div>
+                                        <p>Mobile App</p>
+                                        <small>2 hours ago - Cairo, Egypt</small>
+                                    </div>
+                                </div>
+                                <button class="revoke-btn">Revoke</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section Scripts {
+   <script src="~/js/profile.js" ></script>
+}

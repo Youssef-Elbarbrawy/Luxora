@@ -1,74 +1,263 @@
 ﻿@{
 	ViewData["Title"] = "Terms & Conditions";
 }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="~/css/terms.css" rel="stylesheet" />
+<div class="terms-scroll-progress"></div>
 
-<div class="Terms">
-	<h1>Terms & Conditions</h1>
-	<ol>
+<div class="terms-container">
+    <div class="terms-header">
+        <div class="terms-logo">
+            <i class="fas fa-crown"></i>
+        </div>
+        <h1 class="terms-title">Terms & Conditions</h1>
+        <p class="terms-intro">Please review our policies carefully to ensure a pleasant and seamless experience during your stay with us. These terms outline the agreement between our hotel and our valued guests.</p>
+        <p class="terms-last-updated">Last updated: June 15, 2023</p>
+    </div>
 
-		<li>
-			Booking Policy
+    <div class="terms-content-container">
+        <div class="terms-navigation">
+            <h2><i class="fas fa-list-alt"></i> Quick Navigation</h2>
+            <div class="terms-nav-item active" data-section="1">
+                <div class="terms-nav-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="terms-nav-text">Booking Policy</div>
+            </div>
+            <div class="terms-nav-item" data-section="2">
+                <div class="terms-nav-icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="terms-nav-text">Cancellation Policy</div>
+            </div>
+            <div class="terms-nav-item" data-section="3">
+                <div class="terms-nav-icon">
+                    <i class="fas fa-door-open"></i>
+                </div>
+                <div class="terms-nav-text">Check-in/Check-out</div>
+            </div>
+            <div class="terms-nav-item" data-section="4">
+                <div class="terms-nav-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="terms-nav-text">Payment Policy</div>
+            </div>
+            <div class="terms-nav-item" data-section="5">
+                <div class="terms-nav-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="terms-nav-text">Guest Responsibilities</div>
+            </div>
+            <div class="terms-nav-item" data-section="6">
+                <div class="terms-nav-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="terms-nav-text">Hotel's Liability</div>
+            </div>
+        </div>
 
-			<ul>
-				<li>
-					Reservation confirmation process.
-				</li>
-				<li>
-					Deposit or prepayment requirements.
-				</li>
-			</ul>
-		</li>
-		<li>
+        <div class="terms-main-content">
+            <div class="terms-section" id="terms-section-1">
+                <div class="terms-section-header">
+                    <div class="terms-section-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="terms-section-title">1. Booking Policy</h3>
+                </div>
+                <ul class="terms-list">
+                    <li>
+                        Reservation confirmation process
+                        <ul class="terms-sublist">
+                            <li>Bookings are confirmed immediately via email with a unique reservation code</li>
+                            <li>Guests must verify all details within 24 hours of booking</li>
+                            <li>Special requests are noted but not guaranteed</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Deposit or prepayment requirements
+                        <ul class="terms-sublist">
+                            <li>A deposit of <span class="terms-highlight">30% of the total stay</span> is required at time of booking</li>
+                            <li>Full prepayment required for stays during peak seasons and special events</li>
+                            <li>Deposits are applied toward the final bill</li>
+                            <li>Non-refundable rates require full payment at booking</li>
+                        </ul>
+                    </li>
+                    <li>Age requirement: Primary guest must be at least 21 years old with valid ID</li>
+                    <li>Group bookings (5+ rooms) require signed contract and 50% deposit</li>
+                </ul>
+            </div>
 
-			Cancellation & Refund Policy
-			<ul>
-				<li>Deadline for free cancellation.</li>
-				<li>Any penalties for late cancellation or no-show.</li>
-			</ul>
-		</li>
-		<li>
+            <div class="terms-section" id="terms-section-2">
+                <div class="terms-section-header">
+                    <div class="terms-section-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <h3 class="terms-section-title">2. Cancellation & Refund Policy</h3>
+                </div>
+                <ul class="terms-list">
+                    <li>
+                        Deadline for free cancellation
+                        <ul class="terms-sublist">
+                            <li>Standard reservations: <span class="terms-highlight">48 hours</span> prior to check-in</li>
+                            <li>Group bookings (5+ rooms): <span class="terms-highlight">7 days</span> prior to check-in</li>
+                            <li>Non-refundable rates: No cancellation permitted</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Penalties for late cancellation or no-show
+                        <ul class="terms-sublist">
+                            <li>Cancellations within 48 hours: 50% of first night charge</li>
+                            <li>No-shows: 100% of first night charge</li>
+                            <li>Special event periods: 100% of entire stay for cancellations within 14 days</li>
+                            <li>Early departures are subject to 50% of remaining stay charge</li>
+                        </ul>
+                    </li>
+                    <li>Refunds processed within 7-10 business days to original payment method</li>
+                    <li>Force majeure events may qualify for waiver with proper documentation</li>
+                </ul>
+            </div>
 
-			Check-in / Check-out
-			<ul>
-				<li>Standard times (e.g., Check-in: 2 PM, Check-out: 12 PM).</li>
+            <div class="terms-section" id="terms-section-3">
+                <div class="terms-section-header">
+                    <div class="terms-section-icon">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <h3 class="terms-section-title">3. Check-in / Check-out</h3>
+                </div>
+                <ul class="terms-list">
+                    <li>
+                        Standard times
+                        <ul class="terms-sublist">
+                            <li>Check-in: <span class="terms-highlight">3:00 PM</span></li>
+                            <li>Check-out: <span class="terms-highlight">11:00 AM</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        Early check-in and late check-out available upon request and subject to availability
+                        <ul class="terms-sublist">
+                            <li>Early check-in (before 3 PM): 50% of daily rate if available</li>
+                            <li>Late check-out (until 2 PM): 50% of daily rate if available</li>
+                            <li>After 2 PM: full daily rate applies</li>
+                        </ul>
+                    </li>
+                    <li>Express check-in available for members of our loyalty program</li>
+                    <li>Guests must present valid ID and credit card at check-in</li>
+                    <li>Room keys must be returned at check-out or $25 replacement fee applies</li>
+                </ul>
+            </div>
 
-			</ul>
-		</li>
+            <div class="terms-section" id="terms-section-4">
+                <div class="terms-section-header">
+                    <div class="terms-section-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="terms-section-title">4. Payment Policy</h3>
+                </div>
+                <ul class="terms-list">
+                    <li>
+                        Accepted payment methods
+                        <ul class="terms-sublist">
+                            <li>Credit cards: Visa, MasterCard, American Express, Discover</li>
+                            <li>Debit cards (with credit card functionality)</li>
+                            <li>Cash (up to $500, requires security deposit)</li>
+                            <li>Digital wallets: Apple Pay, Google Pay, Samsung Pay</li>
+                            <li>Bank transfers for advance bookings (must clear before arrival)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Security for online payments
+                        <ul class="terms-sublist">
+                            <li>All transactions encrypted with SSL technology</li>
+                            <li>PCI-DSS compliant payment processing</li>
+                            <li>No storage of full credit card details on our servers</li>
+                            <li>3D Secure authentication for added protection</li>
+                        </ul>
+                    </li>
+                    <li>Incidental hold of $100 per night required at check-in for incidentals</li>
+                    <li>Foreign currency payments subject to exchange rate and 3% processing fee</li>
+                </ul>
+            </div>
 
-		<li>
+            <div class="terms-section" id="terms-section-5">
+                <div class="terms-section-header">
+                    <div class="terms-section-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3 class="terms-section-title">5. Guest Responsibilities</h3>
+                </div>
+                <ul class="terms-list">
+                    <li>
+                        Valid government-issued photo ID required at check-in
+                        <ul class="terms-sublist">
+                            <li>Driver's license, passport, or state ID accepted</li>
+                            <li>Must match name on reservation and credit card</li>
+                            <li>International guests must provide passport and visa documentation</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Responsible use of hotel property
+                        <ul class="terms-sublist">
+                            <li>Guests are liable for damages beyond normal wear and tear</li>
+                            <li>Quiet hours from 10 PM to 7 AM</li>
+                            <li>No smoking in rooms (fees up to $250 for violation)</li>
+                            <li>No pets except service animals with documentation</li>
+                            <li>No illegal activities on premises</li>
+                        </ul>
+                    </li>
+                    <li>Visitors must be registered at front desk and vacate by 10 PM</li>
+                    <li>Children must be supervised at all times</li>
+                </ul>
+            </div>
 
-			Payment Policy
-			<ul>
-				<li>
-					Accepted payment methods (credit card, cash, etc.).
-				</li>
-				<li> Security for online payments.</li>
+            <div class="terms-section" id="terms-section-6">
+                <div class="terms-section-header">
+                    <div class="terms-section-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="terms-section-title">6. Hotel's Liability</h3>
+                </div>
+                <ul class="terms-list">
+                    <li>
+                        Disclaimer for lost items
+                        <ul class="terms-sublist">
+                            <li>Not responsible for items left unattended in public areas</li>
+                            <li>Safe available in rooms for valuables</li>
+                            <li>Found items held for 30 days</li>
+                            <li>$25 handling fee plus shipping for returned items</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Force majeure
+                        <ul class="terms-sublist">
+                            <li>Not liable for circumstances beyond our control including natural disasters, utility failures, or pandemics</li>
+                            <li>Right to relocate guests to comparable accommodation if necessary</li>
+                        </ul>
+                    </li>
+                    <li>Limitation of liability for guest injuries except in cases of gross negligence</li>
+                    <li>Parked vehicles are at owner's risk</li>
+                    <li>Right to refuse service to anyone behaving unlawfully or disruptively</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-			</ul>
-		</li>
-		<li>
+    <div class="terms-footer">
+        <div class="terms-acceptance">
+            <p>By making a reservation with us, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.</p>
+            <button class="terms-accept-btn">I Accept These Terms</button>
+        </div>
 
-			Guest Responsibilities
+        <div class="terms-contact-info">
+            <p>Questions about our policies? Contact our guest services team:</p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567 | <i class="fas fa-envelope"></i> <a href="mailto:support@luxuryhotel.com">support@luxuryhotel.com</a></p>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Luxury Avenue, Resort City, RC 10001</p>
+        </div>
 
-			<ul>
-				<li>
-					Valid ID required at check-in.
-				</li>
-				<li> Responsible use of hotel property.</li>
-
-			</ul>
-		</li>
-		<li>
-
-			Hotel’s Liability
-			<ul>
-				<li>
-					Disclaimer for lost items, force majeure, etc.
-				</li>
-
-
-			</ul>
-		</li>
-	</ol>
+        <button class="terms-print-btn" onclick="window.print()"><i class="fas fa-print"></i> Print Terms</button>
+    </div>
 </div>
-
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/terms.js" ></script>
+}

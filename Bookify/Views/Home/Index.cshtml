@@ -1,106 +1,757 @@
-﻿@model IEnumerable<Bookify.Models.Room>
-@{
-    ViewData["Title"] = "Home";
-}
+﻿<link href="~/css/home.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<div>
-    <section class="hero-section">
-        <div>
-            <div class="hero-section-img-large">
-                <img src="~/img/index_hero/img1.jpg" alt="Alternate Text" />
-                <img src="~/img/index_hero/img2.jpg" alt="Alternate Text" />
-                <img src="~/img/index_hero/img4.jpg" alt="Alternate Text" />
-                <img src="~/img/index_hero/img5.jpg" alt="Alternate Text" />
+div class="search-overlay" id="searchOverlay">
+    <div class="search-overlay-content">
+        <div class="search-overlay-header">
+            <h3>Search</h3>
+            <button class="close-search" id="closeSearch">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="search-overlay-body">
+            <div class="search-input-container large">
+                <input type="text" placeholder="What are you looking for?" class="search-input large">
+                <button class="search-submit large">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
-
-            <div class="hero-section-img-small">
-                <img src="~/img/index_hero/img1-s.jpg" alt="Alternate Text" />
-                <img src="~/img/index_hero/img2-s.jpg" alt="Alternate Text" />
-                <img src="~/img/index_hero/img4-s.jpg" alt="Alternate Text" />
-                <img src="~/img/index_hero/img5-s.jpg" alt="Alternate Text" />
-            </div>
-
-            <div class="pre-next-container">
-                <div class="prev">&#10094;</div>
-                <div class="next">&#10095;</div>
-            </div>
-
-            <div class="dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+            <div class="search-categories">
+                <button class="search-category">
+                    <i class="fas fa-bed"></i>
+                    <span>Rooms</span>
+                </button>
+                <button class="search-category">
+                    <i class="fas fa-utensils"></i>
+                    <span>Dining</span>
+                </button>
+                <button class="search-category">
+                    <i class="fas fa-spa"></i>
+                    <span>Spa</span>
+                </button>
+                <button class="search-category">
+                    <i class="fas fa-calendar"></i>
+                    <span>Events</span>
+                </button>
             </div>
         </div>
-        
-        <div class="hero-section-div">
-            <div class="hero-sections">
-                <div>
-                    <div class="people">
-                        <img src="~/img/index-reviews/img1.jpg" alt="Alternate Text" />
-                        <img class="translate1" src="~/img/index-reviews/img2.jpg" alt="Alternate Text" />
-                        <img class="translate2" src="~/img/index-reviews/img3.jpg" alt="Alternate Text" />
-                        <img class="translate3" src="~/img/index-reviews/img4.jpg" alt="Alternate Text" />
-                    </div>
-                    <div>
-                        <p>41,000,000+</p>
-                        <p>searches this week</p>
-                    </div>
-                </div>
-
-                <div>
-                    <div>
-                        <p>5,000+</p>
-                        <p>luxury rooms listed</p>
-                    </div>
-                </div>
-
-                <div>
-                    <div>
-                        <p>24/7</p>
-                        <p>customer support</p>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="fixed-rating">★★★★★</div>
-                    <div>
-                        <p>Travelers loves us</p>
-                        <p>1M+ ratings on our website</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <link href="~/css/rooms.css" rel="stylesheet" />
-    <style>
-        .rooms {
-            background: var(--second-color);
-        }
-    </style>
-    <section class="rooms">
-
-        <div class="rooms-grid" id="roomsGrid">
-            @foreach (var room in Model.Take(9))
-            {
-                <article class="room-card" data-category="@room.Category.ToLower()">
-                    <div class="room-img">
-                        <img src="@room.Image" alt="@room.Name" />
-                        <div class="overlay"><p>@room.Perks</p></div>
-                        <span class="price-tag">$@room.Price / Night</span>
-                    </div>
-                    <div class="room-content">
-                        <h3>@room.Name</h3>
-                        <p>@room.Description</p>
-                        <button class="book-btn" onclick="location.href='@Url.Action("MakeOrder","Rooms", new { id = room.Id })'">Book Now</button>
-                    </div>
-                </article>
-            }
-        </div>
-    </section>
-    @section Scripts {
-        <script src="~/js/rooms.js"></script>
-    }
+    </div>
 </div>
+<section class="hero-section">
+    <!-- Background Video -->
+    <video autoplay
+           muted
+           loop
+           playsinline
+           id="heroVideo"
+           class="hero-video"
+           preload="auto">
+        <source src="~/Videos/a.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Overlay -->
+    <div class="hero-overlay"></div>
+
+    <!-- Floating Glass Circles -->
+    <div class="glass-circle circle1"></div>
+    <div class="glass-circle circle2"></div>
+    <div class="glass-circle circle3"></div>
+
+    <!-- Content -->
+    <div class="hero-content">
+        <h1 class="hero-title reveal">
+            Experience <span id="typewriter"></span>
+        </h1>
+        <p class="hero-subtitle reveal">
+            Where sophistication meets comfort. Discover unforgettable stays.
+        </p>
+
+        <!-- CTA -->
+        <div class="hero-cta reveal">
+            <button class="hero-btn">Book Now</button>
+            <button class="hero-btn-outline">Watch Tour</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="hero-stats reveal">
+            <div class="stat"><strong>150K+</strong><span>Guests</span></div>
+            <div class="stat"><strong>20K+</strong><span>Reviews</span></div>
+            <div class="stat"><strong>4.9★</strong><span>Rating</span></div>
+        </div>
+    </div>
+</section>
+<section class="special-offers-section">
+    <div class="offers-container">
+        <div class="offers-header">
+            <h2>Exclusive Hotel Offers</h2>
+            <p class="offers-subtitle">Indulge in our limited-time luxury packages and create unforgettable memories</p>
+
+            <div class="offer-tabs">
+                <button class="offer-tab active">All Offers</button>
+                <button class="offer-tab">Seasonal</button>
+                <button class="offer-tab">Romantic</button>
+                <button class="offer-tab">Family</button>
+                <button class="offer-tab">Luxury</button>
+            </div>
+        </div>
+
+        <div class="offers-grid">
+            <!-- Offer 1 -->
+            <div class="offer-card">
+                <div class="ribbon">Best Value</div>
+                <div class="offer-image">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Summer Escape Package">
+                    <div class="offer-badge">Limited Time</div>
+                </div>
+                <div class="offer-content">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="offer-title">Summer Escape Package</h3>
+                    <div class="offer-price">
+                        $199 <span class="original-price">$299</span>
+                        <span class="discount-badge">Save 33%</span>
+                    </div>
+                    <p class="offer-description">Enjoy a relaxing summer getaway with our exclusive package including breakfast, spa access, and late checkout.</p>
+
+                    <div class="offer-features">
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>3 Days / 2 Nights</span>
+                        </div>
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Daily Breakfast for Two</span>
+                        </div>
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Complimentary Spa Access</span>
+                        </div>
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Late Checkout (2 PM)</span>
+                        </div>
+                    </div>
+
+                    <div class="countdown">
+                        <div class="countdown-title">Offer ends in:</div>
+                        <div class="timer" id="countdown1">
+                            <div class="time-unit">
+                                <div class="time-value" id="days1">05</div>
+                                <div class="time-label">Days</div>
+                            </div>
+                            <div class="time-unit">
+                                <div class="time-value" id="hours1">12</div>
+                                <div class="time-label">Hours</div>
+                            </div>
+                            <div class="time-unit">
+                                <div class="time-value" id="minutes1">45</div>
+                                <div class="time-label">Minutes</div>
+                            </div>
+                            <div class="time-unit">
+                                <div class="time-value" id="seconds1">22</div>
+                                <div class="time-label">Seconds</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="offer-btn">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Offer 2 -->
+            <div class="offer-card">
+                <div class="offer-image">
+                    <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Romantic Getaway">
+                    <div class="offer-badge">Weekend Deal</div>
+                </div>
+                <div class="offer-content">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <h3 class="offer-title">Romantic Getaway</h3>
+                    <div class="offer-price">
+                        $249 <span class="original-price">$349</span>
+                        <span class="discount-badge">Save 29%</span>
+                    </div>
+                    <p class="offer-description">Perfect for couples! Enjoy a romantic package with champagne, roses, and a candlelit dinner for two.</p>
+
+                    <div class="offer-features">
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>2 Nights Luxury Suite</span>
+                        </div>
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Champagne & Chocolate on Arrival</span>
+                        </div>
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Candlelit Dinner for Two</span>
+                        </div>
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Couples Massage Session</span>
+                        </div>
+                    </div>
+
+                    <div class="countdown">
+                        <div class="countdown-title">Offer ends in:</div>
+                        <div class="timer" id="countdown2">
+                            <div class="time-unit">
+                                <div class="time-value" id="days2">03</div>
+                                <div class="time-label">Days</div>
+                            </div>
+                            <div class="time-unit">
+                                <div class="time-value" id="hours2">08</div>
+                                <div class="time-label">Hours</div>
+                            </div>
+                            <div class="time-unit">
+                                <div class="time-value" id="minutes2">30</div>
+                                <div class="time-label">Minutes</div>
+                            </div>
+                            <div class="time-unit">
+                                <div class="time-value" id="seconds2">15</div>
+                                <div class="time-label">Seconds</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="offer-btn">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Offer 3 -->
+            <div class="offer-card">
+                <div class="offer-image">
+                    <img src="https://images.unsplash.com/photo-1535827841776-24afc1e255ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Family Fun Package">
+                    <div class="offer-badge">Family Special</div>
+                </div>
+                <div class="offer-content">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="offer-title">Family Fun Package</h3>
+                    <div class="offer-price">
+                        $349 <span class="original-price">$499</span>
+                        <span class="discount-badge">Save 30%</span>
+                    </div>
+                    <p class="offer-description">Create lasting memories with your family. Includes connecting rooms, kids eat free, and family activity passes.</p>
+
+                    <div class="offer-features">
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Connecting Rooms for 4</span>
+                        </div>
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Kids Eat Free (Under 12)</span>
+                        </div>
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Family Activity Passes</span>
+                        </div>
+                        <div class="offer-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Complimentary Board Games</span>
+                        </div>
+                    </div>
+
+                    <div class="countdown">
+                        <div class="countdown-title">Offer ends in:</div>
+                        <div class="timer" id="countdown3">
+                            <div class="time-unit">
+                                <div class="time-value" id="days3">07</div>
+                                <div class="time-label">Days</div>
+                            </div>
+                            <div class="time-unit">
+                                <div class="time-value" id="hours3">10</div>
+                                <div class="time-label">Hours</div>
+                            </div>
+                            <div class="time-unit">
+                                <div class="time-value" id="minutes3">20</div>
+                                <div class="time-label">Minutes</div>
+                            </div>
+                            <div class="time-unit">
+                                <div class="time-value" id="seconds3">40</div>
+                                <div class="time-label">Seconds</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="offer-btn">Book Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="offers-info">
+            <h3 class="info-title">Why Choose Our Special Offers?</h3>
+            <p class="info-text">Our exclusive packages are carefully crafted to provide exceptional value and unforgettable experiences. Each offer includes premium amenities and special touches that elevate your stay beyond the ordinary. With limited availability and time-sensitive pricing, these deals represent the perfect opportunity to indulge in luxury at an exceptional value.</p>
+        </div>
+    </div>
+</section>
+
+<section class="about-hotel" id="about">
+    <!-- Background Layers -->
+    <div class="about-bg"></div>
+    <div class="about-overlay"></div>
+    <div class="spotlight"></div>
+
+    <div class="about-container">
+        <!-- Text -->
+        <div class="about-text">
+            <h2>
+                Discover <span>Grand Haven Hotel</span>
+            </h2>
+            <p>
+                Since 1928, Grand Haven has been a sanctuary of timeless elegance.
+                Nestled in the heart of the city, we blend heritage architecture
+                with modern sophistication, offering experiences that redefine luxury.
+            </p>
+
+            <!-- Signature -->
+            <div class="signature-block">
+                <div class="signature-line"></div>
+                <blockquote class="signature-quote">
+                    “Luxury Redefined. Memories Eternal.”
+                </blockquote>
+            </div>
+
+            <!-- Facts -->
+            <div class="hotel-facts">
+                <div class="fact"><i class="fas fa-map-marker-alt"></i><span>Iconic Location</span></div>
+                <div class="fact"><i class="fas fa-star"></i><span>Five-Star Luxury</span></div>
+                <div class="fact"><i class="fas fa-glass-cheers"></i><span>Signature Experiences</span></div>
+                <div class="fact"><i class="fas fa-clock"></i><span>Since 1928</span></div>
+            </div>
+
+            <!-- CTA -->
+            <a href="about.html" class="btn-learn-more">Explore More</a>
+        </div>
+
+        <!-- Media -->
+        <div class="about-media">
+            <div class="video-wrapper">
+                <video autoplay muted loop playsinline>
+                    <source src="~/Videos/adv.mp4" type="video/mp4">
+                </video>
+                <div class="media-overlay"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="hotel-gallery-section">
+    <div class="gallery-header">
+        <div class="floating-elements">
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+        </div>
+        <h2>Hotel <span class="gold-accent">Gallery</span></h2>
+        <div class="header-line"></div>
+        <p class="gallery-subtitle">Explore our luxurious accommodations, amenities, and facilities through our visual journey</p>
+        <div class="gallery-stats">
+            <div class="stat-item">
+                <span class="stat-number" data-target="150">0</span>
+                <span class="stat-label">Luxury Rooms</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="5">0</span>
+                <span class="stat-label">Star Rating</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="25">0</span>
+                <span class="stat-label">Years Experience</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="gallery-filters">
+        <button class="gallery-filter active" data-filter="all">
+            <i class="fas fa-th-large"></i>
+            All
+        </button>
+        <button class="gallery-filter" data-filter="rooms">
+            <i class="fas fa-bed"></i>
+            Rooms & Suites
+        </button>
+        <button class="gallery-filter" data-filter="dining">
+            <i class="fas fa-utensils"></i>
+            Dining
+        </button>
+        <button class="gallery-filter" data-filter="pool">
+            <i class="fas fa-swimming-pool"></i>
+            Pool & Spa
+        </button>
+        <button class="gallery-filter" data-filter="events">
+            <i class="fas fa-calendar-alt"></i>
+            Events
+        </button>
+        <button class="gallery-filter" data-filter="lobby">
+            <i class="fas fa-building"></i>
+            Lobby
+        </button>
+    </div>
+
+    <div class="gallery-search">
+        <div class="search-container">
+            <input type="text" placeholder="Search gallery..." id="searchInput">
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- Room Images -->
+        <div class="gallery-item" data-category="rooms" data-tags="suite luxury bedroom">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Luxury Suite">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Presidential Suite</div>
+                <div class="gallery-item-desc">Spacious suite with panoramic city views and premium amenities</div>
+                <div class="item-tags">
+                    <span class="tag">Luxury</span>
+                    <span class="tag">City View</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="rooms" data-tags="deluxe king bedroom">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Deluxe Room">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Deluxe King Room</div>
+                <div class="gallery-item-desc">Elegant room with premium amenities and modern design</div>
+                <div class="item-tags">
+                    <span class="tag">Deluxe</span>
+                    <span class="tag">Modern</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="rooms" data-tags="bathroom marble luxury">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Bathroom">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Luxury Bathroom</div>
+                <div class="gallery-item-desc">Marble bathroom with deep soaking tub and rain shower</div>
+                <div class="item-tags">
+                    <span class="tag">Marble</span>
+                    <span class="tag">Spa Bath</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dining Images -->
+        <div class="gallery-item" data-category="dining" data-tags="restaurant fine dining">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Restaurant">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Main Restaurant</div>
+                <div class="gallery-item-desc">Fine dining experience with gourmet cuisine and elegant atmosphere</div>
+                <div class="item-tags">
+                    <span class="tag">Fine Dining</span>
+                    <span class="tag">Gourmet</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="dining" data-tags="food gourmet cuisine">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Food">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Gourmet Cuisine</div>
+                <div class="gallery-item-desc">Exquisite dishes prepared by our internationally acclaimed chefs</div>
+                <div class="item-tags">
+                    <span class="tag">Chef's Special</span>
+                    <span class="tag">Award Winning</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="dining" data-tags="bar cocktails rooftop">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Bar">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Skyline Bar</div>
+                <div class="gallery-item-desc">Rooftop bar with signature cocktails and breathtaking views</div>
+                <div class="item-tags">
+                    <span class="tag">Rooftop</span>
+                    <span class="tag">Cocktails</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pool & Spa Images -->
+        <div class="gallery-item" data-category="pool" data-tags="infinity pool swimming">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1561501878-aabd62634533?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Pool">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Infinity Pool</div>
+                <div class="gallery-item-desc">Stunning infinity pool with panoramic views of the city skyline</div>
+                <div class="item-tags">
+                    <span class="tag">Infinity</span>
+                    <span class="tag">City Views</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="pool" data-tags="spa wellness relaxation">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Spa">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Luxury Spa</div>
+                <div class="gallery-item-desc">Relaxing spa treatments and therapies for ultimate wellness</div>
+                <div class="item-tags">
+                    <span class="tag">Wellness</span>
+                    <span class="tag">Therapeutic</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Images -->
+        <div class="gallery-item" data-category="events" data-tags="wedding venue celebration">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1580619305218-8427ad6f5c20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Wedding">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Wedding Venue</div>
+                <div class="gallery-item-desc">Elegant space for unforgettable weddings and celebrations</div>
+                <div class="item-tags">
+                    <span class="tag">Weddings</span>
+                    <span class="tag">Elegant</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="events" data-tags="conference business meeting">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Conference">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Conference Room</div>
+                <div class="gallery-item-desc">State-of-the-art meeting facilities with modern technology</div>
+                <div class="item-tags">
+                    <span class="tag">Business</span>
+                    <span class="tag">Modern Tech</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lobby Images -->
+        <div class="gallery-item" data-category="lobby" data-tags="grand entrance reception">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Lobby">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Grand Lobby</div>
+                <div class="gallery-item-desc">Impressive entrance with elegant decor and luxurious ambiance</div>
+                <div class="item-tags">
+                    <span class="tag">Grand</span>
+                    <span class="tag">Luxurious</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="lobby" data-tags="executive lounge vip">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1535827841776-24afc1e255ac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Lounge">
+                <div class="image-overlay">
+                    <div class="zoom-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="favorite-btn">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-overlay">
+                <div class="gallery-item-title">Executive Lounge</div>
+                <div class="gallery-item-desc">Exclusive lounge for premium guests with VIP services</div>
+                <div class="item-tags">
+                    <span class="tag">Executive</span>
+                    <span class="tag">VIP</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-container">
+        <button class="load-more-btn" id="loadMoreBtn">
+            <i class="fas fa-plus"></i>
+            Load More Images
+        </button>
+    </div>
+
+    <!-- Video Tour Section -->
+    <div class="video-tour">
+        <div class="video-header">
+            <h3><i class="fas fa-video"></i> Virtual Hotel Tour</h3>
+            <p>Experience our luxury facilities through this immersive video journey</p>
+        </div>
+        <div class="video-container">
+            <div class="video-placeholder" id="videoPlaceholder">
+                <div class="play-button">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div class="video-info">
+                    <h4>HD Virtual Tour</h4>
+                    <p>3 minutes • 4K Quality</p>
+                </div>
+            </div>
+            <iframe id="hotelVideo" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: none;"></iframe>
+        </div>
+    </div>
+
+    <!-- Gallery Actions -->
+    <div class="gallery-actions">
+        <button class="action-btn" id="shareGallery">
+            <i class="fas fa-share-alt"></i>
+            Share Gallery
+        </button>
+        <button class="action-btn" id="downloadCatalog">
+            <i class="fas fa-download"></i>
+            Download Catalog
+        </button>
+        <button class="action-btn" id="viewFavorites">
+            <i class="fas fa-heart"></i>
+            View Favorites (<span id="favCount">0</span>)
+        </button>
+    </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div class="lightbox-modal" id="lightbox">
+    <div class="lightbox-content">
+        <span class="lightbox-close" id="closeLightbox">&times;</span>
+        <div class="lightbox-navigation">
+            <button class="nav-btn prev-btn" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="nav-btn next-btn" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <img src="" alt="" id="lightboxImage">
+        <div class="lightbox-caption">
+            <div class="title" id="lightboxTitle"></div>
+            <div id="lightboxDesc"></div>
+            <div class="lightbox-tags" id="lightboxTags"></div>
+        </div>
+        <div class="lightbox-counter">
+            <span id="currentImageIndex">1</span> / <span id="totalImages">12</span>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/js/home.js" ></script>
+}

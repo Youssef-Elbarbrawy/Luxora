@@ -1,89 +1,173 @@
 @{
     ViewData["Title"] = "Login - Bookify";
 }
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="~/css/login.css" rel="stylesheet" />
 <div class="auth-container">
     <section class="auth-hero-section">
-        <div class="auth-background">
-            <div class="auth-overlay"></div>
-        </div>
-        
-        <div class="auth-content center-center">
+        <div class="auth-background"></div>
+        <div class="auth-overlay"></div>
+        <div class="auth-particles" id="particlesContainer"></div>
+
+        <div class="auth-content">
             <div class="auth-form-container">
-                <div class="auth-form-header center-center col">
+                <div class="auth-form-header">
+                    <div class="brand-logo">
+                        <i class="fas fa-hotel"></i>
+                    </div>
                     <h1>Welcome Back</h1>
                     <p>Sign in to your Bookify account</p>
                 </div>
-
-                <form asp-controller="Auth" asp-action="Login" method="post" class="auth-form center-center col">
+                <form class="auth-form" id="loginForm" novalidate>
                     <div class="auth-inputs">
                         <div class="auth-input-group">
                             <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required placeholder="Enter your email" />
+                            <div class="input-wrapper">
+                                <input type="email"
+                                       id="email"
+                                       name="email"
+                                       required
+                                       placeholder="Enter your email address"
+                                       autocomplete="email">
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                            <div class="validation-message" id="emailError">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span></span>
+                            </div>
                         </div>
-
                         <div class="auth-input-group">
                             <label for="password">Password</label>
-                            <input type="password" id="password" name="password" required placeholder="Enter your password" />
+                            <div class="input-wrapper">
+                                <input type="password"
+                                       id="password"
+                                       name="password"
+                                       required
+                                       placeholder="Enter your password"
+                                       autocomplete="current-password">
+                                <i class="fas fa-lock input-icon"></i>
+                                <i class="fas fa-eye password-toggle" id="passwordToggle"></i>
+                            </div>
+                            <div class="validation-message" id="passwordError">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span></span>
+                            </div>
                         </div>
-
-                        <div class="auth-options center-between">
+                        <div class="auth-options">
                             <label class="remember-me">
-                                <input type="checkbox" name="rememberMe" />
-                                <span class="checkmark"></span>
-                                Remember me
+                                <input type="checkbox" name="rememberMe" id="rememberMe">
+                                <div class="custom-checkbox"></div>
+                                <span>Remember me</span>
                             </label>
-                            <a href="#" class="forgot-password">Forgot Password?</a>
+                            <a href="#" class="forgot-password" id="forgotPasswordLink">
+                                Forgot Password?
+                            </a>
                         </div>
-
-                        <div class="auth-button-group center-center">
-                            <button type="submit" class="auth-btn auth-btn-primary">Sign In</button>
+                        <div class="auth-button-group">
+                            <button type="submit" class="auth-btn auth-btn-primary" id="submitBtn">
+                                <div class="btn-loading">
+                                    <div class="loading-spinner"></div>
+                                    <span class="btn-text">Sign In</span>
+                                </div>
+                            </button>
                         </div>
                     </div>
                 </form>
-
-                <div class="auth-footer center-center">
-                    <p>Don't have an account? <a asp-controller="Auth" asp-action="Signup" class="auth-link">Sign up</a></p>
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" class="auth-link">Sign up here</a></p>
                 </div>
-
-                <div class="auth-divider center-center">
-                    <span>or</span>
+                <div class="auth-divider">
+                    <span>or continue with</span>
                 </div>
-
-                <div class="social-auth center-center col">
-                    <button type="button" class="social-btn google-btn center-center">
+                <div class="social-auth">
+                    <button type="button" class="social-btn google-btn" id="googleSignIn">
+                        <i class="fab fa-google social-icon"></i>
                         <span>Continue with Google</span>
                     </button>
-                    <button type="button" class="social-btn facebook-btn center-center">
+                    <button type="button" class="social-btn facebook-btn" id="facebookSignIn">
+                        <i class="fab fa-facebook-f social-icon"></i>
                         <span>Continue with Facebook</span>
                     </button>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Features Section -->
-    <section class="auth-features center-center">
+    <section class="auth-features">
         <div class="features-container">
-            <h2>Why Choose Bookify?</h2>
+            <div class="features-header">
+                <h2>Why Choose Bookify?</h2>
+                <p class="features-subtitle">
+                    Experience the future of hotel management with our comprehensive platform
+                    designed for modern hospitality professionals.
+                </p>
+            </div>
+
             <div class="features-grid">
-                <div class="feature-card center-center col">
+                <div class="feature-card">
                     <div class="feature-icon">🏨</div>
                     <h3>Premium Accommodations</h3>
-                    <p>Experience luxury and comfort in our carefully selected rooms</p>
+                    <p>
+                        Access to luxury rooms and suites with world-class amenities.
+                        Our carefully curated properties ensure exceptional comfort and service
+                        for every guest experience.
+                    </p>
                 </div>
-                <div class="feature-card center-center col">
+
+                <div class="feature-card">
                     <div class="feature-icon">⚡</div>
-                    <h3>Instant Booking</h3>
-                    <p>Quick and easy reservations with instant confirmation</p>
+                    <h3>Instant Booking System</h3>
+                    <p>
+                        Lightning-fast reservations with real-time availability updates.
+                        Our advanced booking engine processes confirmations instantly,
+                        eliminating wait times and ensuring seamless operations.
+                    </p>
                 </div>
-                <div class="feature-card center-center col">
+
+                <div class="feature-card">
                     <div class="feature-icon">🎯</div>
-                    <h3>Best Rates</h3>
-                    <p>Competitive pricing with exclusive member discounts</p>
+                    <h3>Smart Pricing & Analytics</h3>
+                    <p>
+                        Competitive rates powered by AI-driven market analysis.
+                        Get exclusive member discounts and dynamic pricing optimization
+                        to maximize revenue and guest satisfaction.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Enterprise Security</h3>
+                    <p>
+                        Bank-level encryption and multi-factor authentication protect
+                        your data and transactions. Compliance with international
+                        security standards ensures complete peace of mind.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Advanced Dashboard</h3>
+                    <p>
+                        Comprehensive analytics and reporting tools provide insights
+                        into occupancy rates, revenue trends, and guest preferences
+                        to drive informed business decisions.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌟</div>
+                    <h3>24/7 Premium Support</h3>
+                    <p>
+                        Round-the-clock expert assistance from our dedicated support team.
+                        Live chat, phone support, and priority response ensure
+                        uninterrupted service delivery.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 </div>
-
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="~/js/login.js"></script>
+}
