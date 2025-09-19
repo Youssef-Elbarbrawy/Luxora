@@ -8,6 +8,9 @@
   outline: none;
   font-family: "Poppins", sans-serif;
 }
+body {
+    background: linear-gradient(135deg, #FFF9F0 0%, #FFEDD8 100%);
+}
 :root {
     --primary-gold: #d4a373;
     --secondary-gold: #ffcf80;

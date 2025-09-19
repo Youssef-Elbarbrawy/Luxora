@@ -38,34 +38,20 @@
             }
 
     setupEventListeners() {
-        // Form submission
         this.form.addEventListener('submit', this.handleSubmit.bind(this));
-
-    // Password visibility toggle
     this.passwordToggle.addEventListener('click', this.togglePasswordVisibility.bind(this));
-
-                // Real-time validation
                 this.emailInput.addEventListener('blur', () => this.validateField('email'));
                 this.passwordInput.addEventListener('blur', () => this.validateField('password'));
                 this.emailInput.addEventListener('input', () => this.clearValidationError('email'));
                 this.passwordInput.addEventListener('input', () => this.clearValidationError('password'));
-
-                // Social login buttons
                 document.getElementById('googleSignIn').addEventListener('click', () => this.handleSocialLogin('google'));
                 document.getElementById('facebookSignIn').addEventListener('click', () => this.handleSocialLogin('facebook'));
-
-    // Forgot password
     document.getElementById('forgotPasswordLink').addEventListener('click', this.handleForgotPassword.bind(this));
-
-    // Keyboard shortcuts
     document.addEventListener('keydown', this.handleKeyboardShortcuts.bind(this));
             }
 
     setupFormValidation() {
-        // Disable HTML5 validation
         this.form.setAttribute('novalidate', 'true');
-
-                // Custom validation styling
                 [this.emailInput, this.passwordInput].forEach(input => {
         input.addEventListener('focus', (e) => {
             e.target.parentElement.style.transform = 'scale(1.02)';
@@ -130,8 +116,6 @@
                 const isPassword = this.passwordInput.type === 'password';
     this.passwordInput.type = isPassword ? 'text' : 'password';
     this.passwordToggle.className = isPassword ? 'fas fa-eye-slash password-toggle' : 'fas fa-eye password-toggle';
-
-    // Accessibility
     this.passwordInput.setAttribute('aria-label',
     isPassword ? 'Password visible' : 'Password hidden'
     );
@@ -154,17 +138,12 @@
     this.setLoadingState(true);
 
     try {
-        // Simulate API call
         await this.simulateLogin();
-
-    // Save credentials if remember me is checked
     if (this.rememberMe.checked) {
         this.saveCredentials();
                     }
 
     this.showNotification('Login successful! Redirecting...', 'success');
-
-                    // Simulate redirect
                     setTimeout(() => {
         window.location.href = '/dashboard';
                     }, 2000);
@@ -179,7 +158,6 @@
     async simulateLogin() {
                 return new Promise((resolve, reject) => {
         setTimeout(() => {
-            // Simulate different scenarios
             const email = this.emailInput.value;
             const password = this.passwordInput.value;
 
@@ -188,7 +166,6 @@
             } else if (password.length < 6) {
                 reject(new Error('Password must be at least 6 characters'));
             } else {
-                // Simulate random success/failure for demo
                 Math.random() > 0.3 ? resolve({ success: true }) : reject(new Error('Invalid credentials'));
             }
         }, 2000);
@@ -206,8 +183,6 @@
 
     handleSocialLogin(provider) {
         this.showNotification(`Redirecting to ${provider.charAt(0).toUpperCase() + provider.slice(1)}...`, 'warning');
-
-                // Simulate social login redirect
                 setTimeout(() => {
         window.open(`https://${provider}.com/oauth/authorize?client_id=bookify`, '_blank');
                 }, 1000);
@@ -247,7 +222,6 @@
 
     try {
                     const credentials = JSON.parse(saved);
-    // Check if credentials are less than 30 days old
     const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
                     
                     if (credentials.timestamp > thirtyDaysAgo) {
@@ -268,8 +242,6 @@
     for (let i = 0; i < particleCount; i++) {
                     const particle = document.createElement('div');
     particle.className = 'particle';
-
-    // Random properties
     const size = Math.random() * 4 + 2;
     const delay = Math.random() * 8;
     const duration = Math.random() * 5 + 8;
@@ -286,11 +258,8 @@
             }
 
     setupAccessibility() {
-        // ARIA labels
         this.emailInput.setAttribute('aria-describedby', 'emailError');
     this.passwordInput.setAttribute('aria-describedby', 'passwordError');
-
-                // Focus management
                 this.form.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
                         const inputs = Array.from(this.form.querySelectorAll('input[type="email"], input[type="password"]'));
@@ -305,19 +274,14 @@
             }
 
     handleKeyboardShortcuts(event) {
-                // Alt + L to focus email
                 if (event.altKey && event.key === 'l') {
         event.preventDefault();
     this.emailInput.focus();
                 }
-
-    // Alt + P to focus password
     if (event.altKey && event.key === 'p') {
         event.preventDefault();
     this.passwordInput.focus();
                 }
-
-    // Ctrl + Enter to submit
     if (event.ctrlKey && event.key === 'Enter') {
         event.preventDefault();
     if (!this.isLoading) {
@@ -327,7 +291,6 @@
             }
 
     showNotification(message, type = 'info') {
-                // Remove existing notifications
                 const existing = document.querySelectorAll('.notification');
                 existing.forEach(n => n.remove());
 
@@ -337,31 +300,23 @@
 
     document.body.appendChild(notification);
 
-                // Show notification
                 setTimeout(() => notification.classList.add('show'), 100);
-
-                // Auto hide after 5 seconds
                 setTimeout(() => {
         notification.classList.remove('show');
                     setTimeout(() => notification.remove(), 400);
                 }, 5000);
             }
         }
-
-        // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
         new EnhancedLoginForm();
         });
 
-        // Handle page visibility for performance
         document.addEventListener('visibilitychange', () => {
             const particles = document.querySelectorAll('.particle');
             particles.forEach(particle => {
         particle.style.animationPlayState = document.hidden ? 'paused' : 'running';
             });
         });
-
-        // Preload critical resources
         const preloadResources = () => {
             const links = [
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap',

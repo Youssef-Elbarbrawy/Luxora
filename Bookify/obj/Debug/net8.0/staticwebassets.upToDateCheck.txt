@@ -1,9 +1,11 @@
+wwwroot\css\changepassword.css
 wwwroot\css\home.css
 wwwroot\css\login.css
 wwwroot\css\makeorder.css
 wwwroot\css\Payment.css
 wwwroot\css\profile.css
 wwwroot\css\rooms.css
+wwwroot\css\site.css
 wwwroot\css\terms.css
 wwwroot\img\icon.png
 wwwroot\img\index-contact\img.jpg
@@ -26,8 +28,11 @@ wwwroot\img\Rooms\d.jpg
 wwwroot\img\Rooms\e.jpg
 wwwroot\img\Rooms\f.jpg
 wwwroot\img\Rooms\R.jpeg
+wwwroot\js\changepassword.js
+wwwroot\js\edit.js
 wwwroot\js\home.js
 wwwroot\js\login.js
+wwwroot\js\logout.js
 wwwroot\js\makeorder.js
 wwwroot\js\Payment.js
 wwwroot\js\profile.js
@@ -95,4 +100,5 @@ wwwroot\Videos\a.mp4
 wwwroot\Videos\adv.mp4
 wwwroot\Videos\com.mp4
 wwwroot\Videos\ele.mp4
-wwwroot\css\site.css
+wwwroot\css\edit.css
+wwwroot\css\logout.css

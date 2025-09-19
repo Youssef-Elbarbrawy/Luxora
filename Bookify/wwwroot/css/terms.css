@@ -426,8 +426,6 @@ body {
         padding: 25px;
     }
 }
-
-/* Animation for section highlighting */
 @keyframes terms-highlight {
     0% {
         transform: scale(1);
@@ -448,8 +446,6 @@ body {
 .terms-highlight-section {
     animation: terms-highlight 2s ease;
 }
-
-/* Floating animation for header elements */
 @keyframes terms-float {
     0% {
         transform: translateY(0px);
@@ -467,8 +463,6 @@ body {
 .terms-logo {
     animation: terms-float 5s ease-in-out infinite;
 }
-
-/* Scroll progress indicator */
 .terms-scroll-progress {
     position: fixed;
     top: 0;

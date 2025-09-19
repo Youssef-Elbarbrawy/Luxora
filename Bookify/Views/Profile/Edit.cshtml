@@ -1,48 +1,129 @@
 @{
     ViewData["Title"] = "Edit Profile";
 }
-
+<link href="~/css/edit.css" rel="stylesheet" />
 <div class="profile-container">
-    <div class="profile-header">
-        <h1>Edit Profile</h1>
-        <p class="welcome-text">Update your personal information</p>
+    <div class="gold-accent"></div>
+    <div class="profile-sidebar">
+        <div class="user-profile">
+            <div class="avatar-container">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80" alt="User Avatar" class="user-avatar">
+                <div class="avatar-overlay">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            <div class="user-info">
+                <h2 class="user-name">Ahmed Sameh</h2>
+                <p class="user-role">Luxury Traveler</p>
+                <div class="membership-badge">
+                    <i class="fas fa-crown"></i>
+                    <span>Platinum Member</span>
+                </div>
+            </div>
+        </div>
+
+        <ul class="profile-nav">
+            <li><a href="#" class="active"><i class="fas fa-user-edit"></i> <span>Edit Profile</span></a></li>
+        </ul>
+
+        <div class="profile-stats">
+            <h3><i class="fas fa-chart-line"></i> Profile Stats</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Total Stays</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Upcoming</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Reviews</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Wishlist</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="profile-content">
+        <div class="profile-header">
+            <h1><i class="fas fa-user-edit"></i> Edit Profile</h1>
+            <p class="welcome-text">Update your personal information to keep your account current and secure. Your profile helps us personalize your luxury experience.</p>
+        </div>
+
         <div class="form-container">
             <form class="profile-form">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="firstName">First Name</label>
+                        <label for="firstName"><i class="fas fa-signature"></i> First Name</label>
                         <input type="text" id="firstName" value="Ahmed">
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="lastName">Last Name</label>
+                        <label for="lastName"><i class="fas fa-signature"></i> Last Name</label>
                         <input type="text" id="lastName" value="Sameh">
                     </div>
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" value="ahmedsmoselhi@gmail.com">
+                    <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                    <div class="input-with-icon">
+                        <input type="email" id="email" value="ahmedsmoselhi@gmail.com">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Verified</span>
+                        </div>
+                    </div>
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" value="+20 123 456 789">
+                    <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                    <div class="input-with-icon">
+                        <input type="tel" id="phone" value="+20 123 456 789">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Verified</span>
+                        </div>
+                    </div>
                 </div>
-                
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="birthdate"><i class="fas fa-birthday-cake"></i> Date of Birth</label>
+                        <input type="date" id="birthdate" value="1990-01-15">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="language"><i class="fas fa-globe"></i> Preferred Language</label>
+                        <select id="language">
+                            <option value="en">English</option>
+                            <option value="ar">Arabic</option>
+                            <option value="fr">French</option>
+                            <option value="es">Spanish</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <label for="address">Address</label>
+                    <label for="address"><i class="fas fa-map-marker-alt"></i> Address</label>
                     <textarea id="address">Cairo, Egypt</textarea>
                 </div>
-                
+
+                <div class="form-group">
+                    <label for="bio"><i class="fas fa-edit"></i> Bio</label>
+                    <textarea id="bio" placeholder="Tell us a little about yourself...">Luxury hotel enthusiast with a passion for exquisite experiences and five-star service. I enjoy discovering hidden gems and sharing my travels with others.</textarea>
+                </div>
+
                 <div class="form-actions">
-                    <button type="submit" class="save-btn">Save Changes</button>
-                    <a asp-controller="Profile" asp-action="Index" class="cancel-btn">Cancel</a>
+                    <button type="submit" class="save-btn"><i class="fas fa-save"></i> Save Changes</button>
+                    <a href="#" class="cancel-btn"><i class="fas fa-times"></i> Cancel</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script src="~/js/edit.js"></script>

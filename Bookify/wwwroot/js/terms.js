@@ -1,23 +1,16 @@
 ﻿
     document.addEventListener('DOMContentLoaded', function() {
-            // Navigation functionality
             const termsNavItems = document.querySelectorAll('.terms-nav-item');
     const termsSections = document.querySelectorAll('.terms-section');
             
             termsNavItems.forEach(item => {
         item.addEventListener('click', function () {
             const sectionId = this.getAttribute('data-section');
-
-            // Update active nav item
             termsNavItems.forEach(nav => nav.classList.remove('active'));
             this.classList.add('active');
-
-            // Scroll to section
             const section = document.getElementById(`terms-section-${sectionId}`);
             if (section) {
                 section.scrollIntoView({ behavior: 'smooth' });
-
-                // Highlight the section
                 section.classList.add('terms-highlight-section');
                 setTimeout(() => {
                     section.classList.remove('terms-highlight-section');
@@ -25,8 +18,6 @@
             }
         });
             });
-
-    // Accept terms button
     const termsAcceptBtn = document.querySelector('.terms-accept-btn');
 
     termsAcceptBtn.addEventListener('click', function() {
@@ -34,8 +25,6 @@
     this.style.background = 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)';
     this.style.boxShadow = '0 8px 25px rgba(76, 175, 80, 0.4)';
     this.disabled = true;
-
-    // Show thank you message
     const thankYou = document.createElement('p');
     thankYou.innerHTML = '<i class="fas fa-smile"></i> Thank you for accepting our terms!';
     thankYou.style.marginTop = '25px';
@@ -44,12 +33,8 @@
     thankYou.style.fontSize = '18px';
 
     this.parentNode.appendChild(thankYou);
-
-    // Confetti effect
     createConfetti();
             });
-
-            // Add intersection observer for sections
             const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -58,16 +43,12 @@
             }
         });
             }, {threshold: 0.1 });
-
-            // Set initial state for animation
             termsSections.forEach(section => {
         section.style.opacity = 0;
     section.style.transform = 'translateY(20px)';
     section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     observer.observe(section);
             });
-
-    // Update active nav based on scroll position
     window.addEventListener('scroll', function() {
         let current = '';
                 termsSections.forEach(section => {
@@ -84,8 +65,6 @@
         item.classList.add('active');
                     }
                 });
-
-    // Update scroll progress
     const winHeight = window.innerHeight;
     const docHeight = document.documentElement.scrollHeight;
     const scrollTop = window.pageYOffset;
@@ -93,7 +72,6 @@
     document.querySelector('.terms-scroll-progress').style.width = scrollPercent + '%';
             });
 
-    // Confetti effect function
     function createConfetti() {
                 const colors = ['#D3A376', '#BF8C60', '#4CAF50', '#3E2723', '#FFF2DF'];
     const container = document.querySelector('.terms-acceptance');

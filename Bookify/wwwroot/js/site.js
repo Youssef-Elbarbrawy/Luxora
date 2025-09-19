@@ -1,7 +1,6 @@
 ﻿/////////////////////////////////////////////////////////////// layout
 //////////////////////// footer///////////////////////////////////////////////////
 document.addEventListener('DOMContentLoaded', function () {
-    // Back to top functionality
     const backToTopBtn = document.getElementById('backToTop');
 
     window.addEventListener('scroll', function () {
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Floating contact menu
     const contactToggle = document.getElementById('contactToggle');
     const floatingMenu = document.getElementById('floatingMenu');
 
@@ -27,14 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
         floatingMenu.classList.toggle('active');
     });
 
-    // Close floating menu when clicking outside
     document.addEventListener('click', function (e) {
         if (!contactToggle.contains(e.target) && !floatingMenu.contains(e.target)) {
             floatingMenu.classList.remove('active');
         }
     });
 
-    // Newsletter form submission
     const newsletterForm = document.getElementById('newsletterForm');
 
     newsletterForm.addEventListener('submit', function (e) {
@@ -43,11 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const email = this.querySelector('input[type="email"]').value;
         const submitBtn = this.querySelector('.subscribe-btn');
 
-        // Add loading state
         submitBtn.classList.add('loading');
         submitBtn.innerHTML = '<span>Subscribing...</span>';
 
-        // Simulate API call
         setTimeout(() => {
             submitBtn.classList.remove('loading');
             submitBtn.innerHTML = '<span>Subscribe</span><i class="fas fa-paper-plane"></i>';
@@ -60,14 +54,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }, 2000);
     });
-
-    // Email validation
     function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     }
-
-    // Show success/error messages
     function showMessage(text, type) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `${type}-message`;
@@ -89,8 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 300);
         }, 5000);
     }
-
-    // Animate stats on scroll
     const observerOptions = {
         threshold: 0.5,
         rootMargin: '0px 0px -100px 0px'
@@ -112,8 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (brandStats) {
         statsObserver.observe(brandStats);
     }
-
-    // Number animation function
     function animateNumber(element) {
         const target = element.textContent;
         const isDecimal = target.includes('.');
@@ -139,8 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }, stepTime);
     }
-
-    // Intersection Observer for fade-in animations
     const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -153,18 +137,14 @@ document.addEventListener('DOMContentLoaded', function () {
     footerSections.forEach(section => {
         fadeObserver.observe(section);
     });
-
-    // Social media link tracking (for analytics)
     const socialLinks = document.querySelectorAll('.social-link');
     socialLinks.forEach(link => {
         link.addEventListener('click', function (e) {
             const platform = this.querySelector('i').className.split('-').pop();
             console.log(`Social media click: ${platform}`);
-            // Here you would typically send this to your analytics service
         });
     });
 
-    // Contact item click handlers
     const contactItems = document.querySelectorAll('.contact-item');
     contactItems.forEach(item => {
         const icon = item.querySelector('i').className;
@@ -186,22 +166,17 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
-
-    // Dynamic year update
     const currentYear = new Date().getFullYear();
     const copyrightText = document.querySelector('.copyright p');
     if (copyrightText) {
         copyrightText.innerHTML = copyrightText.innerHTML.replace('2025', currentYear);
     }
 
-    // Keyboard navigation
     document.addEventListener('keydown', function (e) {
-        // Close floating menu with Escape key
         if (e.key === 'Escape') {
             floatingMenu.classList.remove('active');
         }
 
-        // Back to top with Ctrl/Cmd + Home
         if ((e.ctrlKey || e.metaKey) && e.key === 'Home') {
             e.preventDefault();
             window.scrollTo({
@@ -267,16 +242,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     `;
     document.head.appendChild(rippleStyle);
-
-    // Initialize tooltips (if needed)
     const tooltipElements = document.querySelectorAll('[data-tooltip]');
     tooltipElements.forEach(element => {
         element.addEventListener('mouseenter', function () {
-            // Create and show tooltip
         });
 
         element.addEventListener('mouseleave', function () {
-            // Hide tooltip
         });
     });
 
@@ -287,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Navigation elements
     const navbar = document.querySelector('.navbar');
     const menuToggle = document.getElementById('menuToggle');
     const navContent = document.getElementById('navbarContent');
@@ -297,8 +267,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchOverlay = document.getElementById('searchOverlay');
     const closeSearch = document.getElementById('closeSearch');
     const progressBar = document.getElementById('progressBar');
-
-    // Mobile hamburger menu
     menuToggle.addEventListener('change', function () {
         if (this.checked) {
             navContent.classList.add('active');
@@ -308,8 +276,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.style.overflow = 'auto';
         }
     });
-
-    // Mobile dropdown functionality
     dropdowns.forEach(dropdown => {
         const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
 
@@ -317,8 +283,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
                 dropdown.classList.toggle('active');
-
-                // Close other dropdowns
                 dropdowns.forEach(otherDropdown => {
                     if (otherDropdown !== dropdown) {
                         otherDropdown.classList.remove('active');
@@ -327,8 +291,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-
-    // Search functionality
     searchToggle.addEventListener('click', function (e) {
         e.stopPropagation();
         if (window.innerWidth <= 768) {
@@ -338,56 +300,40 @@ document.addEventListener('DOMContentLoaded', function () {
             searchDropdown.classList.toggle('active');
         }
     });
-
-    // Close search dropdown when clicking outside
     document.addEventListener('click', function (e) {
         if (!searchDropdown.contains(e.target) && !searchToggle.contains(e.target)) {
             searchDropdown.classList.remove('active');
         }
     });
-
-    // Close search overlay
     closeSearch.addEventListener('click', function () {
         searchOverlay.classList.remove('active');
         document.body.style.overflow = 'auto';
     });
-
-    // Close search overlay when clicking outside
     searchOverlay.addEventListener('click', function (e) {
         if (e.target === searchOverlay) {
             searchOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
     });
-
-    // Navbar scroll effect
     let lastScrollTop = 0;
     window.addEventListener('scroll', function () {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-        // Add scrolled class for styling
         if (scrollTop > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
-
-        // Hide/show navbar on scroll (optional)
         if (scrollTop > lastScrollTop && scrollTop > 200) {
             navbar.style.transform = 'translateY(-100%)';
         } else {
             navbar.style.transform = 'translateY(0)';
         }
         lastScrollTop = scrollTop;
-
-        // Update progress bar
         const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const scrolled = (winScroll / height) * 100;
         progressBar.style.width = scrolled + '%';
     });
-
-    // Close mobile menu when clicking on nav links
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', function () {
@@ -398,8 +344,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -412,15 +356,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-
-    // Search functionality
     const searchInputs = document.querySelectorAll('.search-input');
     const searchCategories = document.querySelectorAll('.search-category');
 
     searchInputs.forEach(input => {
         input.addEventListener('input', function () {
             const searchTerm = this.value.toLowerCase();
-            // Implement search logic here
             console.log('Searching for:', searchTerm);
         });
 
@@ -441,25 +382,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function performSearch(query) {
         console.log('Performing search for:', query);
-        // Close search overlay/dropdown
         searchOverlay.classList.remove('active');
         searchDropdown.classList.remove('active');
         document.body.style.overflow = 'auto';
-
-        // Implement actual search functionality here
-        // This could redirect to a search results page or filter content
     }
-
-    // Notification functionality
     const notificationBtn = document.querySelector('.notification-btn');
     if (notificationBtn) {
         notificationBtn.addEventListener('click', function () {
-            // Toggle notification dropdown/panel
             console.log('Show notifications');
         });
-    }
-
-    // Auth state management (simulated)
+    })
     function updateAuthState(isLoggedIn) {
         if (isLoggedIn) {
             document.body.classList.add('user-logged-in');
@@ -467,25 +399,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.classList.remove('user-logged-in');
         }
     }
-
-    // Initialize auth state (you would get this from your backend)
-    // updateAuthState(false); // Change to true if user is logged in
-
-    // Add loading states to buttons
     const authButtons = document.querySelectorAll('.auth-btn');
     authButtons.forEach(btn => {
         btn.addEventListener('click', function () {
             this.classList.add('loading');
-            // Remove loading state after API call completes
             setTimeout(() => {
                 this.classList.remove('loading');
             }, 2000);
         });
     });
-
-    // Keyboard navigation
     document.addEventListener('keydown', function (e) {
-        // ESC key closes dropdowns and overlays
         if (e.key === 'Escape') {
             searchDropdown.classList.remove('active');
             searchOverlay.classList.remove('active');
@@ -494,8 +417,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             document.body.style.overflow = 'auto';
         }
-
-        // Ctrl/Cmd + K opens search
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
             if (window.innerWidth <= 768) {
@@ -504,7 +425,6 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 searchDropdown.classList.add('active');
             }
-            // Focus on search input
             setTimeout(() => {
                 const searchInput = document.querySelector('.search-input');
                 if (searchInput) {
@@ -513,42 +433,29 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 100);
         }
     });
-
-    // Window resize handler
     window.addEventListener('resize', function () {
         if (window.innerWidth > 768) {
-            // Close mobile menu on desktop
             menuToggle.checked = false;
             navContent.classList.remove('active');
             searchOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
-
-            // Close mobile dropdowns
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
             });
         }
     });
-
-    // Add animation delays for staggered effects
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.1}s`;
     });
-
-    // Initialize tooltips (if needed)
     const tooltipElements = document.querySelectorAll('[data-tooltip]');
     tooltipElements.forEach(element => {
         element.addEventListener('mouseenter', function () {
-            // Create and show tooltip
         });
 
         element.addEventListener('mouseleave', function () {
-            // Hide tooltip
         });
     });
-
-    // Performance: Debounce scroll events
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
@@ -561,14 +468,10 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    // Apply debounced scroll handler
     const debouncedScrollHandler = debounce(function () {
-        // Additional scroll-based functionality can be added here
     }, 100);
 
     window.addEventListener('scroll', debouncedScrollHandler);
-
-    // Add mobile search button functionality
     function addMobileSearchButton() {
         if (window.innerWidth <= 768) {
             const navActions = document.querySelector('.nav-actions');
@@ -584,11 +487,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
-
-    // Initialize mobile search button
     addMobileSearchButton();
-
-    // Update mobile search button on resize
     window.addEventListener('resize', addMobileSearchButton);
 });
 ///////////////////////////////////////////////////////////////////////end of the navbar js////////////////////////////
