@@ -1,0 +1,172 @@
+﻿﻿* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    text-decoration: none;
+    list-style: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+}
+
+:root {
+    --first-color: #fff;
+    --second-color: #fff2df;
+    --third-color: #ffe0b2;
+    --fourth-color: #d3a376;
+    --fifth-color: #8c6e63;
+    --sixth-color: #3e2522;
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.bot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--second-color);
+    height: 90vh;
+}
+
+.inner-container {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    gap: 20px;
+    padding: 20px 0;
+    color: var(--sixth-color);
+}
+
+#chatWindow {
+    display: none;
+    flex-direction: column;
+    width: 500px;
+    height: 92vh;
+    overflow-y: auto;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 8px;
+    border-radius: 8px;
+}
+
+.message-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 480px;
+    flex-shrink: 0;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.user {
+    justify-content: flex-end;
+}
+
+.bot {
+    justify-content: flex-start;
+}
+
+.mess p {
+    word-wrap: break-word;
+    color: var(--sixth-color);
+    max-width: 480px;
+}
+
+.user p {
+    background-color: var(--first-color);
+    padding: 5px 10px;
+    color: var(--sixth-color);
+    border-radius: 15px;
+}
+
+#howcanihelp h1 {
+    font-size: 30px;
+}
+
+.messageBox {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    border-radius: 10px;
+    background-color: var(--sixth-color);
+    gap: 8px;
+    width: 500px;
+}
+
+    .messageBox textarea {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        outline: none;
+        border-radius: 8px;
+        background-color: var(--sixth-color);
+        color: var(--second-color);
+        font-size: 14px;
+        height: auto;
+        min-height: 20px;
+        max-height: 150px;
+        resize: none;
+        overflow-y: auto;
+    }
+
+#sendBtn {
+    width: fit-content;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+    #sendBtn svg {
+        height: 18px;
+        transition: all 0.3s;
+    }
+
+        #sendBtn svg path {
+            transition: all 0.3s;
+            fill: var(--sixth-color);
+            stroke: var(--second-color);
+        }
+
+.messageBox textarea::placeholder {
+    color: var(--second-color);
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+@media (max-width: 500px) {
+    #chatWindow {
+        width: 300px;
+    }
+
+    .mess {
+        width: 280px;
+    }
+
+        .mess p {
+            font-size: 14px;
+            max-width: 280px;
+        }
+
+    #userInput {
+        font-size: 14px;
+    }
+
+    #howcanihelp h1 {
+        font-size: 26px;
+    }
+
+    .message-input {
+        gap: 20px;
+    }
+
+    .messageBox {
+        width: 300px;
+    }
+}

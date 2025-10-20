@@ -278,6 +278,7 @@ body {
     cursor: pointer;
     transition: var(--transition-smooth);
     position: relative;
+    height:1px;
 }
 
     .nav-tab::after {

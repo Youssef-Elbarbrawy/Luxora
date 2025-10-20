@@ -10,4 +10,9 @@
         public string Image { get; set; }
         public string Category { get; set; }
     }
+
+    public class HotelRooms
+    {
+        static public List<Room> Rooms { get; set; } = new List<Room>();
+    }
 }

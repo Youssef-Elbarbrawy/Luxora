@@ -1,0 +1,85 @@
+﻿@{
+	ViewData["Title"] = "Chat Bot";
+}
+
+<link href="~/css/chatBot.css" rel="stylesheet" />
+<section>
+
+
+	<div class="bot-container" style="padding-top:70px;">
+		<div class="inner-container">
+			<div id="chatWindow"></div>
+
+			<div class="message-input">
+				<div id="howcanihelp">
+					<h1>How can I help you?</h1>
+				</div>
+
+				<div class="messageBox" id="messageBox">
+					<textarea rows="1" id="userInput" type="text" placeholder="Type your message..."></textarea>
+
+					<button id="sendBtn">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+							<path fill="none"
+								  d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+							<path stroke-linejoin="round"
+								  stroke-linecap="round"
+								  stroke-width="33.67"
+								  stroke="#6c6c6c"
+								  d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		const textarea = document.getElementById("userInput");
+
+		textarea.addEventListener("input", function() {
+			this.style.height = "auto";      // reset to calculate
+			this.style.height = (this.scrollHeight) + "px"; // set new height
+		});
+
+
+		async function sendMessage() {
+			const text = $("#userInput").val().trim();
+			if (!text) return;
+
+
+			document.getElementById("howcanihelp").style.display="none";
+			document.getElementById("chatWindow").style.display="block";
+			document.querySelector(".message-input").style.height = "auto";
+
+			// Add user message
+			$("#chatWindow").append(`<div class="mess user"><p>${text}</p></div>`);
+
+			// Send to backend
+			const response = await fetch("/api/chat/send", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ text })
+			});
+
+			const data = await response.json();
+
+			// Add bot reply
+			$("#chatWindow").append(`<div class="mess bot"><p>${data.reply}</p></div>`);
+
+			$("#chatWindow").scrollTop($("#chatWindow")[0].scrollHeight);
+			$("#userInput").val("").css("height", "auto");
+		}
+
+		$("#sendBtn").click(sendMessage);
+
+		$("#userInput").keydown(function (e) {
+			if (e.key === "Enter" && !e.shiftKey) {
+				e.preventDefault();
+				sendMessage();
+			}
+		});
+	</script>
+</section>
