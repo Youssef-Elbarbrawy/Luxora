@@ -1,109 +1,119 @@
-﻿using System.Text.RegularExpressions;
-using Bookify.Models;
+﻿using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
+using Bookify.DataAccessLayer;
+using Bookify.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-[Route("api/chat")]
-[ApiController]
-public class BotController : ControllerBase
+namespace Bookify.Controllers
 {
-    private List<Room> hotelRooms = HotelRooms.Rooms;
-
-    [HttpPost("send")]
-    public IActionResult SendMessage([FromBody] ChatMessage message)
+    [Route("api/chat")]
+    [ApiController]
+    public class BotController : ControllerBase
     {
-        string reply = "";
-        string input = message.Text.ToLower();
+        private readonly BookifyDbContext _context;
 
-        if (input == "hi")
+        public BotController(BookifyDbContext context)
         {
-            reply = "Hi there!<br/>How can I help you?<br/>";
+            _context = context;
+        }
+
+        [HttpPost("send")]
+        public async Task<IActionResult> SendMessage([FromBody] BotRequest request)
+        {
+            string userMessage = request.Message?.ToLower().Trim() ?? "";
+            string reply = "I'm sorry, I didn't understand that. Can you please rephrase?";
+
+            // Handle greetings
+            if (Regex.IsMatch(userMessage, @"\b(hi|hello|hey|good morning|good evening)\b"))
+            {
+                reply = "👋 Hello! Welcome to Bookify. How can I assist you today?";
+            }
+
+            // Handle asking for available rooms
+            else if (userMessage.Contains("available") && userMessage.Contains("room"))
+            {
+                var rooms = await _context.Rooms
+                .Include(r => r.RoomType)
+                    .Where(r => r.Status == "Available")
+                    .ToListAsync();
+
+                if (rooms.Any())
+                {
+                    reply = "🏨 Here are some available rooms:<br><br>";
+                    foreach (var room in rooms)
+                    {
+                        string imageUrl = !string.IsNullOrEmpty(room.ImageUrl)
+                            ? room.ImageUrl
+                            : "https://via.placeholder.com/600x400?text=No+Image";
+
+                        reply += $@"
+                            <b>Room {room.RoomNumber}</b> ({room.RoomType?.TypeName})<br>
+                            💰 Price: ${room.Price}<br>
+                            🏷️ {room.Description}<br>
+                            👉 <a href='{imageUrl}' target='_blank'>View Room</a><br><br>";
+                    }
+                }
+                else
+                {
+                    reply = "😔 Sorry, there are no available rooms at the moment.";
+                }
+            }
+
+            // Handle filtering by type
+            else if (userMessage.Contains("room type") || userMessage.Contains("type"))
+            {
+                var types = await _context.RoomTypes.Select(t => t.TypeName).ToListAsync();
+                reply = "🏷️ Available room types:<br>" + string.Join("<br>", types);
+            }
+
+            // Handle request for specific type (e.g., "show deluxe rooms")
+            else if (userMessage.Contains("show") && userMessage.Contains("room"))
+            {
+                string selectedType = _context.RoomTypes
+                    .Select(t => t.TypeName.ToLower())
+                    .FirstOrDefault(t => userMessage.Contains(t));
+
+                if (selectedType != null)
+                {
+                    var rooms = await _context.Rooms
+                        .Include(r => r.RoomType)
+                        .Where(r => r.RoomType.TypeName.ToLower().Contains(selectedType))
+                        .ToListAsync();
+
+                    if (rooms.Any())
+                    {
+                        reply = $"🏨 Available {selectedType} rooms:<br><br>";
+                        foreach (var room in rooms)
+                        {
+                            string imageUrl = !string.IsNullOrEmpty(room.ImageUrl)
+                                ? room.ImageUrl
+                                : "https://via.placeholder.com/600x400?text=No+Image";
+
+                            reply += $@"
+                                <b>Room {room.RoomNumber}</b> ({room.RoomType?.TypeName})<br>
+                                💰 Price: ${room.Price}<br>
+                                🏷️ {room.Description}<br>
+                                👉 <a href='{imageUrl}' target='_blank'>View Room</a><br><br>";
+                        }
+                    }
+                    else
+                    {
+                        reply = $"😔 Sorry, no {selectedType} rooms are available right now.";
+                    }
+                }
+                else
+                {
+                    reply = "❓ Please specify a valid room type.";
+                }
+            }
+
             return Ok(new { reply });
         }
-        else if (input == "bye")
-        {
-            reply = "See you later!<br/>";
-            return Ok(new { reply });
-        }
-
-        // Available room types (match with Category)
-        var roomTypes = new List<string>
-        {
-            "deluxe",
-            "luxury",
-            "standard",
-            "family"
-        };
-
-        // 1. Detect if user specified a room type
-        string selectedType = roomTypes.FirstOrDefault(rt => input.Contains(rt));
-
-        if (!string.IsNullOrEmpty(selectedType))
-        {
-            reply += $"You’re looking for a {selectedType} room, right?<br>";
-        }
-
-        // 2. Detect if user specified a number (budget)
-        int? budget = null;
-        var numbers = Regex.Matches(input, @"\d+");
-        if (numbers.Count > 0)
-        {
-            budget = int.Parse(numbers[0].Value);
-        }
-
-        // 3. Build query using in-memory list
-        IEnumerable<Room> query = Enumerable.Empty<Room>();
-
-        if (!string.IsNullOrEmpty(selectedType))
-        {
-            query = HotelRooms.Rooms.Where(r =>
-                !string.IsNullOrEmpty(r.Category) &&
-                Regex.IsMatch(r.Category, $@"\b{Regex.Escape(selectedType)}\b", RegexOptions.IgnoreCase));
-
-            if (budget.HasValue)
-                query = query.OrderBy(r => Math.Abs((double)r.Price - budget.Value));
-        }
-        else
-        {
-            if (budget.HasValue)
-            {
-                query = HotelRooms.Rooms;
-                query = query.OrderBy(r => Math.Abs((double)r.Price - budget.Value));
-            }
-        }
-
-        var rooms = query.Take(5).ToList();
-
-        // 4. Build reply
-        if (rooms.Any())
-        {
-            if (!string.IsNullOrEmpty(selectedType) && budget.HasValue)
-                reply += $"Here are {selectedType} rooms closest to your budget of ${budget}:<br><br>";
-            else if (!string.IsNullOrEmpty(selectedType))
-                reply += $"Here are our available {selectedType} rooms:<br><br>";
-            else if (budget.HasValue)
-                reply += $"Here are rooms closest to your budget of ${budget}:<br><br>";
-            else
-                reply += $"Here are some of our available rooms:<br><br>";
-
-            foreach (var room in rooms)
-            {
-                reply += $@"
-                    <b>{room.Name}</b> ({room.Category})<br>
-                    Price: ${room.Price}<br>
-                    {room.Description}<br>
-                    {room.Perks}<br>
-                    👉 <a href='{room.Image}' target='_blank'>View Room</a><br><br>";
-            }
-        }
-
-        if (reply == "") reply = "Sorry, I didn’t understand your request. Could you please clarify?";
-        else reply += "Is there anything else I can help you with?";
-
-        return Ok(new { reply });
     }
-}
 
-public class ChatMessage
-{
-    public string Text { get; set; }
+    public class BotRequest
+    {
+        public string Message { get; set; }
+    }
 }

@@ -388,266 +388,34 @@ div class="search-overlay" id="searchOverlay">
         </div>
     </div>
 
+    @model IEnumerable<Bookify.DataAccessLayer.Entities.Room>
+
     <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item" data-category="rooms" data-tags="suite luxury bedroom">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Luxury Suite">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Presidential Suite</div>
-                <div class="gallery-item-desc">Spacious suite with panoramic city views and premium amenities</div>
-                <div class="item-tags">
-                    <span class="tag">Luxury</span>
-                    <span class="tag">City View</span>
-                </div>
-            </div>
-        </div>
+        @foreach (var room in Model)
+        {
+            <div class="gallery-item"
+                 data-category="@room.RoomType.TypeName.ToLower()"
+                 data-tags="@room.RoomName.ToLower() @room.RoomType.TypeName.ToLower()">
 
-        <div class="gallery-item" data-category="rooms" data-tags="deluxe king bedroom">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Deluxe Room">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
+                <div class="image-container">
+                    <img src="@room.ImageUrl" alt="@room.RoomName">
+                    <div class="image-overlay">
+                        <div class="zoom-icon"><i class="fas fa-expand"></i></div>
+                        <div class="favorite-btn"><i class="far fa-heart"></i></div>
                     </div>
                 </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Deluxe King Room</div>
-                <div class="gallery-item-desc">Elegant room with premium amenities and modern design</div>
-                <div class="item-tags">
-                    <span class="tag">Deluxe</span>
-                    <span class="tag">Modern</span>
-                </div>
-            </div>
-        </div>
 
-        <div class="gallery-item" data-category="rooms" data-tags="bathroom marble luxury">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Bathroom">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
+                <div class="gallery-overlay">
+                    <div class="gallery-item-title">@room.RoomName</div>
+                    <div class="gallery-item-desc">@room.Description</div>
+                    <div class="item-tags">
+                        <span class="tag">@room.RoomType.TypeName.ToUpper()</span>
+                        <span class="tag">@room.Status</span>
+                        <span class="tag">Price: @room.Price.ToString("C")</span>
                     </div>
                 </div>
             </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Luxury Bathroom</div>
-                <div class="gallery-item-desc">Marble bathroom with deep soaking tub and rain shower</div>
-                <div class="item-tags">
-                    <span class="tag">Marble</span>
-                    <span class="tag">Spa Bath</span>
-                </div>
-            </div>
-        </div>
-        <div class="gallery-item" data-category="dining" data-tags="restaurant fine dining">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Restaurant">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Main Restaurant</div>
-                <div class="gallery-item-desc">Fine dining experience with gourmet cuisine and elegant atmosphere</div>
-                <div class="item-tags">
-                    <span class="tag">Fine Dining</span>
-                    <span class="tag">Gourmet</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="gallery-item" data-category="dining" data-tags="food gourmet cuisine">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Food">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Gourmet Cuisine</div>
-                <div class="gallery-item-desc">Exquisite dishes prepared by our internationally acclaimed chefs</div>
-                <div class="item-tags">
-                    <span class="tag">Chef's Special</span>
-                    <span class="tag">Award Winning</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="gallery-item" data-category="dining" data-tags="bar cocktails rooftop">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Bar">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Skyline Bar</div>
-                <div class="gallery-item-desc">Rooftop bar with signature cocktails and breathtaking views</div>
-                <div class="item-tags">
-                    <span class="tag">Rooftop</span>
-                    <span class="tag">Cocktails</span>
-                </div>
-            </div>
-        </div>
-        <div class="gallery-item" data-category="pool" data-tags="infinity pool swimming">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1561501878-aabd62634533?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Pool">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Infinity Pool</div>
-                <div class="gallery-item-desc">Stunning infinity pool with panoramic views of the city skyline</div>
-                <div class="item-tags">
-                    <span class="tag">Infinity</span>
-                    <span class="tag">City Views</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="gallery-item" data-category="pool" data-tags="spa wellness relaxation">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Spa">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Luxury Spa</div>
-                <div class="gallery-item-desc">Relaxing spa treatments and therapies for ultimate wellness</div>
-                <div class="item-tags">
-                    <span class="tag">Wellness</span>
-                    <span class="tag">Therapeutic</span>
-                </div>
-            </div>
-        </div>
-        <div class="gallery-item" data-category="events" data-tags="wedding venue celebration">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1580619305218-8427ad6f5c20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Wedding">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Wedding Venue</div>
-                <div class="gallery-item-desc">Elegant space for unforgettable weddings and celebrations</div>
-                <div class="item-tags">
-                    <span class="tag">Weddings</span>
-                    <span class="tag">Elegant</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="gallery-item" data-category="events" data-tags="conference business meeting">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Conference">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Conference Room</div>
-                <div class="gallery-item-desc">State-of-the-art meeting facilities with modern technology</div>
-                <div class="item-tags">
-                    <span class="tag">Business</span>
-                    <span class="tag">Modern Tech</span>
-                </div>
-            </div>
-        </div>
-        <div class="gallery-item" data-category="lobby" data-tags="grand entrance reception">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Lobby">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Grand Lobby</div>
-                <div class="gallery-item-desc">Impressive entrance with elegant decor and luxurious ambiance</div>
-                <div class="item-tags">
-                    <span class="tag">Grand</span>
-                    <span class="tag">Luxurious</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="gallery-item" data-category="lobby" data-tags="executive lounge vip">
-            <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1535827841776-24afc1e255ac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Lounge">
-                <div class="image-overlay">
-                    <div class="zoom-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="favorite-btn">
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-overlay">
-                <div class="gallery-item-title">Executive Lounge</div>
-                <div class="gallery-item-desc">Exclusive lounge for premium guests with VIP services</div>
-                <div class="item-tags">
-                    <span class="tag">Executive</span>
-                    <span class="tag">VIP</span>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 
     <div class="load-more-container">

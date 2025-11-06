@@ -27,10 +27,21 @@ namespace Bookify.DataAccessLayer.Entities
         [Column("RT_ID")]
         public int RoomTypeId { get; set; }
 
+        public string RoomName { get; set; }
+
+        public string ImageUrl { get; set; }
+
         // Navigation properties
         [ForeignKey("RoomTypeId")]
         public virtual RoomType RoomType { get; set; } = null!;
         public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+
+        // Extra details in Rooms
+        public int Capacity { get; set; }
+        public string Size { get; set; }
+        public string BedType { get; set; } = string.Empty;
+        public string View { get; set; } = string.Empty;
+        public string Amenities { get; set; } = string.Empty;
     }
 }
 

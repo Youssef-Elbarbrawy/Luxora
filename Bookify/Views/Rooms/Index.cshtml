@@ -2,211 +2,182 @@
 @{
     ViewBag.Title = "Rooms";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    // Serialize rooms data to JSON for JavaScript
+    var roomsJson = System.Text.Json.JsonSerializer.Serialize(Model.Select(r => new {
+        id = r.RoomNumber,
+        number = r.RoomNumber,
+        type = r.RoomType?.TypeName ?? "standard",
+        price = r.Price,
+        status = r.Status?.ToLower() ?? "available",
+        capacity = r.Capacity,
+        size = r.Size,
+        bedType = r.BedType,
+        view = r.View?.ToLower() ?? "city",
+        amenities = r.Amenities?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(a => a.Trim()).ToArray() ?? new string[0],
+        // featured = r.Featured,
+        // premium = r.Premium,
+        image = r.ImageUrl,
+        description = r.Description
+    }));
 }
 <link href="~/css/rooms.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <section class="breadcrumb">
-<div class="luxury-container"  style="padding-top:100px;"> 
-
-    <header class="luxury-header">
-        <div class="header-top">
-            <div class="hotel-brand">
-                <div class="hotel-logo">
-                    <i class="fas fa-crown"></i>
+    <div class="luxury-container" style="padding-top:100px;"> 
+        <header class="luxury-header">
+            <div class="header-top">
+                <div class="hotel-brand">
+                    <div class="hotel-logo">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h1 class="hotel-title">GRAND LUXURY HOTEL</h1>
                 </div>
-                <h1 class="hotel-title">GRAND LUXURY HOTEL</h1>
-            </div>
-            <div class="header-controls">
-                <div class="luxury-search">
-                    <span class="search-icon"><i class="fas fa-search"></i></span>
-                    <input type="text" placeholder="Search rooms..." id="searchInput">
-                </div>
-                <div class="view-controls">
-                    <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
-                    <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
-                    <button class="view-btn" data-view="map"><i class="fas fa-map"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="header-stats">
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-door-open"></i></div>
-                <div class="stat-value">24</div>
-                <div class="stat-label">Available Rooms</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-bed"></i></div>
-                <div class="stat-value">18</div>
-                <div class="stat-label">Occupied</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-star"></i></div>
-                <div class="stat-value">6</div>
-                <div class="stat-label">Premium Suites</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-                <div class="stat-value">92%</div>
-                <div class="stat-label">Occupancy Rate</div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Filters -->
-    <section class="luxury-filters">
-        <div class="filter-header">
-            <h2 class="filter-title"><i class="fas fa-sliders-h"></i> Room Filters</h2>
-            <div class="filter-actions">
-                <button class="luxury-btn secondary" id="clearFilters">
-                    <i class="fas fa-undo"></i> Clear All
-                </button>
-                <button class="luxury-btn" id="applyFilters">
-                    <i class="fas fa-check"></i> Apply Filters
-                </button>
-            </div>
-        </div>
-        <div class="filter-grid">
-            <div class="filter-group">
-                <label class="filter-label"><i class="fas fa-bed"></i> Room Type</label>
-                <select class="luxury-select" id="typeFilter">
-                    <option value="">All Types</option>
-                    <option value="deluxe">Deluxe Room</option>
-                    <option value="executive">Executive Suite</option>
-                    <option value="suite">Junior Suite</option>
-                    <option value="presidential">Presidential Suite</option>
-                    <option value="royal">Royal Suite</option>
-                    <option value="penthouse">Penthouse</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label class="filter-label"><i class="fas fa-tag"></i> Price Range</label>
-                <div class="price-range">
-                    <input type="number" class="luxury-input" placeholder="Min" id="minPrice">
-                    <span style="color: var(--text-muted);">to</span>
-                    <input type="number" class="luxury-input" placeholder="Max" id="maxPrice">
-                </div>
-            </div>
-            <div class="filter-group">
-                <label class="filter-label"><i class="fas fa-users"></i> Capacity</label>
-                <select class="luxury-select" id="capacityFilter">
-                    <option value="">Any Capacity</option>
-                    <option value="1">1 Guest</option>
-                    <option value="2">2 Guests</option>
-                    <option value="3">3 Guests</option>
-                    <option value="4">4+ Guests</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label class="filter-label"><i class="fas fa-info-circle"></i> Room Status</label>
-                <select class="luxury-select" id="statusFilter">
-                    <option value="">All Status</option>
-                    <option value="available">Available</option>
-                    <option value="occupied">Occupied</option>
-                    <option value="maintenance">Maintenance</option>
-                    <option value="cleaning">Cleaning</option>
-                    <option value="reserved">Reserved</option>
-                </select>
-            </div>
-        </div>
-        <div class="filter-chips">
-            <div class="filter-chip active"><i class="fas fa-layer-group"></i> All Rooms</div>
-            <div class="filter-chip"><i class="fas fa-water"></i> Ocean View</div>
-            <div class="filter-chip"><i class="fas fa-city"></i> City View</div>
-            <div class="filter-chip"><i class="fas fa-crown"></i> Premium</div>
-            <div class="filter-chip"><i class="fas fa-star"></i> Featured</div>
-        </div>
-    </section>
-
-    <!-- Rooms Grid -->
-    <section class="rooms-section">
-        <div class="section-header">
-            <h2 class="section-title"><i class="fas fa-concierge-bell"></i> Available Rooms</h2>
-            <div class="sort-controls">
-                <select class="luxury-select" id="sortSelect">
-                    <option value="number">Sort by Room Number</option>
-                    <option value="price">Sort by Price</option>
-                    <option value="capacity">Sort by Capacity</option>
-                    <option value="type">Sort by Type</option>
-                </select>
-            </div>
-        </div>
-        <div class="rooms-grid" id="roomsGrid">
-        </div>
-    </section>
-</div>
-<div class="modal-overlay" id="roomModal">
-    <div class="luxury-modal">
-        <div class="modal-header">
-            <h2 class="modal-title" id="modalRoomTitle"><i class="fas fa-info-circle"></i> Presidential Suite - Room 801</h2>
-            <button class="btn-close" id="closeModal"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-content">
-            <div class="modal-image">
-                <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Presidential Suite">
-            </div>
-            <div class="modal-details">
-                <div class="detail-group">
-                    <div class="detail-label">Room Type</div>
-                    <div class="detail-value">Presidential Suite</div>
-                </div>
-                <div class="detail-group">
-                    <div class="detail-label">Price</div>
-                    <div class="detail-value">$899 <span style="color: var(--text-muted); font-size: 0.9rem;">/ night</span></div>
-                </div>
-                <div class="detail-group">
-                    <div class="detail-label">Capacity</div>
-                    <div class="detail-value">4 Guests</div>
-                </div>
-                <div class="detail-group">
-                    <div class="detail-label">Size</div>
-                    <div class="detail-value">120 m²</div>
-                </div>
-                <div class="detail-group">
-                    <div class="detail-label">Bed Type</div>
-                    <div class="detail-value">King Size × 2</div>
-                </div>
-                <div class="detail-group">
-                    <div class="detail-label">View</div>
-                    <div class="detail-value">Panoramic City View</div>
-                </div>
-                <div class="detail-group">
-                    <div class="detail-label">Status</div>
-                    <div class="detail-value"><span class="status-available" style="padding: 6px 12px; border-radius: 8px; font-size: 0.85rem;">Available</span></div>
-                </div>
-                <div class="detail-group">
-                    <div class="detail-label">Amenities</div>
-                    <div class="amenities-grid">
-                        <div class="amenity-tag">WiFi</div>
-                        <div class="amenity-tag">Air Conditioning</div>
-                        <div class="amenity-tag">Mini Bar</div>
-                        <div class="amenity-tag">Jacuzzi</div>
-                        <div class="amenity-tag">Smart TV</div>
-                        <div class="amenity-tag">Room Service</div>
-                        <div class="amenity-tag">Balcony</div>
-                        <div class="amenity-tag">Safe</div>
-                        <div class="amenity-tag">Butler Service</div>
-                        <div class="amenity-tag">Private Check-in</div>
+                <div class="header-controls">
+                    <div class="luxury-search">
+                        <span class="search-icon"><i class="fas fa-search"></i></span>
+                        <input type="text" placeholder="Search rooms..." id="searchInput">
+                    </div>
+                    <div class="view-controls">
+                        <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
+                        <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
+                        <button class="view-btn" data-view="map"><i class="fas fa-map"></i></button>
                     </div>
                 </div>
-                <div class="detail-group">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-value">Experience ultimate luxury in our Presidential Suite with panoramic city views, a spacious living area, dining room, and premium amenities for an unforgettable stay. This suite features a master bedroom with a king-sized bed, a luxurious bathroom with a jacuzzi, and a separate living area.</div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-door-open"></i></div>
+                    <div class="stat-value" id="availableCount">@Model.Count(r => r.Status?.ToLower() == "available")</div>
+                    <div class="stat-label">Available Rooms</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-bed"></i></div>
+                    <div class="stat-value" id="occupiedCount">@Model.Count(r => r.Status?.ToLower() == "occupied")</div>
+                    <div class="stat-label">Occupied</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-star"></i></div>
+                    @* <div class="stat-value" id="premiumCount">@Model.Count(r => r.Premium)</div> *@
+                    <div class="stat-label">Premium Suites</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                    @* <div class="stat-value">@((Model.Count(r => r.Status?.ToLower() == "occupied") * 100 / Math.Max(Model.Count(), 1))%</div> *@
+                    <div class="stat-label">Occupancy Rate</div>
                 </div>
             </div>
-        </div>
-        <div class="modal-actions">
-            <button class="btn-details"><i class="far fa-heart"></i> Add to Favorites</button>
-            <button class="btn-book"><i class="fas fa-concierge-bell"></i> Book This Room</button>
+        </header>
+
+        <!-- Filters -->
+        <section class="luxury-filters">
+            <div class="filter-header">
+                <h2 class="filter-title"><i class="fas fa-sliders-h"></i> Room Filters</h2>
+                <div class="filter-actions">
+                    <button class="luxury-btn secondary" id="clearFilters">
+                        <i class="fas fa-undo"></i> Clear All
+                    </button>
+                    <button class="luxury-btn" id="applyFilters">
+                        <i class="fas fa-check"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label class="filter-label"><i class="fas fa-bed"></i> Room Type</label>
+                    <select class="luxury-select" id="typeFilter">
+                        <option value="">All Types</option>
+                        @foreach (var type in Model.Select(r => r.RoomType?.TypeName).Distinct().Where(t => !string.IsNullOrEmpty(t)))
+                        {
+                            <option value="@type?.ToLower()">@type</option>
+                        }
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label"><i class="fas fa-tag"></i> Price Range</label>
+                    <div class="price-range">
+                        <input type="number" class="luxury-input" placeholder="Min" id="minPrice" min="0" max="@(Model.Any() ? Model.Max(r => r.Price) : 0)">
+                        <input type="number" class="luxury-input" placeholder="Max" id="maxPrice" min="0" max="@(Model.Any() ? Model.Max(r => r.Price) : 0)">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label"><i class="fas fa-users"></i> Capacity</label>
+                    <select class="luxury-select" id="capacityFilter">
+                        <option value="">Any Capacity</option>
+                        @foreach (var capacity in Model.Select(r => r.Capacity).Distinct().OrderBy(c => c))
+                        {
+                            <option value="@capacity">@capacity @(capacity == 1 ? "Guest" : "Guests")</option>
+                        }
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label"><i class="fas fa-info-circle"></i> Room Status</label>
+                    <select class="luxury-select" id="statusFilter">
+                        <option value="">All Status</option>
+                        @foreach (var status in Model.Select(r => r.Status).Distinct().Where(s => !string.IsNullOrEmpty(s)))
+                        {
+                            <option value="@status?.ToLower()">@status</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="filter-chips">
+                <div class="filter-chip active"><i class="fas fa-layer-group"></i> All Rooms</div>
+                <div class="filter-chip"><i class="fas fa-water"></i> Ocean View</div>
+                <div class="filter-chip"><i class="fas fa-city"></i> City View</div>
+                <div class="filter-chip"><i class="fas fa-crown"></i> Premium</div>
+                <div class="filter-chip"><i class="fas fa-star"></i> Featured</div>
+            </div>
+        </section>
+
+        <!-- Rooms Grid -->
+        <section class="rooms-section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-concierge-bell"></i> Available Rooms</h2>
+                <div class="sort-controls">
+                    <select class="luxury-select" id="sortSelect">
+                        <option value="number">Sort by Room Number</option>
+                        <option value="price">Sort by Price</option>
+                        <option value="capacity">Sort by Capacity</option>
+                        <option value="type">Sort by Type</option>
+                    </select>
+                </div>
+            </div>
+            <div class="rooms-grid" id="roomsGrid">
+                <!-- Rooms will be loaded here by JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Room Modal -->
+    <div class="modal-overlay" id="roomModal">
+        <div class="luxury-modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalRoomTitle"><i class="fas fa-info-circle"></i> Room Details</h2>
+                <button class="btn-close" id="closeModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-content" id="modalContent">
+                <!-- Modal content will be loaded dynamically -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn-details" id="addToFavorites"><i class="far fa-heart"></i> Add to Favorites</button>
+                <button class="btn-book" id="modalBookBtn"><i class="fas fa-concierge-bell"></i> Book This Room</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="toast" id="toast">
-    <i class="fas fa-check-circle"></i>
-    <span id="toastMessage">Room booked successfully!</span>
-</div>
-
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Room booked successfully!</span>
+    </div>
 </section>
+
 @section Scripts {
+    <script>
+        // Pass server-side data to JavaScript
+        const serverRooms = @Html.Raw(roomsJson);
+    </script>
     <script src="~/js/rooms.js"></script>
 }

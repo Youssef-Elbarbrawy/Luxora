@@ -322,6 +322,8 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
     margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 .filter-group {
@@ -352,6 +354,8 @@ body {
     color: var(--text-light);
     transition: var(--transition-smooth);
     font-size: 0.95rem;
+    justify-content:center;
+    align-items:center;
 }
 
     .luxury-select:focus, .luxury-input:focus {
@@ -361,13 +365,17 @@ body {
     }
 
 .price-range {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    min-width: 300px;
 }
 
     .price-range input {
         flex: 1;
+        max-width: 2000px;
+        width: 100%;
+        margin-bottom: 2px;
     }
 
 .filter-chips {
