@@ -27,7 +27,9 @@ namespace Bookify.DataAccessLayer.Entities
         [Required]
         [StringLength(20)]
         public string SSN { get; set; } = string.Empty;
-
+        [Phone]
+        public string phoneNumber { get; set; } = null!;
+        public string nationality { get; set; } = null!;
         [Required]
         public int Age { get; set; }
 
@@ -46,6 +48,7 @@ namespace Bookify.DataAccessLayer.Entities
 
     // Navigation properties
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
     }
 }

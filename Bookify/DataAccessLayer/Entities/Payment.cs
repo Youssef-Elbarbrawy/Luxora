@@ -18,6 +18,9 @@ namespace Bookify.DataAccessLayer.Entities
         // Navigation properties
         [ForeignKey("ReservationId")]
         public virtual Reservation Reservation { get; set; } = null!;
+        public int OrderId { get; set; }
+        public Order order { get; set; }
+        public decimal amount { get; set; }
     }
 }
 

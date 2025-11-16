@@ -17,7 +17,13 @@ namespace Bookify.DataAccessLayer
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<BookingInfo> BookingInfos { get; set; }
 
+        public DbSet<AdditionalService> Services { get; set; }
+        public DbSet<OrderService> OrderServices { get; set; }
+
+
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -99,6 +105,86 @@ namespace Bookify.DataAccessLayer
                       .WithMany(c => c.Feedbacks)
                       .HasForeignKey(e => e.CustomerId)
                       .OnDelete(DeleteBehavior.Restrict);
+            });
+            //order configuration
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.ToTable("Orders");
+
+                // Primary Key
+                entity.HasKey(o => o.Id);
+                entity.Property(o => o.Id)
+                  .ValueGeneratedOnAdd();
+
+                //Relationship with Customer(one to many)
+                entity.HasOne(o => o.customer)
+                      .WithMany(c => c.Orders)
+                      .HasForeignKey(o => o.CustomerId)
+                      .OnDelete(DeleteBehavior.Restrict);
+                //Relationship with Booking info (one to one) but the booking info make first
+                entity.HasOne(b => b.bookingInfo)
+                .WithOne(o => o.order)
+                .HasForeignKey<BookingInfo>(b => b.OrderId)
+                .OnDelete(DeleteBehavior.Cascade); // if you need to delete order delete his booking info
+
+
+                //Relationship with paymentMethod (one to one
+
+
+                entity.HasOne(o => o.payment)
+                .WithOne(p => p.order)
+                .HasForeignKey<Payment>(p => p.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+                //Relationship with AdditionalServices (Many-to-Many through OrderService)
+                entity.HasMany(o => o.additionalServices)
+                      .WithOne(os => os.order)
+                      .HasForeignKey(os => os.OrderId);
+
+
+                entity.Property(o => o.specialRequests)
+                      .HasMaxLength(500)
+                      .IsRequired(false);
+
+                //Property configurations
+                entity.Property(o => o.TotalPrice)
+                      .HasColumnType("decimal(18,2)");
+
+
+
+            });
+            modelBuilder.Entity<BookingInfo>(entity =>
+            {
+                entity.HasKey(b => b.Id);
+                entity.Property(b => b.Id).ValueGeneratedOnAdd();
+                entity.Property(b => b.NoOfGuests)
+                      .IsRequired();
+
+                entity.Property(b => b.NoOfChilds);
+
+
+                entity.Property(b => b.CheckIn)
+                      .IsRequired();
+
+                entity.Property(b => b.CheckOut)
+                      .IsRequired();
+                entity.Property(b => b.NumOfRooms)
+                      .IsRequired();
+
+            });
+            modelBuilder.Entity<OrderService>(entity =>
+            {
+                entity.HasKey(os => new { os.OrderId, os.ServiceId }); // compsite pk
+                entity.HasOne(os => os.order)
+                .WithMany(o => o.additionalServices)
+                .HasForeignKey(os => os.OrderId);
+
+                entity.HasOne(os => os.service)
+                .WithMany(s => s.OrderServices)
+                .HasForeignKey(os => os.ServiceId);
+
+
             });
 
             // Seed initial data
