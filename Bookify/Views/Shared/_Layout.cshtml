@@ -13,6 +13,7 @@
     </head>
 
     <body>
+        @Html.AntiForgeryToken();
         <header>
         <nav class="navbar">
             <div class="nav-container">
@@ -111,20 +112,6 @@
                                         </a>
                                     </div>
                                 </div>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-utensils"></i>
-                                    <span>Dining</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-spa"></i>
-                                    <span>Amenities</span>
-                                </a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -586,6 +573,13 @@
                 <a asp-action="Index" asp-controller="Chat_Bot" class="contact-panel-btn chat-btn" data-label="Live Chat">
                     <i class="fas fa-comments"></i>
                 </a>
+                <!-- In your navigation menu -->
+                <div class="cart-icon">
+                    <a asp-action="Index" asp-controller="Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>

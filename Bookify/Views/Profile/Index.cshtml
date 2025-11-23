@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="profile-info">
-                <h1>Ahmed Sameh</h1>
+                <h1>@(ViewBag.Customer?.Name ?? "User")</h1>
                 <p class="member-status">
                     <i class="fas fa-gem"></i>
                     Premium Member since 2020
@@ -78,14 +78,20 @@
     </div>
 
     <div class="profile-container">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" style="background: #81c784; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+                <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+            </div>
+        }
         <div class="tab-content active" id="overview">
             <div class="content-grid">
                 <div class="profile-card">
                     <div class="card-header">
                         <h3><i class="fas fa-user-circle"></i> Personal Information</h3>
-                        <button class="edit-btn" id="editPersonalInfo">
+                        <a href="@Url.Action("Edit", "Profile")" class="edit-btn" id="editPersonalInfo">
                             <i class="fas fa-edit"></i>
-                        </button>
+                        </a>
                     </div>
                     <div class="card-content">
                         <div class="info-grid">
@@ -95,7 +101,7 @@
                                 </div>
                                 <div class="info-content">
                                     <span class="info-label">Full Name</span>
-                                    <span class="info-value">Ahmed Sameh</span>
+                                    <span class="info-value">@(ViewBag.Customer?.Name ?? "N/A")</span>
                                 </div>
                             </div>
                             <div class="info-item">
@@ -104,7 +110,7 @@
                                 </div>
                                 <div class="info-content">
                                     <span class="info-label">Email Address</span>
-                                    <span class="info-value">ahmedsmoselhi@gmail.com</span>
+                                    <span class="info-value">@(ViewBag.Customer?.Email ?? "N/A")</span>
                                     <span class="verified-badge">
                                         <i class="fas fa-check-circle"></i>
                                         Verified
@@ -117,11 +123,14 @@
                                 </div>
                                 <div class="info-content">
                                     <span class="info-label">Phone Number</span>
-                                    <span class="info-value">+20 123 456 789</span>
-                                    <span class="verified-badge">
-                                        <i class="fas fa-check-circle"></i>
-                                        Verified
-                                    </span>
+                                    <span class="info-value">@(ViewBag.Customer?.phoneNumber ?? "N/A")</span>
+                                    @if (!string.IsNullOrEmpty(ViewBag.Customer?.phoneNumber))
+                                    {
+                                        <span class="verified-badge">
+                                            <i class="fas fa-check-circle"></i>
+                                            Verified
+                                        </span>
+                                    }
                                 </div>
                             </div>
                             <div class="info-item">
@@ -130,7 +139,7 @@
                                 </div>
                                 <div class="info-content">
                                     <span class="info-label">Location</span>
-                                    <span class="info-value">Cairo, Egypt</span>
+                                    <span class="info-value">@(ViewBag.Customer?.Address ?? "N/A")</span>
                                 </div>
                             </div>
                             <div class="info-item">
@@ -138,17 +147,17 @@
                                     <i class="fas fa-calendar-alt"></i>
                                 </div>
                                 <div class="info-content">
-                                    <span class="info-label">Date of Birth</span>
-                                    <span class="info-value">January 15, 1990</span>
+                                    <span class="info-label">Age</span>
+                                    <span class="info-value">@(ViewBag.Customer?.Age ?? 0) years old</span>
                                 </div>
                             </div>
                             <div class="info-item">
                                 <div class="info-icon">
-                                    <i class="fas fa-venus-mars"></i>
+                                    <i class="fas fa-globe"></i>
                                 </div>
                                 <div class="info-content">
-                                    <span class="info-label">Gender</span>
-                                    <span class="info-value">Male</span>
+                                    <span class="info-label">Nationality</span>
+                                    <span class="info-value">@(ViewBag.Customer?.nationality ?? "N/A")</span>
                                 </div>
                             </div>
                         </div>
@@ -247,10 +256,10 @@
                                 <i class="fas fa-plus"></i>
                                 <span>New Booking</span>
                             </button>
-                            <button class="quick-action-btn secondary">
+                            <a href="@Url.Action("Edit", "Profile")" class="quick-action-btn secondary">
                                 <i class="fas fa-edit"></i>
                                 <span>Edit Profile</span>
-                            </button>
+                            </a>
                             <button class="quick-action-btn tertiary">
                                 <i class="fas fa-star"></i>
                                 <span>Write Review</span>
@@ -275,63 +284,52 @@
                     <button class="filter-btn" data-filter="cancelled">Cancelled</button>
                 </div>
             </div>
-            <div class="bookings-list">
-                <div class="booking-card upcoming">
-                    <div class="booking-image">
-                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Deluxe Suite">
-                        <div class="booking-status status-upcoming">Upcoming</div>
-                    </div>
-                    <div class="booking-details">
-                        <h4>Deluxe Suite with City View</h4>
-                        <div class="booking-info">
-                            <div class="info-row">
-                                <i class="fas fa-calendar"></i>
-                                <span>Dec 20, 2024 - Dec 25, 2024</span>
-                            </div>
-                            <div class="info-row">
-                                <i class="fas fa-users"></i>
-                                <span>2 Guests</span>
-                            </div>
-                            <div class="info-row">
-                                <i class="fas fa-credit-card"></i>
-                                <span>$1,250 Total</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="booking-actions">
-                        <button class="action-btn primary">Manage</button>
-                        <button class="action-btn secondary">Cancel</button>
-                    </div>
-                </div>
+           
+            @model IEnumerable<Bookify.DataAccessLayer.Entities.Reservation>
 
-                <div class="booking-card completed">
-                    <div class="booking-image">
-                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Presidential Suite">
-                        <div class="booking-status status-completed">Completed</div>
-                    </div>
-                    <div class="booking-details">
-                        <h4>Presidential Suite</h4>
-                        <div class="booking-info">
-                            <div class="info-row">
-                                <i class="fas fa-calendar"></i>
-                                <span>Nov 15, 2024 - Nov 20, 2024</span>
-                            </div>
-                            <div class="info-row">
-                                <i class="fas fa-users"></i>
-                                <span>2 Guests</span>
-                            </div>
-                            <div class="info-row">
-                                <i class="fas fa-credit-card"></i>
-                                <span>$2,100 Total</span>
+            <div class="bookings-list">
+                @foreach (var reservation in Model)
+                {
+                    <div class="booking-card @(reservation.Status.ToString().ToLower())">
+                        <div class="booking-image">
+                            @* <img src="@GetRoomImage(reservation.RoomNumber)" alt="Room @reservation.RoomNumber"> *@
+                            <div class="booking-status status-@(reservation.Status.ToString().ToLower())">
+                                @reservation.Status
                             </div>
                         </div>
+                        <div class="booking-details">
+                            <h4>Room @reservation.RoomNumber</h4>
+                            <div class="booking-info">
+                                <div class="info-row">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>@reservation.StartDate.ToString("MMM dd, yyyy") - @reservation.EndDate.ToString("MMM dd, yyyy")</span>
+                                </div>
+                                <div class="info-row">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span>Booked on: @reservation.ReservationDate.ToString("MMM dd, yyyy")</span>
+                                </div>
+                                <div class="info-row">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>@reservation.Price.ToString("C") Total</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="booking-actions">
+                            @if (reservation.Status == Bookify.DataAccessLayer.Entities.ReservationStatus.Pending)
+                            {
+                                <button class="action-btn primary">Manage</button>
+                                <button class="action-btn secondary">Cancel</button>
+                            }
+                            else if (reservation.Status == Bookify.DataAccessLayer.Entities.ReservationStatus.Completed)
+                            {
+                                <button class="action-btn primary">Review</button>
+                                <button class="action-btn secondary">Receipt</button>
+                            }
+                        </div>
                     </div>
-                    <div class="booking-actions">
-                        <button class="action-btn primary">Review</button>
-                        <button class="action-btn secondary">Receipt</button>
-                    </div>
-                </div>
+                }
             </div>
+
         </div>
         <div class="tab-content" id="reviews">
             <div class="reviews-header">

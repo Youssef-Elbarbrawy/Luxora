@@ -16,6 +16,14 @@ namespace Bookify.DataAccessLayer
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<BookingInfo> BookingInfos { get; set; }
+
+        public DbSet<AdditionalService> Services { get; set; }
+        public DbSet<OrderService> OrderServices { get; set; }
+
+
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +44,16 @@ namespace Bookify.DataAccessLayer
                 entity.HasKey(e => e.RoomTypeId);
                 entity.Property(e => e.RoomTypeId).ValueGeneratedOnAdd();
             });
+            modelBuilder.Entity<CartItem>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.Room)
+                      .WithMany(r => r.CartItems)
+                      .HasForeignKey(e => e.RoomNumber)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
 
             // Configure Room entity
             modelBuilder.Entity<Room>(entity =>
@@ -88,6 +106,86 @@ namespace Bookify.DataAccessLayer
                       .HasForeignKey(e => e.CustomerId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+            //order configuration
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.ToTable("Orders");
+
+                // Primary Key
+                entity.HasKey(o => o.Id);
+                entity.Property(o => o.Id)
+                  .ValueGeneratedOnAdd();
+
+                //Relationship with Customer(one to many)
+                entity.HasOne(o => o.customer)
+                      .WithMany(c => c.Orders)
+                      .HasForeignKey(o => o.CustomerId)
+                      .OnDelete(DeleteBehavior.Restrict);
+                //Relationship with Booking info (one to one) but the booking info make first
+                entity.HasOne(b => b.bookingInfo)
+                .WithOne(o => o.order)
+                .HasForeignKey<BookingInfo>(b => b.OrderId)
+                .OnDelete(DeleteBehavior.Cascade); // if you need to delete order delete his booking info
+
+
+                //Relationship with paymentMethod (one to one
+
+
+                entity.HasOne(o => o.payment)
+                .WithOne(p => p.order)
+                .HasForeignKey<Payment>(p => p.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+                //Relationship with AdditionalServices (Many-to-Many through OrderService)
+                entity.HasMany(o => o.additionalServices)
+                      .WithOne(os => os.order)
+                      .HasForeignKey(os => os.OrderId);
+
+
+                entity.Property(o => o.specialRequests)
+                      .HasMaxLength(500)
+                      .IsRequired(false);
+
+                //Property configurations
+                entity.Property(o => o.TotalPrice)
+                      .HasColumnType("decimal(18,2)");
+
+
+
+            });
+            modelBuilder.Entity<BookingInfo>(entity =>
+            {
+                entity.HasKey(b => b.Id);
+                entity.Property(b => b.Id).ValueGeneratedOnAdd();
+                entity.Property(b => b.NoOfGuests)
+                      .IsRequired();
+
+                entity.Property(b => b.NoOfChilds);
+
+
+                entity.Property(b => b.CheckIn)
+                      .IsRequired();
+
+                entity.Property(b => b.CheckOut)
+                      .IsRequired();
+                entity.Property(b => b.NumOfRooms)
+                      .IsRequired();
+
+            });
+            modelBuilder.Entity<OrderService>(entity =>
+            {
+                entity.HasKey(os => new { os.OrderId, os.ServiceId }); // compsite pk
+                entity.HasOne(os => os.order)
+                .WithMany(o => o.additionalServices)
+                .HasForeignKey(os => os.OrderId);
+
+                entity.HasOne(os => os.service)
+                .WithMany(s => s.OrderServices)
+                .HasForeignKey(os => os.ServiceId);
+
+
+            });
 
             // Seed initial data
             SeedData(modelBuilder);
@@ -95,37 +193,206 @@ namespace Bookify.DataAccessLayer
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            // Seed Room Types based on navigation menu
+            // ===== Room Types =====
             modelBuilder.Entity<RoomType>().HasData(
-                new RoomType { RoomTypeId = 1, TypeName = "Standard" },
-                new RoomType { RoomTypeId = 2, TypeName = "Deluxe" },
-                new RoomType { RoomTypeId = 3, TypeName = "Suite" },
-                new RoomType { RoomTypeId = 4, TypeName = "Special View" },
-                new RoomType { RoomTypeId = 5, TypeName = "Family & Group" }
+                new RoomType { RoomTypeId = 1, TypeName = "rooms" },
+                new RoomType { RoomTypeId = 2, TypeName = "dining" },
+                new RoomType { RoomTypeId = 3, TypeName = "pool" },
+                new RoomType { RoomTypeId = 4, TypeName = "events" },
+                new RoomType { RoomTypeId = 5, TypeName = "lobby" }
             );
 
-            // Seed some sample rooms
+            // ===== Rooms =====
             modelBuilder.Entity<Room>().HasData(
-                // Standard Rooms
-                new Room { RoomNumber = 101, Description = "Comfortable standard room with city view", Status = "Available", Price = 150.00m, RoomTypeId = 1 },
-                new Room { RoomNumber = 102, Description = "Standard room with modern amenities", Status = "Available", Price = 150.00m, RoomTypeId = 1 },
-                new Room { RoomNumber = 103, Description = "Cozy standard room perfect for solo travelers", Status = "Available", Price = 150.00m, RoomTypeId = 1 },
+                // ----- Rooms category -----
+                new Room
+                {
+                    RoomNumber = 1,
+                    RoomName = "Presidential Suite",
+                    Description = "Experience ultimate luxury with panoramic city views, a spacious living area, dining room, and premium amenities.",
+                    Status = "Available",
+                    Price = 899.00m,
+                    RoomTypeId = 1,
+                    ImageUrl = "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 4,
+                    Size = "120",
+                    BedType = "King Size × 2",
+                    View = "Panoramic City View",
+                    Amenities = "WiFi,Air Conditioning,Mini Bar,Jacuzzi,Smart TV,Room Service,Balcony,Safe,Butler Service,Private Check-in"
+                },
+                new Room
+                {
+                    RoomNumber = 2,
+                    RoomName = "Deluxe King Room",
+                    Description = "Elegant room with premium amenities and modern design for a comfortable stay.",
+                    Status = "Available",
+                    Price = 120.00m,
+                    RoomTypeId = 1,
+                    ImageUrl = "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 2,
+                    Size = "50",
+                    BedType = "King Size",
+                    View = "City View",
+                    Amenities = "WiFi,Smart TV,Mini Bar,Air Conditioning,Room Service,Safe"
+                },
+                new Room
+                {
+                    RoomNumber = 3,
+                    RoomName = "Luxury Bathroom",
+                    Description = "Marble bathroom with deep soaking tub, rain shower, and luxurious decor.",
+                    Status = "Available",
+                    Price = 90.00m,
+                    RoomTypeId = 1,
+                    ImageUrl = "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 1,
+                    Size = "25",
+                    BedType = "None",
+                    View = "Interior",
+                    Amenities = "Jacuzzi,Hair Dryer,Toiletries,Towels"
+                },
 
-                // Deluxe Rooms
-                new Room { RoomNumber = 201, Description = "Spacious deluxe room with premium furnishing", Status = "Available", Price = 250.00m, RoomTypeId = 2 },
-                new Room { RoomNumber = 202, Description = "Deluxe room with balcony and garden view", Status = "Available", Price = 250.00m, RoomTypeId = 2 },
+                // ----- Dining category -----
+                new Room
+                {
+                    RoomNumber = 4,
+                    RoomName = "Main Restaurant",
+                    Description = "Fine dining experience with gourmet cuisine and elegant atmosphere.",
+                    Status = "Available",
+                    Price = 200.00m,
+                    RoomTypeId = 2,
+                    ImageUrl = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 60,
+                    Size = "500",
+                    BedType = "-",
+                    View = "Garden View",
+                    Amenities = "WiFi,Air Conditioning,Private Dining,Bar,Music System"
+                },
+                new Room
+                {
+                    RoomNumber = 5,
+                    RoomName = "Gourmet Cuisine",
+                    Description = "Exquisite dishes prepared by internationally acclaimed chefs.",
+                    Status = "Available",
+                    Price = 180.00m,
+                    RoomTypeId = 2,
+                    ImageUrl = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 80,
+                    Size = "450",
+                    BedType = "-",
+                    View = "Open Kitchen View",
+                    Amenities = "WiFi,Bar,Chef’s Table,Music System,Private Dining"
+                },
+                new Room
+                {
+                    RoomNumber = 6,
+                    RoomName = "Skyline Bar",
+                    Description = "Rooftop bar with signature cocktails and breathtaking skyline views.",
+                    Status = "Available",
+                    Price = 160.00m,
+                    RoomTypeId = 2,
+                    ImageUrl = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 100,
+                    Size = "550",
+                    BedType = "-",
+                    View = "City Skyline",
+                    Amenities = "WiFi,Bar,Lounge Music,Outdoor Seating,VIP Section"
+                },
 
-                // Suite Rooms
-                new Room { RoomNumber = 301, Description = "Luxurious suite with separate living area", Status = "Available", Price = 450.00m, RoomTypeId = 3 },
-                new Room { RoomNumber = 302, Description = "Executive suite with work area and premium amenities", Status = "Available", Price = 450.00m, RoomTypeId = 3 },
+                // ----- Pool category -----
+                new Room
+                {
+                    RoomNumber = 7,
+                    RoomName = "Infinity Pool",
+                    Description = "Stunning infinity pool with panoramic views of the city skyline.",
+                    Status = "Available",
+                    Price = 220.00m,
+                    RoomTypeId = 3,
+                    ImageUrl = "https://images.unsplash.com/photo-1561501878-aabd62634533?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 50,
+                    Size = "600",
+                    BedType = "-",
+                    View = "Skyline View",
+                    Amenities = "Pool Bar,Sun Loungers,Jacuzzi,Towel Service,WiFi"
+                },
+                new Room
+                {
+                    RoomNumber = 8,
+                    RoomName = "Luxury Spa",
+                    Description = "Relaxing spa treatments and therapies for ultimate wellness.",
+                    Status = "Available",
+                    Price = 250.00m,
+                    RoomTypeId = 3,
+                    ImageUrl = "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 20,
+                    Size = "400",
+                    BedType = "-",
+                    View = "Poolside",
+                    Amenities = "Massage Rooms,Steam Room,Sauna,Jacuzzi,Relaxation Lounge"
+                },
 
-                // Special View Rooms
-                new Room { RoomNumber = 401, Description = "Ocean view room with panoramic windows", Status = "Available", Price = 350.00m, RoomTypeId = 4 },
-                new Room { RoomNumber = 402, Description = "Mountain view room with scenic balcony", Status = "Available", Price = 350.00m, RoomTypeId = 4 },
+                // ----- Events category -----
+                new Room
+                {
+                    RoomNumber = 9,
+                    RoomName = "Wedding Venue",
+                    Description = "Elegant space for unforgettable weddings and celebrations.",
+                    Status = "Available",
+                    Price = 300.00m,
+                    RoomTypeId = 4,
+                    ImageUrl = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 200,
+                    Size = "900",
+                    BedType = "-",
+                    View = "Garden View",
+                    Amenities = "Stage,Sound System,Lighting,WiFi,Bridal Suite"
+                },
+                new Room
+                {
+                    RoomNumber = 10,
+                    RoomName = "Conference Room",
+                    Description = "State-of-the-art meeting facilities with modern technology.",
+                    Status = "Available",
+                    Price = 180.00m,
+                    RoomTypeId = 4,
+                    ImageUrl = "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 50,
+                    Size = "300",
+                    BedType = "-",
+                    View = "City View",
+                    Amenities = "Projector,WiFi,Whiteboard,Conference Table,Sound System"
+                },
 
-                // Family & Group Rooms
-                new Room { RoomNumber = 501, Description = "Family room with multiple beds, sleeps 6", Status = "Available", Price = 300.00m, RoomTypeId = 5 },
-                new Room { RoomNumber = 502, Description = "Group suite with connecting rooms, sleeps 8", Status = "Available", Price = 400.00m, RoomTypeId = 5 }
+                // ----- Lobby category -----
+                new Room
+                {
+                    RoomNumber = 11,
+                    RoomName = "Grand Lobby",
+                    Description = "Impressive entrance with elegant decor and luxurious ambiance.",
+                    Status = "Available",
+                    Price = 200.00m,
+                    RoomTypeId = 5,
+                    ImageUrl = "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 100,
+                    Size = "700",
+                    BedType = "-",
+                    View = "Main Entrance",
+                    Amenities = "Reception,Concierge,Seating Area,Art Displays,WiFi"
+                },
+                new Room
+                {
+                    RoomNumber = 12,
+                    RoomName = "Executive Lounge",
+                    Description = "Exclusive lounge for premium guests with VIP services.",
+                    Status = "Available",
+                    Price = 220.00m,
+                    RoomTypeId = 5,
+                    ImageUrl = "https://images.unsplash.com/photo-1535827841776-24afc1e255ac?auto=format&fit=crop&w=600&q=80",
+                    Capacity = 40,
+                    Size ="250",
+                    BedType = "-",
+                    View = "Lobby View",
+                    Amenities = "WiFi,Bar,Snacks,Lounge Seating,Newspapers,Coffee Machine"
+                }
             );
         }
     }
