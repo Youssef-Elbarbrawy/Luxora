@@ -16,11 +16,10 @@ namespace Bookify
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            // Configure Entity Framework with Azure AD authentication
-            // Uses Managed Identity when deployed, DefaultAzureCredential locally
+            // Configure Entity Framework
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             
-            // Remove Authentication from connection string - we'll set token manually
+            // Clean connection string (remove any authentication parameters that will be handled programmatically)
             var sqlBuilder = new Microsoft.Data.SqlClient.SqlConnectionStringBuilder(connectionString);
             if (sqlBuilder.ContainsKey("Authentication"))
             {

@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 namespace Bookify.DataAccessLayer
 {
     /// <summary>
-    /// Interceptor that adds Azure AD token to SQL connections.
-    /// Uses Managed Identity in Azure, DefaultAzureCredential locally.
+    /// Interceptor that handles SQL connection authentication.
+    /// Automatically detects connection type and applies appropriate authentication.
     /// </summary>
     public class AzureSqlConnectionInterceptor : DbConnectionInterceptor
     {
@@ -23,20 +23,24 @@ namespace Bookify.DataAccessLayer
         {
             if (connection is SqlConnection sqlConnection && sqlConnection.AccessToken == null)
             {
-                try
+                // Only apply special authentication for cloud SQL connections
+                // Skip for local databases (localdb, localhost, etc.)
+                var connectionString = sqlConnection.ConnectionString ?? "";
+                if (connectionString.Contains("database.windows.net", StringComparison.OrdinalIgnoreCase))
                 {
-                    var token = await _credential.GetTokenAsync(
-                        new TokenRequestContext(new[] { "https://database.windows.net/.default" }),
-                        cancellationToken);
-                    
-                    sqlConnection.AccessToken = token.Token;
-                }
-                catch (Exception ex)
-                {
-                    // Log the error - token acquisition failed
-                    // This will help diagnose if Managed Identity is not working
-                    System.Diagnostics.Debug.WriteLine($"Azure AD token acquisition failed: {ex.Message}");
-                    throw; // Re-throw to fail fast and show the real error
+                    try
+                    {
+                        var token = await _credential.GetTokenAsync(
+                            new TokenRequestContext(new[] { "https://database.windows.net/.default" }),
+                            cancellationToken);
+                        
+                        sqlConnection.AccessToken = token.Token;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Token acquisition failed: {ex.Message}");
+                        throw;
+                    }
                 }
             }
 
@@ -50,19 +54,24 @@ namespace Bookify.DataAccessLayer
         {
             if (connection is SqlConnection sqlConnection && sqlConnection.AccessToken == null)
             {
-                try
+                // Only apply special authentication for cloud SQL connections
+                // Skip for local databases (localdb, localhost, etc.)
+                var connectionString = sqlConnection.ConnectionString ?? "";
+                if (connectionString.Contains("database.windows.net", StringComparison.OrdinalIgnoreCase))
                 {
-                    var token = _credential.GetToken(
-                        new TokenRequestContext(new[] { "https://database.windows.net/.default" }),
-                        CancellationToken.None);
-                    
-                    sqlConnection.AccessToken = token.Token;
-                }
-                catch (Exception ex)
-                {
-                    // Log the error - token acquisition failed
-                    System.Diagnostics.Debug.WriteLine($"Azure AD token acquisition failed: {ex.Message}");
-                    throw; // Re-throw to fail fast and show the real error
+                    try
+                    {
+                        var token = _credential.GetToken(
+                            new TokenRequestContext(new[] { "https://database.windows.net/.default" }),
+                            CancellationToken.None);
+                        
+                        sqlConnection.AccessToken = token.Token;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Token acquisition failed: {ex.Message}");
+                        throw;
+                    }
                 }
             }
 
