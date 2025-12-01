@@ -426,3 +426,29 @@
     `;
     document.head.appendChild(pulseStyle);
 });
+$(document).ready(function () {
+    // فلترة الحجوزات
+    $('.filter-btn').click(function () {
+        var filter = $(this).data('filter');
+
+        // تحديث الحالة النشطة
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+
+        // عرض/إخفاء الحجوزات بناءً على الفلتر
+        $('.booking-card').each(function () {
+            var status = $(this).attr('class').match(/pending|completed|cancelled/);
+
+            if (filter === 'all' || (status && status[0] === filter)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
+    // إخفاء رسائل التنبيه بعد 5 ثوانٍ
+    setTimeout(function () {
+        $('.alert').fadeOut('slow');
+    }, 5000);
+});

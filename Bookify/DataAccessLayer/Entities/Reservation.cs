@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookify.DataAccessLayer.Entities
@@ -25,9 +25,9 @@ namespace Bookify.DataAccessLayer.Entities
         [Required]
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
-        [Required]
-        public ReservationStatus Status { get; set; } = ReservationStatus.Pending;
 
+        [Required]
+        public ReservationStatus Status { get; set; } = ReservationStatus.Pending;  // ✅ القيمة الافتراضية Pending
 
         // Foreign Keys
         [Required]
@@ -48,4 +48,3 @@ namespace Bookify.DataAccessLayer.Entities
         public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }
-

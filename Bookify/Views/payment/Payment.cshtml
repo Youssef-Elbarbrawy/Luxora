@@ -1,7 +1,20 @@
-﻿@model Bookify.Models.Payment;
+﻿@model Bookify.DataAccessLayer.DTOs.PaymentDto
+@{
+    ViewData["Title"] = "Complete Payment";
+}
+
 <link href="~/css/payment.css" rel="stylesheet" />
+
 <section class="hotel-payment">
-    <h2>🏨 Secure Hotel Payment</h2>
+    <h2>🏨 Complete Your Payment</h2>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @Html.Raw(TempData["ErrorMessage"])
+        </div>
+    }
+
     <div class="hotel-card-preview" id="hotelCardPreview">
         <div class="hotel-card-inner" id="hotelCardInner">
             <div class="hotel-card-face hotel-card-front">
@@ -21,41 +34,53 @@
             </div>
         </div>
     </div>
-    <form asp-action="Payment" method="post" class="hotel-payment-form" id="hotelPaymentForm">
+
+    <form asp-action="Payment"  method="post" class="hotel-payment-form" id="hotelPaymentForm">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="ReservationId" />
+
         <div class="hotel-summary">
             <h3>Room: @Model.RoomType</h3>
-            <p><strong>Total:</strong> $<span>@Model.TotalAmount</span></p>
+            <p><strong>Total Amount:</strong> $<span>@Model.TotalAmount.ToString("F2")</span></p>
         </div>
 
         <div class="hotel-input-group">
-            <label asp-for="GuestName"></label>
+            <label asp-for="GuestName">Guest Name *</label>
             <input asp-for="GuestName" id="guestName" placeholder="John Doe" />
             <span asp-validation-for="GuestName" class="text-danger"></span>
         </div>
 
         <div class="hotel-input-group">
-            <label asp-for="CardNumber"></label>
+            <label asp-for="CardNumber">Card Number *</label>
             <input asp-for="CardNumber" id="cardNum" maxlength="19" placeholder="1234 5678 9012 3456" />
             <span asp-validation-for="CardNumber" class="text-danger"></span>
         </div>
 
         <div class="hotel-row">
             <div class="hotel-input-group">
-                <label asp-for="ExpiryDate"></label>
+                <label asp-for="ExpiryDate">Expiry Date *</label>
                 <input asp-for="ExpiryDate" id="expiryDate" maxlength="5" placeholder="MM/YY" />
                 <span asp-validation-for="ExpiryDate" class="text-danger"></span>
             </div>
             <div class="hotel-input-group">
-                <label asp-for="CVV"></label>
-                <input asp-for="CVV" id="cardCvv" maxlength="4" placeholder="123" />
+                <label asp-for="CVV">CVV *</label>
+                <input asp-for="CVV" id="cardCvv" maxlength="4" placeholder="123" type="password" />
                 <span asp-validation-for="CVV" class="text-danger"></span>
             </div>
         </div>
 
-        <button type="submit" class="btn-hotel-pay">💳 Pay & Confirm Booking</button>
+        <div class="hotel-form-actions">
+            <a asp-action="Index" asp-controller="History" class="btn-hotel-back">
+                ← Cancel
+            </a>
+            <button type="submit" class="btn-hotel-pay">
+                <i class="fas fa-credit-card"></i> Confirm Payment
+            </button>
+        </div>
     </form>
 </section>
 
 @section Scripts {
     <script src="~/js/Payment.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 }

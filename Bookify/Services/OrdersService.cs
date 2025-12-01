@@ -115,7 +115,7 @@ namespace Bookify.Service
             {
                 OrderId = order.Id,
 
-                amount = order.TotalPrice
+                TotalAmount = order.TotalPrice
             };
 
             _context.Payments.Add(payment);

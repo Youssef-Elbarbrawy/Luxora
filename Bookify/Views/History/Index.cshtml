@@ -1,64 +1,187 @@
 ﻿@model IEnumerable<Bookify.DataAccessLayer.Entities.Reservation>
 @{
-	ViewData["Title"] = "Booking History";
+    ViewData["Title"] = "Booking History";
 }
 
 <link href="~/css/profile.css" rel="stylesheet" />
 
 <style>
-	.profile-page{
-		padding: 0 20px;
-	}
+    .profile-page {
+        padding: 0 20px;
+    }
+
+    .btn-pay {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+        transition: all 0.3s;
+    }
+
+        .btn-pay:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-pay i {
+            margin-right: 5px;
+        }
+
+    .payment-info {
+        margin-top: 10px;
+        padding: 8px 12px;
+        background-color: #e8f5e9;
+        border-radius: 4px;
+        display: inline-block;
+    }
+
+    .paid-badge {
+        color: #2e7d32;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+        .paid-badge i {
+            color: #4CAF50;
+        }
+
+    .alert {
+        padding: 12px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-color: #f5c6cb;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+        display: block;
+    }
 </style>
 
 <h2 class="Book_title">My Booking History</h2>
 
 <div class="profile-page" style="padding-top:50px;">
-	<div class="bookings-header">
-		<h2>My Bookings</h2>
-		<div class="booking-filters">
-			<button class="filter-btn active" data-filter="all">All</button>
-			<button class="filter-btn" data-filter="pending">Pending</button>
-			<button class="filter-btn" data-filter="upcoming">Upcoming</button>
-			<button class="filter-btn" data-filter="completed">Completed</button>
-			<button class="filter-btn" data-filter="cancelled">Cancelled</button>
-		</div>
-	</div>
+    <div class="bookings-header">
+        <h2>My Bookings</h2>
+        <div class="booking-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+            <button class="filter-btn" data-filter="cancelled">Cancelled</button>
+        </div>
+    </div>
 
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @Html.Raw(TempData["SuccessMessage"])
+        </div>
+    }
 
-	<div class="bookings-list">
-		@foreach (var reservation in Model)
-		{
-			<div class="booking-card @(reservation.Status.ToString().ToLower())">
-				<div class="booking-details">
-					<h4>Room @reservation.RoomNumber</h4>
-					<div class="booking-info">
-						<div class="info-row">
-							<i class="fas fa-calendar"></i>
-							<span>@reservation.StartDate.ToString("MMM dd, yyyy") - @reservation.EndDate.ToString("MMM dd, yyyy")</span>
-						</div>
-						<div class="info-row">
-							<i class="fas fa-calendar-check"></i>
-							<span>Booked on: @reservation.ReservationDate.ToString("MMM dd, yyyy")</span>
-						</div>
-						<div class="info-row">
-							<i class="fas fa-credit-card"></i>
-							<span>@reservation.Price.ToString("C") Total</span>
-						</div>
-					</div>
-				</div>
-				<div class="booking-image">
-					@* <img src="@GetRoomImage(reservation.RoomNumber)" alt="Room @reservation.RoomNumber"> *@
-					<div class="booking-status status-@(reservation.Status.ToString().ToLower())">
-						@reservation.Status
-					</div>
-				</div>
-			</div>
-		}
-	</div>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @Html.Raw(TempData["ErrorMessage"])
+        </div>
+    }
+
+    <div class="bookings-list">
+        @if (!Model.Any())
+        {
+            <div class="no-bookings">
+                <p>No bookings found.</p>
+            </div>
+        }
+
+        @foreach (var reservation in Model)
+        {
+            <div class="booking-card @(reservation.Status.ToString().ToLower())">
+                <div class="booking-details">
+                    <h4>Room @reservation.RoomNumber</h4>
+                    <div class="booking-info">
+                        <div class="info-row">
+                            <i class="fas fa-calendar"></i>
+                            <span>@reservation.StartDate.ToString("MMM dd, yyyy") - @reservation.EndDate.ToString("MMM dd, yyyy")</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Booked on: @reservation.ReservationDate.ToString("MMM dd, yyyy")</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-credit-card"></i>
+                            <span>@reservation.Price.ToString("C") Total</span>
+                        </div>
+                    </div>
+
+                    @if (reservation.Status == Bookify.DataAccessLayer.Entities.ReservationStatus.Pending)
+                    {
+                        <a asp-action="Payment" asp-controller="Payment"
+                           asp-route-reservationId="@reservation.ReservationId"
+                           class="btn-pay">
+                            <i class="fas fa-credit-card"></i> Pay Now
+                        </a>
+                    }
+                    else if (reservation.Status == Bookify.DataAccessLayer.Entities.ReservationStatus.Completed)
+                    {
+                        <div class="payment-info">
+                            <span class="paid-badge">
+                                <i class="fas fa-check-circle"></i> Paid Successfully
+                            </span>
+                        </div>
+                    }
+                </div>
+                <div class="booking-image">
+                    <div class="booking-status status-@(reservation.Status.ToString().ToLower())">
+                        @reservation.Status
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @section Scripts {
-	<script src="~/js/profile.js"></script>
+    <script src="~/js/profile.js"></script>
+    <script>
+        // إخفاء رسائل التنبيه بعد 5 ثواني
+        setTimeout(function() {
+            $('.alert').fadeOut('slow');
+        }, 5000);
+                function payReservation(reservationId) {
+            if (confirm('Are you sure you want to complete the payment?')) {
+                $.ajax({
+                    url: '/Payment/Payment',
+                    type: 'POST',
+                    data: { reservationId: reservationId },
+                    success: function(response) {
+                        location.reload(); // إعادة تحميل الصفحة لتحديث الحالة
+                    },
+                    error: function() {
+                        alert('Payment failed. Please try again.');
+                    }
+                });
+            }
+        }
+    </script>
 }

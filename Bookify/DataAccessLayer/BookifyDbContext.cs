@@ -84,16 +84,7 @@ namespace Bookify.DataAccessLayer
             });
 
             // Configure Payment entity
-            modelBuilder.Entity<Payment>(entity =>
-            {
-                entity.HasKey(e => e.PaymentId);
-                entity.Property(e => e.PaymentId).ValueGeneratedOnAdd();
-                
-                entity.HasOne(e => e.Reservation)
-                      .WithMany(r => r.Payments)
-                      .HasForeignKey(e => e.ReservationId)
-                      .OnDelete(DeleteBehavior.Cascade);
-            });
+            
 
             // Configure Feedback entity
             modelBuilder.Entity<Feedback>(entity =>
@@ -129,12 +120,25 @@ namespace Bookify.DataAccessLayer
 
 
                 //Relationship with paymentMethod (one to one
+                modelBuilder.Entity<Payment>(entity =>
+                {
+                    entity.HasKey(e => e.PaymentId);
+                    entity.Property(e => e.PaymentId).ValueGeneratedOnAdd();
 
-
+                    entity.HasOne(e => e.Reservation)
+                          .WithMany(r => r.Payments)
+                          .HasForeignKey(e => e.ReservationId)
+                          .OnDelete(DeleteBehavior.Cascade);
+                });
                 entity.HasOne(o => o.payment)
-                .WithOne(p => p.order)
-                .HasForeignKey<Payment>(p => p.OrderId)
-                .OnDelete(DeleteBehavior.Restrict);
+.WithOne(p => p.Order)
+.HasForeignKey<Payment>(p => p.OrderId)
+.OnDelete(DeleteBehavior.Restrict);
+
+
+
+
+
 
 
                 //Relationship with AdditionalServices (Many-to-Many through OrderService)

@@ -43,3 +43,21 @@ cardCvv.addEventListener("blur", () => {
 cardCvv.addEventListener("input", () => {
     hotelPreviewCvv.textContent = cardCvv.value ? cardCvv.value.replace(/./g, "•") : "***";
 });
+document.addEventListener('DOMContentLoaded', function () {
+    // إذا كان هناك رسالة نجاح، أظهرها
+    if (localStorage.getItem('paymentSuccess')) {
+        alert(localStorage.getItem('paymentSuccess'));
+        localStorage.removeItem('paymentSuccess');
+    }
+
+    // معالجة أزرار الدفع
+    document.querySelectorAll('.pay-button').forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const reservationId = this.dataset.reservationId;
+
+            // تحويل مباشر لصفحة الدفع
+            window.location.href = `/Payment/Payment?reservationId=${reservationId}`;
+        });
+    });
+});
