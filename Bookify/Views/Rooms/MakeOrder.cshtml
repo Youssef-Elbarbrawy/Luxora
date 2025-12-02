@@ -18,8 +18,9 @@
                 </div>
             </div>
         </div>
+       @* <form asp-action="MakeOrder" asp-controller="Booking" method="post" class="booking-form" id="bookingForm"> *@
 
-        <form class="booking-form" id="bookingForm" novalidate>
+        <form class="booking-form" id="bookingForm" novalidate asp-action="MakeOrder" asp-controller="Booking" method="post">
             <div class="form-header">
                 <h2>Complete Your Reservation</h2>
                 <p>Please fill out the information below to secure your booking</p>
@@ -32,7 +33,7 @@
                 <div class="form-grid two-columns">
                     <div class="form-group required">
                         <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" name="fullName" class="form-input"
+                        <input type="text" id="fullName" name="Customer.FullName" class="form-input"
                                placeholder="Enter your full name" required>
                         <div class="error-message">
                             <i class="fas fa-exclamation-triangle"></i>
@@ -42,7 +43,7 @@
                     <div class="form-group required">
                         <label for="email">Email Address</label>
                         <div class="form-group has-icon">
-                            <input type="email" id="email" name="email" class="form-input"
+                            <input type="email" id="email" name="Customer.Email" class="form-input"
                                    placeholder="your.email@example.com" required>
                             <i class="fas fa-envelope input-icon"></i>
                         </div>
@@ -54,7 +55,7 @@
                     <div class="form-group required">
                         <label for="phone">Phone Number</label>
                         <div class="form-group has-icon">
-                            <input type="tel" id="phone" name="phone" class="form-input"
+                            <input type="tel" id="phone" name="Customer.PhoneNumber" class="form-input"
                                    placeholder="+1 (555) 123-4567" required>
                             <i class="fas fa-phone input-icon"></i>
                         </div>
@@ -65,7 +66,7 @@
                     </div>
                     <div class="form-group required">
                         <label for="nationality">Nationality</label>
-                        <input list="nationalities" id="nationality" name="nationality"
+                        <input list="nationalities" id="nationality" name="Customer.Nationality"
                                class="form-input" placeholder="Select your nationality" required>
                         <datalist id="nationalities">
                             <option value="United States"></option>
@@ -93,7 +94,7 @@
                 <div class="form-group required">
                     <label for="idNumber">National ID or Passport Number</label>
                     <div class="form-group has-icon">
-                        <input type="text" id="idNumber" name="idNumber" class="form-input"
+                        <input type="text" id="idNumber" name="Customer.NationalID" class="form-input"
                                placeholder="Enter your ID or passport number" required>
                         <i class="fas fa-id-card input-icon"></i>
                     </div>
@@ -114,7 +115,7 @@
                     <div class="date-inputs">
                         <div class="form-group required">
                             <label for="checkinDate">Check-in Date</label>
-                            <input type="date" id="checkinDate" name="checkinDate"
+                            <input type="date" id="checkinDate" name="BookingInfo.CheckIn"
                                    class="form-input" required>
                             <div class="error-message">
                                 <i class="fas fa-exclamation-triangle"></i>
@@ -123,7 +124,7 @@
                         </div>
                         <div class="form-group required">
                             <label for="checkoutDate">Check-out Date</label>
-                            <input type="date" id="checkoutDate" name="checkoutDate"
+                            <input type="date" id="checkoutDate" name="BookingInfo.CheckOut"
                                    class="form-input" required>
                             <div class="error-message">
                                 <i class="fas fa-exclamation-triangle"></i>
@@ -147,7 +148,7 @@
                             </div>
                             <div class="counter-controls">
                                 <button type="button" class="counter-btn" id="adultsDecrease">-</button>
-                                <div class="counter-value" id="adultsCount">1</div>
+                                <div class="counter-value" id="adultsCount" >1</div>
                                 <button type="button" class="counter-btn" id="adultsIncrease">+</button>
                             </div>
                         </div>
@@ -158,7 +159,7 @@
                             </div>
                             <div class="counter-controls">
                                 <button type="button" class="counter-btn" id="childrenDecrease">-</button>
-                                <div class="counter-value" id="childrenCount">0</div>
+                                <div class="counter-value" id="childrenCount"  >0</div>
                                 <button type="button" class="counter-btn" id="childrenIncrease">+</button>
                             </div>
                         </div>
@@ -170,7 +171,7 @@
                     <div class="room-selection">
                         <div class="form-group required">
                             <label for="roomType">Type of Room</label>
-                            <select id="roomType" name="roomType" class="form-input" required>
+                            <select id="roomType" name="BookingInfo.RoomTypeId" class="form-input" required>
                                 <option value="">Select room type</option>
                                 <optgroup label="Standard Rooms">
                                     <option value="single" data-price="150">Single Room - $150/night</option>
@@ -220,7 +221,7 @@
                     <label>Premium Services</label>
                     <div class="checkbox-group">
                         <div class="checkbox-item">
-                            <input type="checkbox" id="extraBed" name="services" value="extra-bed" data-price="50">
+                            <input type="checkbox" id="extraBed" name="AdditionalServiceIds" value="extra-bed" data-price="50">
                             <label for="extraBed" class="checkbox-label">
                                 <div class="custom-checkbox"></div>
                                 <div>
@@ -230,7 +231,7 @@
                             </label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="breakfast" name="services" value="breakfast" data-price="35">
+                            <input type="checkbox" id="breakfast" name="AdditionalServiceIds" value="breakfast" data-price="35">
                             <label for="breakfast" class="checkbox-label">
                                 <div class="custom-checkbox"></div>
                                 <div>
@@ -240,7 +241,7 @@
                             </label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="airportPickup" name="services" value="airport-pickup" data-price="75">
+                            <input type="checkbox" id="airportPickup" name="AdditionalServiceIds" value="airport-pickup" data-price="75">
                             <label for="airportPickup" class="checkbox-label">
                                 <div class="custom-checkbox"></div>
                                 <div>
@@ -250,7 +251,7 @@
                             </label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="spa" name="services" value="spa" data-price="120">
+                            <input type="checkbox" id="spa" name="AdditionalServiceIds" value="spa" data-price="120">
                             <label for="spa" class="checkbox-label">
                                 <div class="custom-checkbox"></div>
                                 <div>
@@ -260,7 +261,7 @@
                             </label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="decoration" name="services" value="decoration" data-price="100">
+                            <input type="checkbox" id="decoration" name="AdditionalServiceIds" value="decoration" data-price="100">
                             <label for="decoration" class="checkbox-label">
                                 <div class="custom-checkbox"></div>
                                 <div>
@@ -270,7 +271,7 @@
                             </label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="minibar" name="services" value="minibar" data-price="25">
+                            <input type="checkbox" id="minibar" name="AdditionalServiceIds" value="minibar" data-price="25">
                             <label for="minibar" class="checkbox-label">
                                 <div class="custom-checkbox"></div>
                                 <div>
@@ -285,7 +286,7 @@
                 <div class="form-group">
                     <label for="specialRequests">Special Requests</label>
                     <div class="textarea-group">
-                        <textarea id="specialRequests" name="specialRequests" class="form-input"
+                        <textarea id="specialRequests" name="SpecialRequests" class="form-input"
                                   placeholder="Please let us know about any special requests, dietary restrictions, accessibility needs, or celebration arrangements..."
                                   rows="4"></textarea>
                     </div>

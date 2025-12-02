@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bookify.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class OrderController : ControllerBase
+    public class OrderController : Controller
     {
         private readonly OrdersService _orderService;
 
@@ -17,20 +15,23 @@ namespace Bookify.Controllers
             _orderService = orderService;
         }
 
-        [HttpPost("make-order")]
-        public async Task<IActionResult> MakeOrder([FromBody] OrderRequestDTO dto)
+        [HttpGet]
+        public IActionResult MakeOrder()
         {
-            // Get logged-in user ID if available (for authenticated users)
-            int? loggedInUserId = null;
-            if (SessionHelper.IsLoggedIn(HttpContext.Session))
-            {
-                loggedInUserId = SessionHelper.GetUserId(HttpContext.Session);
-            }
-
-            var orderId = await _orderService.MakeOrderAsync(dto, loggedInUserId);
-            return Ok(new { OrderId = orderId });
+            return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> MakeOrder(OrderRequestDTO dto)
+        {
+            int? loggedInUserId = null;
 
+            var orderId = await _orderService.MakeOrderAsync(dto, loggedInUserId);
+
+            ViewBag.OrderId = orderId;
+
+            return View("Success");
+        }
     }
+
 }

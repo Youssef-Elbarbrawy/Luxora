@@ -122,5 +122,10 @@ namespace Bookify.Controllers
         {
             return View();
         }
+        public IActionResult MakeOrder()
+        {
+            return View();
+        }
+
     }
 }
