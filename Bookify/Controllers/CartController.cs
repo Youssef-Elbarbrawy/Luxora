@@ -196,6 +196,9 @@ namespace Bookify.Controllers
             return Json(new { isInCart = isInCart });
         }
 
+        /// <summary>
+        /// Redirects to the Checkout page where users can enter booking details
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Checkout()
         {
@@ -210,89 +213,18 @@ namespace Bookify.Controllers
                 return RedirectToAction("Login", "Auth");
             }
 
-            try
+            // Check if cart has items
+            var hasItems = await _context.CartItems
+                .AnyAsync(c => c.UserId == userId.Value);
+
+            if (!hasItems)
             {
-                // Get all cart items
-                var cartItems = await _context.CartItems
-                    .Include(c => c.Room)
-                    .Where(c => c.UserId == userId.Value)
-                    .ToListAsync();
-
-                if (!cartItems.Any())
-                {
-                    TempData["Error"] = "Your cart is empty.";
-                    return RedirectToAction("Index");
-                }
-
-                // Set default dates: tomorrow as check-in, day after as check-out
-                var checkInDate = DateTime.Today.AddDays(1);
-                var checkOutDate = checkInDate.AddDays(1);
-                var reservationDate = DateTime.Now;
-
-                // Create a reservation for each cart item and mark room as unavailable
-                var reservationsCreated = 0;
-                var today = DateTime.Today;
-                
-                foreach (var cartItem in cartItems)
-                {
-                    // Check if room already has an active reservation
-                    var existingReservation = await _context.Reservations
-                        .AnyAsync(r => r.RoomNumber == cartItem.RoomNumber && 
-                                      (r.Status == ReservationStatus.Pending || 
-                                       (r.Status == ReservationStatus.Completed && r.EndDate >= today)));
-
-                    if (existingReservation)
-                    {
-                        // Skip this room - it's already reserved
-                        continue;
-                    }
-
-                    // Check if room is already marked as unavailable
-                    if (cartItem.Room.Status != null && cartItem.Room.Status.Equals("Unavailable", StringComparison.OrdinalIgnoreCase))
-                    {
-                        // Skip this room - it's unavailable
-                        continue;
-                    }
-
-                    // Update room status to Unavailable
-                    cartItem.Room.Status = "Unavailable";
-                    _context.Rooms.Update(cartItem.Room);
-
-                    var reservation = new Reservation
-                    {
-                        CustomerId = userId.Value, // UserId is the CustomerId
-                        RoomNumber = cartItem.RoomNumber,
-                        StartDate = checkInDate,
-                        EndDate = checkOutDate,
-                        ReservationDate = reservationDate,
-                        Price = cartItem.Room.Price,
-                        Status = ReservationStatus.Pending
-                    };
-
-                    _context.Reservations.Add(reservation);
-                    reservationsCreated++;
-                }
-
-                if (reservationsCreated == 0)
-                {
-                    TempData["Error"] = "All rooms in your cart are already reserved or unavailable.";
-                    return RedirectToAction("Index");
-                }
-
-                // Clear the cart
-                _context.CartItems.RemoveRange(cartItems);
-
-                // Save all changes
-                await _context.SaveChangesAsync();
-
-                TempData["Success"] = $"Successfully created {reservationsCreated} reservation(s)!";
-                return RedirectToAction("Index", "History");
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = "An error occurred while processing your reservation. Please try again.";
+                TempData["Error"] = "Your cart is empty.";
                 return RedirectToAction("Index");
             }
+
+            // Redirect to the new Checkout flow
+            return RedirectToAction("Index", "Checkout");
         }
     }
 }

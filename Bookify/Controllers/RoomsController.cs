@@ -122,10 +122,39 @@ namespace Bookify.Controllers
         {
             return View();
         }
-        public IActionResult MakeOrder()
+
+        /// <summary>
+        /// Smart redirect: If cart has items → Cart, otherwise → Rooms
+        /// Replaces the old MakeOrder flow with unified cart checkout
+        /// </summary>
+        public async Task<IActionResult> MakeOrder()
         {
-            return View();
+            // Check if user is logged in and has items in cart
+            var userId = Helpers.SessionHelper.GetUserId(HttpContext.Session);
+            
+            if (userId.HasValue)
+            {
+                var hasCartItems = await _context.CartItems
+                    .AnyAsync(c => c.UserId == userId.Value);
+
+                if (hasCartItems)
+                {
+                    TempData["Info"] = "You have rooms in your cart. Continue to checkout!";
+                    return RedirectToAction("Index", "Cart");
+                }
+            }
+
+            // No items in cart - go to rooms page
+            TempData["Info"] = "Browse our rooms and add them to your cart to book!";
+            return RedirectToAction("Index", "Rooms");
         }
 
+        /// <summary>
+        /// Alias for MakeOrder - handles any "Book Now" links
+        /// </summary>
+        public Task<IActionResult> BookNow()
+        {
+            return MakeOrder();
+        }
     }
 }

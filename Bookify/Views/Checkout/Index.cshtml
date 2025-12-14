@@ -1,0 +1,305 @@
+@model Bookify.DataAccessLayer.DTOs.CheckoutDTO
+
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/checkout.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="checkout-container">
+    <div class="checkout-header">
+        <div class="checkout-title">
+            <h1><i class="fas fa-calendar-check"></i> Complete Your Booking</h1>
+            <p class="checkout-subtitle">Enter your booking details to confirm your reservation</p>
+        </div>
+        <div class="checkout-steps">
+            <div class="step completed">
+                <span class="step-number">1</span>
+                <span class="step-label">Cart</span>
+            </div>
+            <div class="step-connector completed"></div>
+            <div class="step active">
+                <span class="step-number">2</span>
+                <span class="step-label">Details</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <span class="step-label">Payment</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step">
+                <span class="step-number">4</span>
+                <span class="step-label">Done</span>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-error">
+            <i class="fas fa-exclamation-circle"></i>
+            @TempData["Error"]
+        </div>
+    }
+
+    <form asp-action="ProcessCheckout" asp-controller="Checkout" method="post" id="checkoutForm">
+        @Html.AntiForgeryToken()
+        
+        <div class="checkout-content">
+            <!-- Booking Details Form -->
+            <div class="checkout-form">
+                <div class="form-section">
+                    <h3><i class="fas fa-calendar-alt"></i> Stay Dates</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="CheckIn">Check-in Date</label>
+                            <input type="date" asp-for="CheckIn" class="form-control" id="checkIn" 
+                                   min="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+                            <span asp-validation-for="CheckIn" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CheckOut">Check-out Date</label>
+                            <input type="date" asp-for="CheckOut" class="form-control" id="checkOut"
+                                   min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" required />
+                            <span asp-validation-for="CheckOut" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="nights-display" id="nightsDisplay">
+                        <i class="fas fa-moon"></i>
+                        <span id="nightsCount">1</span> night(s)
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-users"></i> Guests</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="NoOfGuests">Adults</label>
+                            <div class="number-input">
+                                <button type="button" class="btn-decrement" data-target="NoOfGuests">-</button>
+                                <input type="number" asp-for="NoOfGuests" class="form-control" min="1" max="20" required />
+                                <button type="button" class="btn-increment" data-target="NoOfGuests">+</button>
+                            </div>
+                            <span asp-validation-for="NoOfGuests" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NoOfChildren">Children</label>
+                            <div class="number-input">
+                                <button type="button" class="btn-decrement" data-target="NoOfChildren">-</button>
+                                <input type="number" asp-for="NoOfChildren" class="form-control" min="0" max="10" />
+                                <button type="button" class="btn-increment" data-target="NoOfChildren">+</button>
+                            </div>
+                            <span asp-validation-for="NoOfChildren" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-comment-alt"></i> Special Requests</h3>
+                    <div class="form-group">
+                        <textarea asp-for="SpecialRequests" class="form-control" rows="4" 
+                                  placeholder="Any special requests? (e.g., late check-in, extra pillows, dietary requirements...)"></textarea>
+                        <span class="char-count"><span id="charCount">0</span>/500</span>
+                    </div>
+                </div>
+
+                <!-- Room Summary -->
+                <div class="form-section rooms-section">
+                    <h3><i class="fas fa-bed"></i> Your Rooms (@Model.CartItems?.Count)</h3>
+                    <div class="rooms-list">
+                        @if (Model.CartItems != null)
+                        {
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <div class="room-card">
+                                    <img src="@item.ImageUrl" alt="@item.RoomName" 
+                                         onerror="this.src='https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=400&q=80'">
+                                    <div class="room-info">
+                                        <h4>@item.RoomName</h4>
+                                        <p class="room-type">@item.RoomType</p>
+                                        <div class="room-meta">
+                                            <span><i class="fas fa-users"></i> @item.Capacity guests</span>
+                                            <span class="room-price">$@item.PricePerNight/night</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary Sidebar -->
+            <div class="checkout-sidebar">
+                <div class="summary-card">
+                    <h3 class="summary-title">Booking Summary</h3>
+
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span>Rooms</span>
+                            <span>@Model.CartItems?.Count room(s)</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Check-in</span>
+                            <span id="summaryCheckIn">@Model.CheckIn.ToString("MMM dd, yyyy")</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Check-out</span>
+                            <span id="summaryCheckOut">@Model.CheckOut.ToString("MMM dd, yyyy")</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Duration</span>
+                            <span id="summaryNights">1 night(s)</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row">
+                            <span>Price per night</span>
+                            <span>$<span id="pricePerNight">@Model.CartItems?.Sum(c => c.PricePerNight)</span></span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Service Fee</span>
+                            <span>$@(Model.CartItems?.Count * 20)</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Taxes (10%)</span>
+                            <span id="taxAmount">$@Math.Round((Model.CartItems?.Sum(c => c.PricePerNight) ?? 0) * 0.1m, 2)</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total">
+                            <span><strong>Total</strong></span>
+                            <span><strong>$<span id="totalPrice">@Math.Round((Model.CartItems?.Sum(c => c.PricePerNight) ?? 0) * 1.1m + (Model.CartItems?.Count ?? 0) * 20, 2)</span></strong></span>
+                        </div>
+                    </div>
+
+                    <div class="summary-actions">
+                        <button type="submit" class="btn-checkout">
+                            <i class="fas fa-lock"></i>
+                            Proceed to Payment
+                        </button>
+                        <a href="/Cart" class="btn-back">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Cart
+                        </a>
+                    </div>
+
+                    <div class="summary-features">
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure Booking</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-undo"></i>
+                            <span>Free Cancellation</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-clock"></i>
+                            <span>Instant Confirmation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkInInput = document.getElementById('checkIn');
+            const checkOutInput = document.getElementById('checkOut');
+            const nightsCount = document.getElementById('nightsCount');
+            const summaryNights = document.getElementById('summaryNights');
+            const summaryCheckIn = document.getElementById('summaryCheckIn');
+            const summaryCheckOut = document.getElementById('summaryCheckOut');
+            const totalPriceEl = document.getElementById('totalPrice');
+            const taxAmountEl = document.getElementById('taxAmount');
+            const specialRequests = document.querySelector('textarea[name="SpecialRequests"]');
+            const charCount = document.getElementById('charCount');
+            
+            const pricePerNight = @(Model.CartItems?.Sum(c => c.PricePerNight) ?? 0);
+            const serviceFee = @(Model.CartItems?.Count ?? 0) * 20;
+
+            function updateCalculations() {
+                const checkIn = new Date(checkInInput.value);
+                const checkOut = new Date(checkOutInput.value);
+                
+                if (checkIn && checkOut && checkOut > checkIn) {
+                    const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+                    nightsCount.textContent = nights;
+                    summaryNights.textContent = nights + ' night(s)';
+                    
+                    const subtotal = pricePerNight * nights;
+                    const tax = subtotal * 0.1;
+                    const total = subtotal + serviceFee + tax;
+                    
+                    taxAmountEl.textContent = '$' + tax.toFixed(2);
+                    totalPriceEl.textContent = total.toFixed(2);
+                }
+                
+                // Update summary dates
+                if (checkInInput.value) {
+                    summaryCheckIn.textContent = new Date(checkInInput.value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                }
+                if (checkOutInput.value) {
+                    summaryCheckOut.textContent = new Date(checkOutInput.value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                }
+            }
+
+            checkInInput.addEventListener('change', function() {
+                // Set minimum checkout date to day after checkin
+                const checkIn = new Date(this.value);
+                checkIn.setDate(checkIn.getDate() + 1);
+                checkOutInput.min = checkIn.toISOString().split('T')[0];
+                
+                // If checkout is before new minimum, update it
+                if (new Date(checkOutInput.value) <= new Date(this.value)) {
+                    checkOutInput.value = checkIn.toISOString().split('T')[0];
+                }
+                
+                updateCalculations();
+            });
+
+            checkOutInput.addEventListener('change', updateCalculations);
+
+            // Number input buttons
+            document.querySelectorAll('.btn-increment').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const input = document.getElementById(this.dataset.target);
+                    const max = parseInt(input.max) || 99;
+                    if (parseInt(input.value) < max) {
+                        input.value = parseInt(input.value) + 1;
+                    }
+                });
+            });
+
+            document.querySelectorAll('.btn-decrement').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const input = document.getElementById(this.dataset.target);
+                    const min = parseInt(input.min) || 0;
+                    if (parseInt(input.value) > min) {
+                        input.value = parseInt(input.value) - 1;
+                    }
+                });
+            });
+
+            // Character counter for special requests
+            if (specialRequests) {
+                specialRequests.addEventListener('input', function() {
+                    charCount.textContent = this.value.length;
+                });
+            }
+
+            // Initial calculation
+            updateCalculations();
+        });
+    </script>
+}
+
+
+
+
+

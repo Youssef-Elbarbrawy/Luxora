@@ -100,9 +100,15 @@ namespace Bookify.Controllers
                 reservation.Status = DataAccessLayer.Entities.ReservationStatus.Completed;
                 Console.WriteLine($"Updated status to: {reservation.Status}");
 
-                // Note: Payment record not created for direct reservation payments
-                // (would require a valid OrderId due to FK constraint)
-                // The reservation status update is what matters for the booking flow
+                // Create payment record (OrderId is nullable now)
+                var payment = new DataAccessLayer.Entities.Payment
+                {
+                    ReservationId = model.ReservationId,
+                    OrderId = null,
+                    TotalAmount = model.TotalAmount
+                };
+                _context.Payments.Add(payment);
+                Console.WriteLine($"Added payment record");
 
                 var changes = _context.SaveChanges();
                 Console.WriteLine($"Saved {changes} changes to database");
@@ -169,6 +175,15 @@ namespace Bookify.Controllers
                 if (reservation.Status == DataAccessLayer.Entities.ReservationStatus.Pending)
                 {
                     reservation.Status = DataAccessLayer.Entities.ReservationStatus.Completed;
+
+                    // Create payment record (OrderId is nullable now)
+                    var payment = new DataAccessLayer.Entities.Payment
+                    {
+                        ReservationId = reservationId,
+                        OrderId = null,
+                        TotalAmount = reservation.Price
+                    };
+                    _context.Payments.Add(payment);
                     _context.SaveChanges();
 
                     TempData["SuccessMessage"] = $"✅ Payment Successful! Reservation #{reservationId} confirmed.";

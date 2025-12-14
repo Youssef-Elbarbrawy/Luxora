@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookify.DataAccessLayer.Entities;
 
-
 public class Payment
 {
     [Key]
@@ -14,12 +13,12 @@ public class Payment
     public int ReservationId { get; set; }
 
     [ForeignKey("OrderId")]
-    public int OrderId { get; set; }
+    public int? OrderId { get; set; }  // Nullable - allows payments without an Order
 
     [Column("amount")]
     public decimal TotalAmount { get; set; }
 
     // Navigation properties
     public Reservation Reservation { get; set; }
-    public Order Order { get; set; }
+    public Order? Order { get; set; }
 }
